@@ -7,6 +7,8 @@ import Register from '../views/Register.vue'
 import RegisterHire from '../views/RegisterHire.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
 import Home from '../views/Home.vue'
+import Edit from '../views/Edit.vue'
+import EditCompany from '../views/EditCompany.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +47,16 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/edit',
+    name: 'Edit',
+    component: Edit
+  },
+  {
+    path: '/editcompany',
+    name: 'EditCompany',
+    component: EditCompany
   }
 ]
 

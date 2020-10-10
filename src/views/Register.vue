@@ -24,17 +24,18 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
           </div>
-          <form class="mt-4 mb-4">
+          <form class="mt-4 mb-4" @submit.prevent="registerEmp">
             <label class="small text-muted">Nama</label>
-            <input type="text" class="form-control mb-3" placeholder="Masukkan nama panjang">
-            <label class="small text-muted">Email</label>
-            <input type="email" class="form-control mb-3" placeholder="Masukkan alamat email">
+            <input required type="text" class="form-control mb-3" placeholder="Masukkan nama panjang" v-model="form.name">
+            <label class="small text-muted" >Email</label>
+            <input required type="email" class="form-control mb-3" placeholder="Masukkan alamat email" v-model="form.email">
             <label class="small text-muted">No Handphone</label>
-            <input type="number" class="form-control mb-3" placeholder="Masukkan alamat no handphone">
+            <input required type="number" class="form-control mb-3" placeholder="Masukkan alamat no handphone" v-model="form.phone_number">
             <label class="small text-muted">Kata Sandi</label>
-            <input type="password" class="form-control mb-3" placeholder="Masukkan kata sandi">
+            <input required type="password" class="form-control mb-3" placeholder="Masukkan kata sandi" v-model="form.password">
             <label class="small text-muted">Konfirmasi Kata Sandi</label>
-            <input type="password" class="form-control mb-3" placeholder="Masukkan konfimasi kata sandi">
+            <input required type="password" class="form-control mb-3" placeholder="Masukkan konfimasi kata sandi" @keyup="check" v-model="confirmPassword">
+            <p v-if="error" style="font-size: 14px; color: red; text-align:center;">password not match</p>
             <button type="submit" class="btn btn-orange btn-block text-white">Daftar</button>
             <p class="small text-center m-3">Anda sudah punya akun?
               <router-link to="/login" class="direct-page">Masuk disini</router-link>
@@ -49,7 +50,40 @@
 <style src="../assets/css/style.css" scoped></style>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  name: 'Register'
+  name: 'Register',
+  data () {
+    return {
+      form: {
+        name: '',
+        email: '',
+        phone_number: '',
+        password: ''
+      },
+      confirmPassword: '',
+      error: false
+    }
+  },
+  methods: {
+    registerEmp () {
+      if (this.error) {
+        alert('please check your password')
+      } else {
+        this.actionRegister(this.form)
+      }
+    },
+    ...mapActions({
+      actionRegister: 'auth/registerEmployee'
+    }),
+    check () {
+      if (this.form.password !== this.confirmPassword) {
+        this.error = true
+      } else {
+        this.error = false
+      }
+    }
+  }
 }
 </script>
