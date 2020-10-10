@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="container">
                 <div class="row m-0">
-                    <div class="col-12">
+                    <div class="col-12 p-0 p-sm-3">
                         <div class="footer-top col-12 p-0 mt-4 mb-2 d-flex align-items-center">
                             <img src="../assets/images/logo.png" alt="">
                         </div>
