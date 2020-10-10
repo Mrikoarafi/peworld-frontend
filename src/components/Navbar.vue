@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <div class="container-fluid p-0" id="navbar">
+    <div class="container">
     <b-navbar toggleable="md" type="light" class=" h-158 mt-10">
       <b-navbar-brand href="" class=" d-flex">
         <img src="../assets/icons/Peworld Logo.svg" alt="">
@@ -104,6 +105,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
@@ -130,6 +132,9 @@ export default {
 </script>
 
 <style scoped>
+#navbar {
+  background: white;
+}
 .bg-lighto {
   background: #fff;
 }

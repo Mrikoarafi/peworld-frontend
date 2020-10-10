@@ -24,21 +24,22 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
           </div>
-          <form class="mt-4 mb-4">
+          <form class="mt-4 mb-4" @submit.prevent="registerComp">
             <label class="small text-muted">Nama</label>
-            <input type="text" class="form-control mb-3" placeholder="Masukkan nama panjang">
+            <input required type="text" class="form-control mb-3" placeholder="Masukkan nama panjang" v-model="form.name_recruiter">
             <label class="small text-muted">Email</label>
-            <input type="email" class="form-control mb-3" placeholder="Masukkan alamat email">
+            <input required type="email" class="form-control mb-3" placeholder="Masukkan alamat email"  v-model="form.email_recruiter">
             <label class="small text-muted">Perusahaan</label>
-            <input type="text" class="form-control mb-3" placeholder="Masukkan nama perusahaan">
+            <input required type="text" class="form-control mb-3" placeholder="Masukkan nama perusahaan"  v-model="form.company_name">
             <label class="small text-muted">Jabatan</label>
-            <input type="text" class="form-control mb-3" placeholder="Posisi di perusahaan Anda">
+            <input required type="text" class="form-control mb-3" placeholder="Posisi di perusahaan Anda"  v-model="form.position">
             <label class="small text-muted">No Handphone</label>
-            <input type="number" class="form-control mb-3" placeholder="Masukkan alamat no handphone">
+            <input required type="number" class="form-control mb-3" placeholder="Masukkan alamat no handphone"  v-model="form.phone_number">
             <label class="small text-muted">Kata Sandi</label>
-            <input type="password" class="form-control mb-3" placeholder="Masukkan kata sandi">
+            <input required type="password" class="form-control mb-3" placeholder="Masukkan kata sandi"  v-model="form.password">
             <label class="small text-muted">Konfirmasi Kata Sandi</label>
-            <input type="password" class="form-control mb-3" placeholder="Masukkan konfimasi kata sandi">
+            <input required type="password" class="form-control mb-3" placeholder="Masukkan konfimasi kata sandi"  v-model="confirmPassword" @keyup="check">
+            <p v-if="error" style="font-size: 14px; color: red; text-align:center;">password not match</p>
             <button type="submit" class="btn btn-orange btn-block text-white">Daftar</button>
             <p class="small text-center m-3">Anda sudah punya akun?
               <router-link to="/loginHire" class="direct-page">Masuk disini</router-link>
@@ -53,7 +54,42 @@
 <style src="../assets/css/style.css" scoped></style>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  name: 'RegisterHire'
+  name: 'RegisterHire',
+  data () {
+    return {
+      form: {
+        name_recruiter: '',
+        email_recruiter: '',
+        company_name: '',
+        phone_number: '',
+        position: '',
+        password: ''
+      },
+      confirmPassword: '',
+      error: false
+    }
+  },
+  methods: {
+    registerComp () {
+      if (this.error) {
+        alert('please check your password')
+      } else {
+        this.actionRegister(this.form)
+      }
+    },
+    ...mapActions({
+      actionRegister: 'auth/registerCompany'
+    }),
+    check () {
+      if (this.form.password !== this.confirmPassword) {
+        this.error = true
+      } else {
+        this.error = false
+      }
+    }
+  }
 }
 </script>

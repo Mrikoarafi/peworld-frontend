@@ -24,11 +24,11 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
           </div>
-          <form class="mt-4">
+          <form class="mt-4" @submit.prevent="loginEmployee">
             <label class="small text-muted">Email</label>
-            <input type="email" class="form-control mb-3" placeholder="Masukkan alamat email">
+            <input type="email" class="form-control mb-3" placeholder="Masukkan alamat email" v-model="form.email">
             <label class="small text-muted">Kata Sandi</label>
-            <input type="password" class="form-control mb-3" placeholder="Masukkan kata sandi">
+            <input type="password" class="form-control mb-3" placeholder="Masukkan kata sandi" v-model="form.password">
             <p class="small text-right forgot-button"  data-toggle="modal" data-target="#forgot-pass">Lupa kata sandi?</p>
             <ModalForgot />
             <button type="submit" class="btn btn-orange btn-block text-white">Masuk</button>
@@ -46,11 +46,28 @@
 
 <script>
 import ModalForgot from '../components/ModalForgot'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Login',
   components: {
     ModalForgot
+  },
+  data () {
+    return {
+      form: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    loginEmployee () {
+      this.actionLogin(this.form)
+    },
+    ...mapActions({
+      actionLogin: 'auth/loginEmployee'
+    })
   }
 }
 </script>
