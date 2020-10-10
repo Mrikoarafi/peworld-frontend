@@ -33,7 +33,7 @@
               <div class=" borderprofile rounded-circle ">
                 <img
                   class="rounded-circle"
-                  :src="`${url}/${getdetaildata.image}`"
+                  src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png"
                   alt=""
                 />
               </div>
