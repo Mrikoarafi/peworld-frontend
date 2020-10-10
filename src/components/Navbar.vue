@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="container">
     <b-navbar toggleable="md" type="light" class=" h-158 mt-10">
-      <b-navbar-brand href="" class=" d-flex ml-2 ml-md-5">
+      <b-navbar-brand href="" class=" d-flex">
         <img src="../assets/icons/Peworld Logo.svg" alt="">
       </b-navbar-brand>
 
@@ -52,7 +52,7 @@
           <button
             data-toggle="modal" data-target="#registerfor"
             type="button"
-            class="btn btnsignup mr-5"
+            class="btn btnsignup"
             >Daftar</button
           >
         </b-navbar-nav>
