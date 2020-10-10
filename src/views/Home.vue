@@ -3,6 +3,7 @@
     <Navbar/>
     <!-- <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <Footer />
   </div>
 </template>
 
@@ -10,11 +11,13 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 import Navbar from '@/components/Navbar.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'Home',
   components: {
-    Navbar
+    Navbar,
+    Footer
   }
 }
 </script>

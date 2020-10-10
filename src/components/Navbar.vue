@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="md" type="light" class=" h-158 mt-10">
-      <b-navbar-brand href="" class=" d-flex" @click="home">
+      <b-navbar-brand href="" class=" d-flex ml-2 ml-md-5">
         <img src="../assets/icons/Peworld Logo.svg" alt="">
       </b-navbar-brand>
 
@@ -9,17 +9,17 @@
         ><img src="../assets/icons/align-right.png"
       /></b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav class="ml-sm-auto mt-sm-3">
+      <b-collapse id="nav-collapse" is-nav class="ml-sm-auto">
         <b-navbar-nav class=" ml-auto" v-if="logged">
           <b-navbar-nav class=" mr-xl-auto notif-chat">
-            <b-nav-item href="#" class="d-block d-md-none">Chats</b-nav-item>
-            <b-nav-item href="#" class="d-block d-md-none"
+            <b-nav-item href="#" class="d-block d-md-none nav-ChatNotif">Chats</b-nav-item>
+            <b-nav-item href="#" class="d-block d-md-none nav-ChatNotif"
               >Notifications</b-nav-item
             >
-            <b-nav-item href="#" class="d-none d-md-flex"
+            <b-nav-item href="#" class="d-none mr-2 d-md-flex"
               ><img src="../assets/icons/mail.png"
             /></b-nav-item>
-            <b-nav-item href="/notifications" class="d-none d-md-flex"
+            <b-nav-item href="/notifications" class="d-none mr-2 d-md-flex"
               ><img src="../assets/icons/bell.png"
             /></b-nav-item>
           </b-navbar-nav>
@@ -43,21 +43,67 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else>
-          <router-link
-            to="/register"
+          <button
             type="button"
             class="btn mr-2 btn-outline-signup"
-            >Masuk</router-link
+            data-toggle="modal" data-target="#loginfor"
+            >Masuk</button
           >
-          <router-link
-            to="/register"
+          <button
+            data-toggle="modal" data-target="#registerfor"
             type="button"
-            class="btn btnsignup"
-            >Daftar</router-link
+            class="btn btnsignup mr-5"
+            >Daftar</button
           >
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+    <div class="modal" tabindex="-1" id="loginfor">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h5 class="text-center">
+              <img src="../assets/images/logoPurple.png" alt="logo" class="logo" />
+            </h5>
+            <router-link
+            to="/login"
+            data-dismiss="modal"
+            class="btn btn-fluid btnsignup">
+              Masuk sebagai Pekerja
+            </router-link>
+            <router-link
+            to="/loginHire"
+            data-dismiss="modal"
+            class="btn btn-fluid btn-outline-signup">
+              Masuk sebagai Perekrut
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" tabindex="-1" id="registerfor">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h5 class="text-center">
+              <img src="../assets/images/logoPurple.png" alt="logo" class="logo" />
+            </h5>
+            <router-link
+            to="/register"
+            data-dismiss="modal"
+            class="btn btn-fluid btnsignup">
+              Daftar sebagai Pekerja
+            </router-link>
+            <router-link
+            to="/registerHire"
+            data-dismiss="modal"
+            class="btn btn-fluid btn-outline-signup">
+              Daftar sebagai Perekrut
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -68,7 +114,7 @@
 export default {
   data () {
     return {
-      logged: true,
+      logged: false,
       dataUser: {}
     }
   },
@@ -78,20 +124,8 @@ export default {
       localStorage.removeItem('refreshToken')
       localStorage.removeItem('id')
       window.location.reload()
-    },
-    // ...mapActions({
-    //   getUser: 'user/getUserDetail',
-    //   onUpdateData: 'user/updateData'
-    // }),
-    home () {
-      window.location = '/'
     }
   }
-  // computed: {
-  //   ...mapGetters({
-  //     getdetaildata: 'user/getallData'
-  //   })
-  // }
 }
 </script>
 
@@ -107,21 +141,6 @@ export default {
     padding: 0.5rem 1rem;
     margin: 10px 0px;
 } */
-.divsearch {
-  background: #f5f5f5;
-  color: #6b6b6b;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-}
-.divsearch input {
-  background: rgba(0, 0, 0, 0);
-  border: none;
-}
 .notif-chat {
   width: 80px;
 }
@@ -133,9 +152,9 @@ export default {
   align-items: center;
 }
 .borderprofile {
-  border: 2px #00b7df solid;
-  width: 50px;
-  height: 50px;
+  border: 2px #5E50A1 solid;
+  width: 40px;
+  height: 40px;
   padding: 2px;
 }
 .borderprofile img {
@@ -154,14 +173,14 @@ export default {
 }
 .navigation {
   color: #000;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 500;
   margin: 0px 10px;
 }
 .btn {
   width: 100%;
   font-size: 15px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   margin: 10px 0px;
   border-radius: 10px;
@@ -171,6 +190,9 @@ export default {
   border-radius: 4px;
   border: none;
   color: white;
+}
+.btnsignup:hover {
+  color: whitesmoke
 }
 .btn-outline-signup {
   border: 2px #5E50A1 solid;
@@ -184,11 +206,15 @@ export default {
   }
   #nav-collapse {
     background-color: white;
-    padding: 30px;
+    padding: 10px;
     border-radius: 0px 0px 10px 10px;
+    border-bottom: 2px #5E50A1 solid;
   }
   .borderprofile {
-    border: 2px #fff solid;
+    border: 2px #5E50A1 solid;
+  }
+  .nav-ChatNotif {
+    color: #5E50A1 !important;
   }
 }
 </style>

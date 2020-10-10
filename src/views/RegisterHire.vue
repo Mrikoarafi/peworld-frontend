@@ -1,7 +1,7 @@
 <template>
   <div class="register-page">
-    <div class="container">
-      <div class="row">
+    <div class="container-fluid">
+      <div class="row p-2 pl-4 pr-4">
         <div class="col-sm-7 d-none d-sm-block">
           <div class="image-left col-sm-12">
             <img src="../assets/images/logo.png" alt="logo Peworld" class="logo">
