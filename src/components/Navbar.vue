@@ -2,8 +2,8 @@
   <div class="container-fluid p-0" id="navbar">
     <div class="container">
     <b-navbar toggleable="md" type="light" class=" h-158 mt-10">
-      <b-navbar-brand href="" class=" d-flex">
-        <img src="../assets/icons/Peworld Logo.svg" alt="">
+      <b-navbar-brand to="/" class=" d-flex">
+        <img src="../assets/icons/Peworld Logo.svg" alt="Logo">
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"
@@ -11,17 +11,17 @@
       /></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav class="ml-sm-auto">
-        <b-navbar-nav class=" ml-auto" v-if="logged">
+        <b-navbar-nav class=" ml-auto" v-if="type === 'home'">
           <b-navbar-nav class=" mr-xl-auto notif-chat">
             <b-nav-item href="#" class="d-block d-md-none nav-ChatNotif">Chats</b-nav-item>
             <b-nav-item href="#" class="d-block d-md-none nav-ChatNotif"
               >Notifications</b-nav-item
             >
-            <b-nav-item href="#" class="d-none mr-2 d-md-flex"
-              ><img src="../assets/icons/mail.png"
-            /></b-nav-item>
             <b-nav-item href="/notifications" class="d-none mr-2 d-md-flex"
               ><img src="../assets/icons/bell.png"
+            /></b-nav-item>
+            <b-nav-item href="#" class="d-none mr-2 d-md-flex"
+              ><img src="../assets/icons/mail.png"
             /></b-nav-item>
           </b-navbar-nav>
           <b-nav-item-dropdown
@@ -114,9 +114,10 @@
 // const { url } = require('../helper/env')
 
 export default {
+  props: ['type'],
   data () {
     return {
-      logged: false,
+      // logged: false,
       dataUser: {}
     }
   },

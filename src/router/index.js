@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import LandingPage from '../views/LandingPage.vue'
 import Login from '../views/Login.vue'
 import LoginHire from '../views/LoginHire.vue'
 import Register from '../views/Register.vue'
 import RegisterHire from '../views/RegisterHire.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
+import Home from '../views/Home.vue'
 import Edit from '../views/Edit.vue'
 import EditCompany from '../views/EditCompany.vue'
 
@@ -14,8 +15,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'LandingPage',
+    component: LandingPage
   },
   {
     path: '/register',
@@ -41,6 +42,11 @@ const routes = [
     path: '/forgot',
     name: 'ForgotPassword',
     component: ForgotPassword
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: Home
   },
   {
     path: '/edit',
