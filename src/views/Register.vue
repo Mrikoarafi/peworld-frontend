@@ -72,6 +72,13 @@ export default {
         alert('please check your password')
       } else {
         this.actionRegister(this.form)
+          .then((response) => {
+            alert(response)
+            this.$router.push({ path: '/login' })
+          })
+          .catch((err) => {
+            console.error(err)
+          })
       }
     },
     ...mapActions({

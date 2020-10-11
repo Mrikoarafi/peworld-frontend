@@ -63,6 +63,16 @@ export default {
   methods: {
     loginCompany () {
       this.actionRegister(this.form)
+        .then((response) => {
+          if (response === 'Success') {
+            this.$router.push('/')
+          } else {
+            alert(response)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     ...mapActions({
       actionRegister: 'auth/loginCompany'

@@ -123,9 +123,16 @@ export default {
   methods: {
     logout () {
       localStorage.removeItem('token')
-      localStorage.removeItem('refreshToken')
+      localStorage.removeItem('refreshtoken')
       localStorage.removeItem('id')
+      localStorage.removeItem('role')
       window.location.reload()
+    }
+  },
+  mounted () {
+    const token = localStorage.getItem('token')
+    if (token) {
+      this.logged = true
     }
   }
 }

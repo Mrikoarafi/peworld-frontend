@@ -64,6 +64,16 @@ export default {
   methods: {
     loginEmployee () {
       this.actionLogin(this.form)
+        .then((response) => {
+          if (response === 'Success') {
+            this.$router.push('/')
+          } else {
+            alert(response)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     ...mapActions({
       actionLogin: 'auth/loginEmployee'
