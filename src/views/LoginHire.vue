@@ -26,9 +26,9 @@
           </div>
           <form class="mt-4" @submit.prevent="loginCompany">
             <label class="small text-muted">Email</label>
-            <input type="email" class="form-control mb-3" placeholder="Masukkan alamat email" v-model="form.email">
+            <input type="email" class="form-control mb-3" placeholder="Masukkan alamat email" v-model="form.email" autofocus required>
             <label class="small text-muted">Kata Sandi</label>
-            <input type="password" class="form-control mb-3" placeholder="Masukkan kata sandi" v-model="form.password">
+            <input type="password" class="form-control mb-3" placeholder="Masukkan kata sandi" v-model="form.password" required>
             <p class="small text-right forgot-button" data-toggle="modal" data-target="#forgot-pass">Lupa kata sandi?</p>
             <ModalForgot />
             <button type="submit" class="btn btn-orange btn-block text-white">Masuk</button>
@@ -44,6 +44,7 @@
 <style src="../assets/css/style.css" scoped></style>
 
 <script>
+import Swal from 'sweetalert2'
 import ModalForgot from '../components/ModalForgot'
 import { mapActions } from 'vuex'
 
@@ -65,18 +66,46 @@ export default {
       this.actionRegister(this.form)
         .then((response) => {
           if (response === 'Success') {
-            this.$router.push('/')
+            this.$router.push('/home')
+          } else if (response === 'Email has not been registered') {
+            this.alertActivate()
+          } else if (response === 'Wrong password') {
+            this.alertMatch()
           } else {
-            alert(response)
+            this.alertError()
           }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+        }).catch(err => this.alertExist(err.message))
     },
     ...mapActions({
       actionRegister: 'auth/loginCompany'
-    })
+    }),
+    alertExist () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Email Doesnt Exist!',
+        text: 'Please check your personal info or create a new one'
+      })
+    },
+    alertActivate () {
+      Swal.fire({
+        icon: 'warning',
+        title: 'This Account need to verified!',
+        text: 'Please check your email account to activate'
+      })
+    },
+    alertMatch () {
+      Swal.fire({
+        icon: 'question',
+        title: 'Username and Password Doesnt Match!'
+      })
+    },
+    alertError () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!'
+      })
+    }
   }
 }
 </script>

@@ -32,10 +32,8 @@
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
               <div class=" borderprofile rounded-circle ">
-                <img
-                  class="rounded-circle"
-                  :src="`http://localhost:3000/${detail.image_employe}`" alt="photo profile"
-                />
+                <img class="rounded-circle"
+                  src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png" alt="photo profile" />
               </div>
             </template>
             <b-dropdown-item to="/profile">Profile</b-dropdown-item>
@@ -109,7 +107,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 // const { url } = require('../helper/env')
 
 export default {
@@ -119,25 +117,25 @@ export default {
       id: localStorage.getItem('id')
     }
   },
-  computed: {
-    ...mapGetters({
-      detail: 'employe/getDetail'
-    })
-  },
+  // computed: {
+  //   ...mapGetters({
+  //     detail: 'employe/getDetail'
+  //   })
+  // },
   methods: {
-    ...mapActions({
-      onDetail: 'employe/onDetail'
-    }),
+    // ...mapActions({
+    //   onDetail: 'employe/onDetail'
+    // }),
     logout () {
       localStorage.removeItem('token')
       localStorage.removeItem('refreshtoken')
       localStorage.removeItem('id')
       localStorage.removeItem('role')
-      window.location.reload()
+      window.location = '/'
     }
   },
   mounted () {
-    this.onDetail(this.id)
+    // this.onDetail(this.id)
     const token = localStorage.getItem('token')
     if (token) {
       this.logged = true

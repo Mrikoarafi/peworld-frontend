@@ -26,9 +26,9 @@
           </div>
           <form class="mt-4" @submit.prevent="loginEmployee">
             <label class="small text-muted">Email</label>
-            <input type="email" class="form-control mb-3" placeholder="Masukkan alamat email" v-model="form.email">
+            <input type="email" class="form-control mb-3" placeholder="Masukkan alamat email" v-model="form.email" autofocus required>
             <label class="small text-muted">Kata Sandi</label>
-            <input type="password" class="form-control mb-3" placeholder="Masukkan kata sandi" v-model="form.password">
+            <input type="password" class="form-control mb-3" placeholder="Masukkan kata sandi" v-model="form.password" required>
             <p class="small text-right forgot-button"  data-toggle="modal" data-target="#forgot-pass">Lupa kata sandi?</p>
             <ModalForgot />
             <button type="submit" class="btn btn-orange btn-block text-white">Masuk</button>
@@ -67,12 +67,15 @@ export default {
       this.actionLogin(this.form)
         .then((response) => {
           if (response === 'Success') {
+            this.$router.push('/home')
+          } else if (response === 'Employe has not been actived') {
             this.alertActivate()
-            this.$router.push('/')
+          } else if (response === 'wrong password') {
+            this.alertMatch()
           } else {
-            alert(response)
+            this.alertError()
           }
-        }).catch(err => this.alertError(err.message))
+        }).catch(err => this.alertExist(err.message))
     },
     ...mapActions({
       actionLogin: 'auth/loginEmployee'
@@ -80,7 +83,7 @@ export default {
     alertExist () {
       Swal.fire({
         icon: 'error',
-        title: 'Username Doesnt Exist!',
+        title: 'Email Doesnt Exist!',
         text: 'Please check your personal info or create a new one'
       })
     },

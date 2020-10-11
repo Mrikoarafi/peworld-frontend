@@ -20,7 +20,6 @@ const getters = {
 
 const actions = {
   loginEmployee (context, payload) {
-    console.log(payload)
     return new Promise((resolve, reject) => {
       axios.post(`${url}/employe/login`, payload)
         .then((response) => {
@@ -36,7 +35,6 @@ const actions = {
     })
   },
   loginCompany (context, payload) {
-    console.log(payload)
     return new Promise((resolve, reject) => {
       axios.post(`${url}/hire/recruiter/login`, payload)
         .then((response) => {
@@ -64,7 +62,7 @@ const actions = {
         .then((response) => resolve(response.data.message))
         .catch((err) => reject(err.message))
     })
-  },
+  }
 }
 
 export default {

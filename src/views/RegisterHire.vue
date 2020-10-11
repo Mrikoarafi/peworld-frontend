@@ -26,7 +26,7 @@
           </div>
           <form class="mt-4 mb-4" @submit.prevent="registerComp">
             <label class="small text-muted">Nama</label>
-            <input required type="text" class="form-control mb-3" placeholder="Masukkan nama panjang" v-model="form.name_recruiter">
+            <input required autofocus type="text" class="form-control mb-3" placeholder="Masukkan nama panjang" v-model="form.name_recruiter">
             <label class="small text-muted">Email</label>
             <input required type="email" class="form-control mb-3" placeholder="Masukkan alamat email"  v-model="form.email_recruiter">
             <label class="small text-muted">Perusahaan</label>
