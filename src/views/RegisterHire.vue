@@ -74,6 +74,17 @@ export default {
     }
   },
   methods: {
+    registerComp () {
+      if (this.error) {
+        this.alertCheck()
+      } else {
+        this.actionRegister(this.form)
+          .then((response) => {
+            this.alertActivate()
+            this.$router.push({ path: '/loginHire' })
+          }).catch(err => this.alertError(err))
+      }
+    },
     ...mapActions({
       actionRegister: 'auth/registerCompany'
     }),
@@ -82,20 +93,6 @@ export default {
         this.error = true
       } else {
         this.error = false
-      }
-    },
-    registerComp () {
-      if (this.error) {
-        this.alertCheck()
-      } else {
-        this.actionRegister(this.form).then(result => {
-          if (result === "Duplicate entry 'shofirkn@gmail.com' for key 'email'") {
-            this.alertCheckEmail()
-          } else {
-            this.alertActivate()
-            window.location = '/login'
-          }
-        }).catch(err => this.alertError(err))
       }
     },
     alertActivate () {

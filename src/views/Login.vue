@@ -63,28 +63,20 @@ export default {
     }
   },
   methods: {
+    loginEmployee () {
+      this.actionLogin(this.form)
+        .then((response) => {
+          if (response === 'Success') {
+            this.alertActivate()
+            this.$router.push('/')
+          } else {
+            alert(response)
+          }
+        }).catch(err => this.alertError(err.message))
+    },
     ...mapActions({
       actionLogin: 'auth/loginEmployee'
     }),
-    loginEmployee () {
-      this.actionLogin(this.form).then(result => {
-        if (result.code === "Cannot read property 'status' of undefined") {
-          this.alertExist()
-          // localStorage.removeItem('token')
-          // localStorage.removeItem('refreshToken')
-        } else if (result === 'Employe has not been actived') {
-          this.alertActivate()
-          // localStorage.removeItem('token')
-          // localStorage.removeItem('refreshToken')
-        } else if (result.code === 'wrong password') {
-          this.alertMatch()
-          // localStorage.removeItem('token')
-          // localStorage.removeItem('refreshToken')
-        } else {
-          window.location = '/home'
-        }
-      }).catch(err => this.alertError(err.message))
-    },
     alertExist () {
       Swal.fire({
         icon: 'error',
