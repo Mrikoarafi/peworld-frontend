@@ -3,7 +3,8 @@ const { url } = require('../../helper/env')
 
 const state = () => {
   return {
-    token: localStorage.getItem('token') || null
+    token: localStorage.getItem('token') || null,
+    refreshToken: localStorage.getItem('refreshToken') || null
   }
 }
 
@@ -18,19 +19,33 @@ const getters = {
 }
 
 const actions = {
+  registerEmployee (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${url}/employe/register`, payload)
+        .then((response) => resolve(response.data.message))
+        .catch((err) => reject(err.message))
+    })
+  },
+  registerCompany (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${url}/hire/recruiter/register`, payload)
+        .then((response) => resolve(response.data.message))
+        .catch((err) => reject(err.message))
+    })
+  },
   loginEmployee (context, payload) {
     console.log(payload)
     return new Promise((resolve, reject) => {
       axios.post(`${url}/employe/login`, payload)
         .then((response) => {
-          console.log(response)
           if (response.code === 200) {
-            console.log(response.data)
-            // localStorage.setItem('token', response.data.token)
-            // localStorage.setItem('refreshtoken', response.data.refreshToken)
-          }
-          resolve(response.message)
-        })
+            console.log(response)
+            localStorage.setItem('id', response.data.id)
+            localStorage.setItem('token', response.data.tokenacc)
+            localStorage.setItem('refreshtoken', response.data.refreshToken)
+            resolve(response.message)
+          } else if (response.code === 500) {}
+        }).catch((err) => reject(err.message))
     })
   },
   loginCompany (context, payload) {
@@ -38,32 +53,13 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios.post(`${url}/hire/recruiter/login`, payload)
         .then((response) => {
-          console.log(response)
           if (response.code === 200) {
-            console.log(response.data)
-            // localStorage.setItem('token', response.data.token)
-            // localStorage.setItem('refreshtoken', response.data.refreshToken)
+            localStorage.setItem('id', response.data.id)
+            localStorage.setItem('token', response.data.tokenacc)
+            localStorage.setItem('refreshtoken', response.data.refreshToken)
+            resolve(response.message)
           }
-          resolve(response.message)
-        })
-    })
-  },
-  registerEmployee (context, payload) {
-    console.log(payload)
-    return new Promise((resolve, reject) => {
-      axios.post(`${url}/employe/register`, payload)
-        .then((response) => {
-          resolve(response.data.message)
-        })
-    })
-  },
-  registerCompany (context, payload) {
-    console.log(payload)
-    return new Promise((resolve, reject) => {
-      axios.post(`${url}/hire/recruiter/register`, payload)
-        .then((response) => {
-          resolve(response.data.message)
-        })
+        }).catch((err) => reject(err.message))
     })
   }
 }

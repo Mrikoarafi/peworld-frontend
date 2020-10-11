@@ -34,8 +34,7 @@
               <div class=" borderprofile rounded-circle ">
                 <img
                   class="rounded-circle"
-                  src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png"
-                  alt=""
+                  :src="`http://localhost:3000/${detail.image_employe}`" alt="photo profile"
                 />
               </div>
             </template>
@@ -110,24 +109,34 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 // const { url } = require('../helper/env')
 
 export default {
   props: ['type'],
   data () {
     return {
-      // logged: false,
-      dataUser: {}
+      id: localStorage.getItem('id')
     }
   },
+  computed: {
+    ...mapGetters({
+      detail: 'employe/getDetail'
+    })
+  },
   methods: {
+    ...mapActions({
+      onDetail: 'employe/onDetail'
+    }),
     logout () {
       localStorage.removeItem('token')
       localStorage.removeItem('refreshToken')
       localStorage.removeItem('id')
       window.location.reload()
     }
+  },
+  mounted () {
+    this.onDetail(this.id)
   }
 }
 </script>

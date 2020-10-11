@@ -39,7 +39,7 @@
             <input required type="password" class="form-control mb-3" placeholder="Masukkan kata sandi"  v-model="form.password">
             <label class="small text-muted">Konfirmasi Kata Sandi</label>
             <input required type="password" class="form-control mb-3" placeholder="Masukkan konfimasi kata sandi"  v-model="confirmPassword" @keyup="check">
-            <p v-if="error" style="font-size: 14px; color: red; text-align:center;">password not match</p>
+            <p v-if="error" style="font-size: 12px; color: red; text-align:center; font-weight:bold;">Password not match!</p>
             <button type="submit" class="btn btn-orange btn-block text-white">Daftar</button>
             <p class="small text-center m-3">Anda sudah punya akun?
               <router-link to="/loginHire" class="direct-page">Masuk disini</router-link>
@@ -54,6 +54,7 @@
 <style src="../assets/css/style.css" scoped></style>
 
 <script>
+import Swal from 'sweetalert2'
 import { mapActions } from 'vuex'
 
 export default {
@@ -73,13 +74,6 @@ export default {
     }
   },
   methods: {
-    registerComp () {
-      if (this.error) {
-        alert('please check your password')
-      } else {
-        this.actionRegister(this.form)
-      }
-    },
     ...mapActions({
       actionRegister: 'auth/registerCompany'
     }),
@@ -89,6 +83,48 @@ export default {
       } else {
         this.error = false
       }
+    },
+    registerComp () {
+      if (this.error) {
+        this.alertCheck()
+      } else {
+        this.actionRegister(this.form).then(result => {
+          if (result === "Duplicate entry 'shofirkn@gmail.com' for key 'email'") {
+            this.alertCheckEmail()
+          } else {
+            this.alertActivate()
+            window.location = '/login'
+          }
+        }).catch(err => this.alertError(err))
+      }
+    },
+    alertActivate () {
+      Swal.fire(
+        'Your Registration Success',
+        'Please Check Your Email to activate',
+        'success'
+      )
+    },
+    alertCheck () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please Check Your Password'
+      })
+    },
+    alertCheckEmail () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Email is already registered',
+        text: 'Please use another one'
+      })
+    },
+    alertError () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!'
+      })
     }
   }
 }

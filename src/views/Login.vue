@@ -45,6 +45,7 @@
 <style src="../assets/css/style.css" scoped></style>
 
 <script>
+import Swal from 'sweetalert2'
 import ModalForgot from '../components/ModalForgot'
 import { mapActions } from 'vuex'
 
@@ -62,12 +63,55 @@ export default {
     }
   },
   methods: {
-    loginEmployee () {
-      this.actionLogin(this.form)
-    },
     ...mapActions({
       actionLogin: 'auth/loginEmployee'
-    })
+    }),
+    loginEmployee () {
+      this.actionLogin(this.form).then(result => {
+        if (result.code === "Cannot read property 'status' of undefined") {
+          this.alertExist()
+          // localStorage.removeItem('token')
+          // localStorage.removeItem('refreshToken')
+        } else if (result === 'Employe has not been actived') {
+          this.alertActivate()
+          // localStorage.removeItem('token')
+          // localStorage.removeItem('refreshToken')
+        } else if (result.code === 'wrong password') {
+          this.alertMatch()
+          // localStorage.removeItem('token')
+          // localStorage.removeItem('refreshToken')
+        } else {
+          window.location = '/home'
+        }
+      }).catch(err => this.alertError(err.message))
+    },
+    alertExist () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Username Doesnt Exist!',
+        text: 'Please check your personal info or create a new one'
+      })
+    },
+    alertActivate () {
+      Swal.fire({
+        icon: 'warning',
+        title: 'This Account need to verified!',
+        text: 'Please check your email account to activate'
+      })
+    },
+    alertMatch () {
+      Swal.fire({
+        icon: 'question',
+        title: 'Username and Password Doesnt Match!'
+      })
+    },
+    alertError () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!'
+      })
+    }
   }
 }
 </script>

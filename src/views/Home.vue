@@ -16,30 +16,38 @@
                 <button disabled class="d-none d-sm-block">
                   <b-icon icon="search" variant="secondary" class="pr-4"></b-icon>
                 </button>
-                <a class="btn mr-2 ml-2 text-muted">Category</a>
+                <b-dropdown no-caret text="sort" variant="violet" class="mr-3 ml-3">
+                  <b-dropdown-item>Sort by name</b-dropdown-item>
+                  <b-dropdown-item>Sort by skill</b-dropdown-item>
+                  <b-dropdown-item>Sort by location</b-dropdown-item>
+                  <b-dropdown-item>Sort by freelance</b-dropdown-item>
+                  <b-dropdown-item>Sort by fulltime</b-dropdown-item>
+                </b-dropdown>
                 <input type="submit" class="btn btn-purple text-white" value="Search">
               </div>
             </form>
-            <div class="card-home mt-5 p-4">
+            <div class="card-home mt-4 p-4">
+              <div v-for="(item, index) in allEmploye.data" :key="index">
               <b-row align-h="between">
-                <b-col class="form-inline">
-                  <img src="../assets/images/profile.png" alt="photo profile" class="photo-profile">
+                <b-col class="form-inline" @click="detail(item.id_employe)">
+                  <img :src="`http://localhost:3000/${item.image_employe}`" alt="photo profile" class="photo-profile">
                   <div class="card-home-detail">
-                    <b>Louis Tomlinson</b>
-                    <p class="small text-muted">Web Developer</p>
+                    <b>{{item.name}}</b>
+                    <p class="small text-muted">{{item.jobdesk}}</p>
                     <p class="small text-muted location d-none d-sm-block">
-                      <img src="../assets/images/map.png" alt="location"> Lorem ipsum
+                      <img src="../assets/images/map.png" alt="location"> {{item.domisili}}
                     </p>
                     <a class="btn btn-skill text-white mr-2">PHP</a>
                   </div>
                 </b-col>
                 <b-col cols="auto">
-                  <button class="btn btn-purple text-white d-none d-sm-block">
+                  <button class="btn btn-purple text-white d-none d-sm-block" @click="detail(item.id_employe)">
                     Lihat Profile
                   </button>
                 </b-col>
               </b-row>
               <hr>
+            </div>
             </div>
           </div>
         </div>
@@ -50,6 +58,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
 
@@ -58,11 +67,30 @@ export default {
   components: {
     Navbar,
     Footer
+  },
+  computed: {
+    ...mapGetters({
+      allEmploye: 'employe/getAll'
+    })
+  },
+  methods: {
+    ...mapActions({
+      onAll: 'employe/onAll'
+    }),
+    detail (id) {
+      alert(id)
+    }
+  },
+  mounted () {
+    this.onAll()
   }
 }
 </script>
 
 <style scoped>
+.home {
+  overflow: hidden;
+}
 .content {
   background-color: #E5E5E5;
 }
@@ -107,8 +135,14 @@ input[type="text"]:focus {
   box-shadow: 0px 1px 20px rgba(197, 197, 197, 0.25);
   border-radius: 8px;
 }
+.photo-profile {
+  height: 80px;
+}
 .location {
   margin-top: -10px;
+}
+.location img {
+  margin-top: -3px;
 }
 .btn-skill {
   background: rgba(251, 176, 23, 0.6);
