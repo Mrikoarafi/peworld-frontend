@@ -33,10 +33,10 @@
 
             <template v-slot:button-content>
               <div class=" borderprofile rounded-circle ">
-                <img class="rounded-circle"
-                  src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png" alt="photo profile" />
                 <!-- <img class="rounded-circle"
-                  :src="`http://localhost:3000/${detail.image_employe}`" alt="photo profile" /> -->
+                  src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png" alt="photo profile" /> -->
+                <img class="rounded-circle"
+                  :src="`http://localhost:3000/${detailEmploye.image_employe}`" alt="photo profile" />
               </div>
             </template>
             <b-dropdown-item to="/profile">Profile</b-dropdown-item>
@@ -122,13 +122,13 @@ export default {
   props: ['type'],
   data () {
     return {
-      id: localStorage.getItem('id_employe')
+      id: localStorage.getItem('id')
     }
   },
   computed: {
     ...mapGetters({
       isLogin: 'auth/isLogin',
-      detail: 'employe/getDetail'
+      detailEmploye: 'employe/getDetail'
     })
   },
   methods: {
@@ -145,10 +145,6 @@ export default {
   },
   mounted () {
     this.onDetail(this.id)
-    const token = localStorage.getItem('token')
-    if (token) {
-      this.logged = true
-    }
   }
 }
 </script>
@@ -156,6 +152,7 @@ export default {
 <style scoped>
 #navbar {
   background: white;
+  box-shadow: 0px 10px 50px rgba(132, 132, 132, 0.25);
 }
 .bg-lighto {
   background: #fff;

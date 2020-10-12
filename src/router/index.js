@@ -10,6 +10,7 @@ import ForgotPassword from '../views/ForgotPassword.vue'
 import Home from '../views/Home.vue'
 import Edit from '../views/Edit.vue'
 import EditCompany from '../views/EditCompany.vue'
+import JobHire from '../views/JobHire.vue'
 
 Vue.use(VueRouter)
 
@@ -60,6 +61,12 @@ const routes = [
     path: '/editcompany',
     name: 'EditCompany',
     component: EditCompany
+    // meta: { requiresAuth: true }
+  },
+  {
+    path: '/jobHire',
+    name: 'JobHire',
+    component: JobHire
     // meta: { requiresAuth: true }
   }
 ]

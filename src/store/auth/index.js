@@ -77,7 +77,7 @@ const actions = {
       axios
         .post(`${url}/hire/recruiter/resetPassword`, {
           password: payload.password,
-          user_key: payload.user_key
+          userKey: payload.user_key
         })
         .then(response => {
           resolve(response)

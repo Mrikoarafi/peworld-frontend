@@ -44,7 +44,7 @@ export default {
   data () {
     return {
       password: null,
-      user_key: null,
+      user_key: this.$route.query.key,
       confirmPassword: '',
       error: false
     }
@@ -66,7 +66,7 @@ export default {
       } else {
         const ukey = {
           password: this.password,
-          user_key: this.$route.query.user_key
+          user_key: this.user_key
         }
         this.onResetPassword(ukey).then(result => {
           window.location = '/loginHire'
