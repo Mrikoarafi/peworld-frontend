@@ -39,7 +39,7 @@
               <div class="col-12 p-0 listMessage">
                 <div class="row mx-4 mt-4">Udin gele</div>
               </div>
-              <div class="col-12 p-0 mt-auto">
+              <div class="col-12 p-0 mt-auto mb-4">
                 <div class="row mx-4">
                   <input
                     type="text"
