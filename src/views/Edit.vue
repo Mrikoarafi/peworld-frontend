@@ -45,6 +45,7 @@
                 class="btn btn-fluid btns mb-3"
                 data-toggle="modal"
                 data-target="#loginfor"
+                @click="SendData"
               >
                 Simpan
               </button>
@@ -68,31 +69,71 @@
                   type="text"
                   class="form-control mb-3"
                   placeholder="Masukkan nama lengkap"
+                  v-model="name"
+                />
+                <label class="small text-muted">Email</label>
+                <input
+                  type="Email"
+                  class="form-control mb-3"
+                  placeholder="Masukkan job desk"
+                  v-model="email"
                 />
                 <label class="small text-muted">Job Desk</label>
                 <input
-                  type="email"
+                  type="text"
                   class="form-control mb-3"
                   placeholder="Masukkan job desk"
+                  v-model="jobdesk"
                 />
                 <label class="small text-muted">Domisili</label>
                 <input
                   type="text"
                   class="form-control mb-3"
                   placeholder="Masukkan domisili"
+                  v-model="domisili"
                 />
                 <label class="small text-muted">Tempat Kerja</label>
                 <input
                   type="text"
                   class="form-control mb-3"
                   placeholder="Masukkan tempat kerja"
+                  v-model="workplace"
+                />
+                <label class="small text-muted">Phone Number</label>
+                <input
+                  type="number"
+                  class="form-control mb-3"
+                  placeholder="Masukkan tempat kerja"
+                  v-model="phone_number"
                 />
                 <label class="small text-muted">Deskripsi Singkat</label>
                 <textarea
-                  class="form-control"
+                  class="form-control mb-3"
                   placeholder="Tuliskan deskripsi singkat"
-                  rows="3"
+                  rows="5"
+                  v-model="description"
                 ></textarea>
+                <label class="small text-muted">Instagram</label>
+                <input
+                  type="email"
+                  class="form-control mb-3"
+                  placeholder="Instagram"
+                  v-model="instagram"
+                />
+                <label class="small text-muted">GitHub</label>
+                <input
+                  type="text"
+                  class="form-control mb-3"
+                  placeholder="Github"
+                  v-model="github"
+                />
+                <label class="small text-muted">LinkedIn</label>
+                <input
+                  type="text"
+                  class="form-control mb-3"
+                  placeholder="LinkedIn"
+                  v-model="linkedin"
+                />
               </form>
             </div>
             <div class="col-12 w-100 formEdit mt-4 mb-4">
@@ -114,7 +155,7 @@
               v-for="(skill, index) in skills" :key="index"
               @click="removeSkill(index)"
               >
-                {{skill}}
+                {{skill.skill_name}}
               </div>
             </div>
             <div class="col-12 formEdit">
@@ -244,7 +285,17 @@ export default {
   data () {
     return {
       skill: '',
-      skills: ['asasas', 'asasdsd'],
+      skills: [],
+      name: '',
+      email: '',
+      jobdesk: '',
+      domisili: '',
+      workplace: '',
+      phone_number: '',
+      description: '',
+      instagram: '',
+      github: '',
+      linkedin: '',
       jobExps: [
         {
           position: '',
@@ -277,7 +328,10 @@ export default {
       this.jobExps.splice(index, 1)
     },
     addSkill () {
-      this.skills.push(this.skill)
+      this.skills.push({
+        skill_name: this.skill,
+        id_employe: 3
+      })
       this.skill = ''
     },
     removeSkill (index) {
@@ -287,15 +341,35 @@ export default {
       const file = this.$refs.file.files[0]
       const formData = new FormData()
       formData.append('image', file)
+      console.log(file)
     },
     addPortfolio () {
       this.portfolios.push(
         {
-          app_name: '',
-          link_repository: '',
-          type: ''
+          apk_name: '',
+          link_repo: '',
+          type_portfolio: '',
+          id_employe: 3
         })
+    },
+    SendData () {
+      console.log({
+        skills: this.skills,
+        work_experience: this.jobExps,
+        name: this.name,
+        email: this.email,
+        jobdesk: this.jobdesk,
+        domisili: this.domisili,
+        workplace: this.workplace,
+        phone_number: this.phone_number,
+        description: this.description,
+        instagram: this.instagram,
+        github: this.github,
+        linkedin: this.linkedin,
+        portfolio: this.portfolios
+      })
     }
+
   }
 }
 </script>
