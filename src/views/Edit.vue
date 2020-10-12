@@ -95,7 +95,7 @@
                 ></textarea>
               </form>
             </div>
-            <div class="col-12 w-100 formEdit mt-4 mb-3">
+            <div class="col-12 w-100 formEdit mt-4 mb-4">
               <h3>Skills</h3>
               <hr />
               <form class="d-flex mt-4 mb-4">
@@ -169,6 +169,60 @@
                </button>
               </div>
             </div>
+            <div class="col-12 formEdit  mt-4">
+              <h3>Portofolio</h3>
+              <hr />
+              <form class="mt-4 mb-4" v-for="(portfolio, index) in portfolios" :key="index">
+                <div class="d-flex justify-content-between">
+                  <p>Portfolio {{index+1}}</p>
+                  <p style="color: red; cursor: pointer;" @click="deletePortfolio(index)">hapus</p>
+                </div>
+                <label class="small text-muted">Nama Aplikasi</label>
+                <input
+                  type="text"
+                  class="form-control mb-3"
+                  placeholder="Masukkan nama aplikasi"
+                  v-model="portfolio.app_name"
+                />
+                <label class="small text-muted">Link Repository</label>
+                <input
+                  type="teks"
+                  class="form-control mb-3"
+                  placeholder="Masukkan link repository"
+                  v-model="portfolio.link_repository"
+                />
+                <div class="form-check form-check-inline radioBtn p-2">
+                  <input type="radio" id="appMobile" name="checkApp"
+                  value="mobileApp" v-model="portfolio.type"
+                  class="form-check-input">
+                  <label class="form-check-label" for="appMobile">Aplikasi Mobile</label>
+                </div>
+                <div class="form-check form-check-inline radioBtn p-2">
+                  <input type="radio" id="appWeb" name="checkApp" class="form-check-input" value="webApp" v-model="portfolio.type">
+                  <label class="form-check-label" for="appWeb">Aplikasi Web</label>
+                </div>
+                <div class="dropzone col-12 p-0 mt-3">
+                  <input type="file" class="input-file"
+                  ref="file"
+                  @change="fileReady">
+                  <img src="../assets/images/Vector (1).png" class="mb-5" alt="">
+                  <p v-if="!uploading">Drag and Drop Untuk Upload gambar aplikasi </p>
+                  <p v-if="!uploading" style="font-size: 12px">atau cari untuk mengupload file dari direktorimu </p>
+                  <div class="d-flex">
+                    <img src="../assets/images/Group.png" class="m-1" alt="">
+                    <p class="m-0" style="font-size: 12px">High Resolution images <br> IMG,JPG, or JPEG</p>
+                    <img src="../assets/images/expand 2.png" class="m-1"  alt="">
+                    <p class="m-0" style="font-size: 12px">Size <br>1080x1920 or 600x800p</p>
+                  </div>
+                </div>
+                <hr />
+              </form>
+              <div class="col 12">
+               <button class=" btn btn-fluid w-100 btn-outline-warning" @click="addPortfolio">
+                Tambahkan Portofolio
+               </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -182,6 +236,7 @@ import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
+  name: 'edit',
   components: {
     Navbar,
     Footer
@@ -189,13 +244,21 @@ export default {
   data () {
     return {
       skill: '',
-      skills: [],
+      skills: ['asasas', 'asasdsd'],
       jobExps: [
         {
           position: '',
           company_name: '',
           date: '',
           description: ''
+        }
+      ],
+      uploading: false,
+      portfolios: [
+        {
+          app_name: '',
+          link_repository: '',
+          type: ''
         }
       ]
     }
@@ -219,6 +282,19 @@ export default {
     },
     removeSkill (index) {
       this.skills.splice(index, 1)
+    },
+    fileReady () {
+      const file = this.$refs.file.files[0]
+      const formData = new FormData()
+      formData.append('image', file)
+    },
+    addPortfolio () {
+      this.portfolios.push(
+        {
+          app_name: '',
+          link_repository: '',
+          type: ''
+        })
     }
   }
 }
@@ -278,5 +354,28 @@ export default {
 .btn-outline-warning {
     color: #fbb017;
     border-color: #fbb017;
+}
+.radioBtn {
+  background: #FFFFFF;
+  border: 1px solid #E2E5ED;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.dropzone {
+  min-height: 350px;
+  border: 2px dashed #9EA0A5;
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.input-file {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 </style>

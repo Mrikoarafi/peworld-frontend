@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid p-0" id="navbar">
     <div class="container">
-    <b-navbar toggleable="md" type="light" class=" h-158 mt-10">
+    <b-navbar toggleable="md" type="light">
       <b-navbar-brand to="/" class=" d-flex">
         <img src="../assets/icons/Peworld Logo.svg" alt="Logo">
       </b-navbar-brand>
@@ -25,7 +25,7 @@
             /></b-nav-item>
           </b-navbar-nav>
           <b-nav-item-dropdown
-            toggle-class=" text-decoration-none mr-5"
+            toggle-class=" text-decoration-none"
             no-caret
             right
           >

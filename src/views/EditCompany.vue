@@ -22,9 +22,18 @@
               <div class="d-flex flex-column col mt-4">
                 <h6 style="font-weight: bold">Luis Sambas</h6>
                 <h6 style="font-size: 14px">Web Developer</h6>
-                <p style="font-size: 12px; margin: 0; color: #9b9b9b">
+              <div
+                class="d-flex justify-content-start p-0 mb-2"
+                style="height: 14px"
+              >
+                <img
+                  src="../assets/icons/map-pin (4) 1.svg"
+                  style="width: 14px; height: 14px; margin-right: 5px"
+                />
+                <p class="h-100" style="color: #9b9b9b; font-size: 12px">
                   Purwokerto, Jawa Tengah
                 </p>
+              </div>
                 <p style="font-size: 12px; margin: 0; color: #9b9b9b">
                   Freelancer
                 </p>
