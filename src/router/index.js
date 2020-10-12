@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import LandingPage from '../views/LandingPage.vue'
 import Login from '../views/Login.vue'
 import LoginHire from '../views/LoginHire.vue'
@@ -49,11 +50,13 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home
+    // meta: { requiresAuth: true }
   },
   {
     path: '/edit',
     name: 'Edit',
     component: Edit
+    // meta: { requiresAuth: true }
   },
   {
     path: '/editcompany',
@@ -69,6 +72,7 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile
+    // meta: { requiresAuth: true }
   }
 ]
 
@@ -76,6 +80,20 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters['auth/isLogin']) {
+      next()
+    } else {
+      next({
+        path: '/login'
+      })
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

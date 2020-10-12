@@ -11,7 +11,8 @@
       /></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav class="ml-sm-auto">
-        <b-navbar-nav class=" ml-auto" v-if="type === 'home'">
+        <a href="/home" class="text-dark font-weight-bold ml-5" v-if="type !== 'home' && isLogin === true">Home</a>
+        <b-navbar-nav class=" ml-auto" v-if="type === 'home' && isLogin === true">
           <b-navbar-nav class=" mr-xl-auto notif-chat">
             <b-nav-item href="#" class="d-block d-md-none nav-ChatNotif">Chats</b-nav-item>
             <b-nav-item href="#" class="d-block d-md-none nav-ChatNotif"
@@ -29,19 +30,23 @@
             no-caret
             right
           >
-            <!-- Using 'button-content' slot -->
+
             <template v-slot:button-content>
               <div class=" borderprofile rounded-circle ">
-                <img
-                  class="rounded-circle"
-                  src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png"
-                  alt=""
-                />
+                <img class="rounded-circle"
+                  src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png" alt="photo profile" />
+                <!-- <img class="rounded-circle"
+                  :src="`http://localhost:3000/${detail.image_employe}`" alt="photo profile" /> -->
               </div>
             </template>
             <b-dropdown-item to="/profile">Profile</b-dropdown-item>
             <b-dropdown-item @click="logout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto" v-else-if="isLogin === true">
+          <a href="/profile" class="btn btnsignup">
+            Profile
+          </a>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else>
           <button
@@ -110,27 +115,36 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 // const { url } = require('../helper/env')
 
 export default {
   props: ['type'],
   data () {
     return {
-      // logged: false,
-      dataUser: {}
+      id: localStorage.getItem('id_employe')
     }
   },
+  computed: {
+    ...mapGetters({
+      isLogin: 'auth/isLogin',
+      detail: 'employe/getDetail'
+    })
+  },
   methods: {
+    ...mapActions({
+      onDetail: 'employe/onDetail'
+    }),
     logout () {
       localStorage.removeItem('token')
       localStorage.removeItem('refreshtoken')
       localStorage.removeItem('id')
       localStorage.removeItem('role')
-      window.location.reload()
+      window.location = '/'
     }
   },
   mounted () {
+    this.onDetail(this.id)
     const token = localStorage.getItem('token')
     if (token) {
       this.logged = true

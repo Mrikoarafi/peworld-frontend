@@ -4,10 +4,12 @@
       <div class="row p-2 pl-4 pr-4">
         <div class="col-sm-7 d-none d-sm-block">
           <div class="image-left col-sm-12">
-            <img src="../assets/images/logo.png" alt="logo Peworld" class="logo">
-            <h2 class="text-white font-weight-bold display-font">
-              Temukan developer <br> berbakat &amp; terbaik <br> di berbagai bidang <br> keahlian
-            </h2>
+            <router-link to="/">
+              <img src="../assets/images/logo.png" alt="logo Peworld" class="logo">
+            </router-link>
+              <h2 class="text-white font-weight-bold display-font">
+                Temukan developer <br> berbakat &amp; terbaik <br> di berbagai bidang <br> keahlian
+              </h2>
           </div>
         </div>
         <div class="col-sm-5 form-login mt-4">
@@ -26,7 +28,7 @@
           </div>
           <form class="mt-4 mb-4" @submit.prevent="registerComp">
             <label class="small text-muted">Nama</label>
-            <input required type="text" class="form-control mb-3" placeholder="Masukkan nama panjang" v-model="form.name_recruiter">
+            <input required autofocus type="text" class="form-control mb-3" placeholder="Masukkan nama panjang" v-model="form.name_recruiter">
             <label class="small text-muted">Email</label>
             <input required type="email" class="form-control mb-3" placeholder="Masukkan alamat email"  v-model="form.email_recruiter">
             <label class="small text-muted">Perusahaan</label>
@@ -39,7 +41,7 @@
             <input required type="password" class="form-control mb-3" placeholder="Masukkan kata sandi"  v-model="form.password">
             <label class="small text-muted">Konfirmasi Kata Sandi</label>
             <input required type="password" class="form-control mb-3" placeholder="Masukkan konfimasi kata sandi"  v-model="confirmPassword" @keyup="check">
-            <p v-if="error" style="font-size: 14px; color: red; text-align:center;">password not match</p>
+            <p v-if="error" style="font-size: 12px; color: red; text-align:center; font-weight:bold;">Password not match!</p>
             <button type="submit" class="btn btn-orange btn-block text-white">Daftar</button>
             <p class="small text-center m-3">Anda sudah punya akun?
               <router-link to="/loginHire" class="direct-page">Masuk disini</router-link>
@@ -54,6 +56,7 @@
 <style src="../assets/css/style.css" scoped></style>
 
 <script>
+import Swal from 'sweetalert2'
 import { mapActions } from 'vuex'
 
 export default {
@@ -75,16 +78,13 @@ export default {
   methods: {
     registerComp () {
       if (this.error) {
-        alert('please check your password')
+        this.alertCheck()
       } else {
         this.actionRegister(this.form)
           .then((response) => {
-            alert(response)
+            this.alertActivate()
             this.$router.push({ path: '/loginHire' })
-          })
-          .catch((err) => {
-            console.error(err)
-          })
+          }).catch(err => this.alertError(err))
       }
     },
     ...mapActions({
@@ -96,6 +96,34 @@ export default {
       } else {
         this.error = false
       }
+    },
+    alertActivate () {
+      Swal.fire(
+        'Your Registration Success',
+        'Please Check Your Email to activate',
+        'success'
+      )
+    },
+    alertCheck () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please Check Your Password'
+      })
+    },
+    alertCheckEmail () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Email is already registered',
+        text: 'Please use another one'
+      })
+    },
+    alertError () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!'
+      })
     }
   }
 }

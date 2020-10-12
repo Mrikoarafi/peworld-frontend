@@ -4,10 +4,12 @@
       <div class="row p-2 pl-4 pr-4">
         <div class="col-sm-7 d-none d-sm-block">
           <div class="image-left col-sm-12">
-            <img src="../assets/images/logo.png" alt="logo Peworld" class="logo">
-            <h2 class="text-white font-weight-bold display-font">
-              Temukan developer <br> berbakat &amp; terbaik <br> di berbagai bidang <br> keahlian
-            </h2>
+            <router-link to="/">
+              <img src="../assets/images/logo.png" alt="logo Peworld" class="logo">
+            </router-link>
+              <h2 class="text-white font-weight-bold display-font">
+                Temukan developer <br> berbakat &amp; terbaik <br> di berbagai bidang <br> keahlian
+              </h2>
           </div>
         </div>
         <div class="col-sm-5 form-login">
@@ -26,9 +28,9 @@
           </div>
           <form class="mt-4" @submit.prevent="loginCompany">
             <label class="small text-muted">Email</label>
-            <input type="email" class="form-control mb-3" placeholder="Masukkan alamat email" v-model="form.email">
+            <input type="email" class="form-control mb-3" placeholder="Masukkan alamat email" v-model="form.email" autofocus required>
             <label class="small text-muted">Kata Sandi</label>
-            <input type="password" class="form-control mb-3" placeholder="Masukkan kata sandi" v-model="form.password">
+            <input type="password" class="form-control mb-3" placeholder="Masukkan kata sandi" v-model="form.password" required>
             <p class="small text-right forgot-button" data-toggle="modal" data-target="#forgot-pass">Lupa kata sandi?</p>
             <ModalForgot />
             <button type="submit" class="btn btn-orange btn-block text-white">Masuk</button>
@@ -44,6 +46,7 @@
 <style src="../assets/css/style.css" scoped></style>
 
 <script>
+import Swal from 'sweetalert2'
 import ModalForgot from '../components/ModalForgot'
 import { mapActions } from 'vuex'
 
@@ -65,18 +68,46 @@ export default {
       this.actionRegister(this.form)
         .then((response) => {
           if (response === 'Success') {
-            this.$router.push('/')
-          } else {
-            alert(response)
+            window.location = '/'
+          } else if (response === 'Email has not been actived') {
+            this.alertActivate()
+          } else if (response === 'Email has not been registered') {
+            this.alertExist()
+          } else if (response === 'Wrong password') {
+            this.alertMatch()
           }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+        }).catch(err => this.alertError(err.message))
     },
     ...mapActions({
       actionRegister: 'auth/loginCompany'
-    })
+    }),
+    alertExist () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Email Doesnt Exist!',
+        text: 'Please check your personal info or create a new one'
+      })
+    },
+    alertActivate () {
+      Swal.fire({
+        icon: 'warning',
+        title: 'This Account need to verified!',
+        text: 'Please check your email account to activate'
+      })
+    },
+    alertMatch () {
+      Swal.fire({
+        icon: 'question',
+        title: 'Username and Password Doesnt Match!'
+      })
+    },
+    alertError () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!'
+      })
+    }
   }
 }
 </script>
