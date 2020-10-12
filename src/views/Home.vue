@@ -8,7 +8,7 @@
           </div>
         </div>
 
-        <div class="home-content mb-5 mt-5">
+        <div class="home-content mb-4 mt-5">
           <div class="container">
             <form>
               <div class="form">
@@ -26,28 +26,27 @@
                 <input type="submit" class="btn btn-purple text-white" value="Search">
               </div>
             </form>
-            <div class="card-home mt-4 p-4">
-              <div v-for="(item, index) in allEmploye.data" :key="index">
-              <b-row align-h="between">
-                <b-col class="form-inline" @click="detail(item.id_employe)">
-                  <img :src="`http://localhost:3000/${item.image_employe}`" alt="photo profile" class="photo-profile">
-                  <div class="card-home-detail">
-                    <b>{{item.name}}</b>
-                    <p class="small text-muted">{{item.jobdesk}}</p>
-                    <p class="small text-muted location d-none d-sm-block">
-                      <img src="../assets/images/map.png" alt="location"> {{item.domisili}}
-                    </p>
-                    <a class="btn btn-skill text-white mr-2">PHP</a>
-                  </div>
-                </b-col>
-                <b-col cols="auto">
-                  <button class="btn btn-purple text-white d-none d-sm-block" @click="detail(item.id_employe)">
-                    Lihat Profile
-                  </button>
-                </b-col>
-              </b-row>
-              <hr>
+              <div class="gallery">
+                <div v-for="(item, index) in allEmploye.data" :key="index" class="card-home mt-4 p-3">
+                <b-row align-h="between">
+                  <b-col cols="6" class="text-center">
+                    <img :src="`http://localhost:3000/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-4">
+                  </b-col>
+                  <b-col @click="detail(item.id_employe)" class="ml-2">
+                      <b class="name">{{item.name}}</b>
+                      <p class="small text-muted mt-2">{{item.jobdesk}}</p>
+                      <p class="small text-muted location d-none d-sm-block">
+                        <img src="../assets/images/map.png" alt="location"> {{item.domisili}}
+                      </p>
+                      <a class="btn btn-skill text-white mr-2 mt-2">PHP</a>
+                      <a class="btn btn-skill text-white mr-2 mt-2">PHP</a>
+                  </b-col>
+                </b-row>
+              </div>
             </div>
+            <div class="container mt-5">
+              <b-pagination v-model="currentPage" :total-rows="rows" align="fill">
+              </b-pagination>
             </div>
           </div>
         </div>
@@ -64,6 +63,13 @@ import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'Home',
+  data () {
+    return {
+      rows: 100,
+      currentPage: 1,
+      id: localStorage.getItem('id')
+    }
+  },
   components: {
     Navbar,
     Footer
@@ -97,6 +103,9 @@ export default {
 .header {
   background-color: #5E50A1;
   height: 100%;
+}
+.home-content {
+  display: grid;
 }
 .form {
   display: flex;
@@ -133,10 +142,13 @@ input[type="text"]:focus {
 .card-home {
   background: #FFFFFF;
   box-shadow: 0px 1px 20px rgba(197, 197, 197, 0.25);
-  border-radius: 8px;
+  border-radius: 5px;
 }
 .photo-profile {
-  height: 80px;
+  width: 50%;
+}
+.name {
+  font-size: 18px;
 }
 .location {
   margin-top: -10px;
@@ -153,12 +165,26 @@ input[type="text"]:focus {
   font-size: 12px;
   margin-top: -5px;
 }
-.card-home-detail {
-  margin-left: 15px;
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  column-gap: 30px;
 }
-@media(max-width: 350px) {
-  .card-home-detail {
-    margin: 5px 0;
+@media(max-width: 999px) {
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  .photo-profile {
+    width: 90px;
+  }
+}
+@media(max-width: 576px) {
+  .photo-profile {
+    width: 90px;
+  }
+  .name {
+    font-size: 16px;
   }
 }
 </style>

@@ -4,10 +4,12 @@
       <div class="row p-2 pl-4 pr-4">
         <div class="col-sm-7 d-none d-sm-block">
           <div class="image-left col-sm-12">
-            <img src="../assets/images/logo.png" alt="logo Peworld" class="logo">
-            <h2 class="text-white font-weight-bold display-font">
-              Temukan developer <br> berbakat &amp; terbaik <br> di berbagai bidang <br> keahlian
-            </h2>
+            <router-link to="/">
+              <img src="../assets/images/logo.png" alt="logo Peworld" class="logo">
+            </router-link>
+              <h2 class="text-white font-weight-bold display-font">
+                Temukan developer <br> berbakat &amp; terbaik <br> di berbagai bidang <br> keahlian
+              </h2>
           </div>
         </div>
         <div class="col-sm-5 form-login mt-4">
