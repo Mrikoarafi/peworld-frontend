@@ -10,6 +10,9 @@ import ForgotPassword from '../views/ForgotPassword.vue'
 import Home from '../views/Home.vue'
 import Edit from '../views/Edit.vue'
 import EditCompany from '../views/EditCompany.vue'
+import CompanyProfile from '../views/CompanyProfile.vue'
+import Profile from '../views/Profile.vue'
+import Chat from '../views/Chat.vue'
 import JobHire from '../views/JobHire.vue'
 
 Vue.use(VueRouter)
@@ -61,6 +64,22 @@ const routes = [
     path: '/editcompany',
     name: 'EditCompany',
     component: EditCompany
+  },
+  {
+    path: '/profile-company',
+    name: 'Company Profile',
+    component: CompanyProfile
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+    // meta: { requiresAuth: true }
+  },
+  {
+    path: '/chat',
+    name: 'Chat',
+    component: Chat
     // meta: { requiresAuth: true }
   },
   {
