@@ -30,7 +30,7 @@
                 <div v-for="(item, index) in allEmploye.data" :key="index" class="card-home mt-4 p-3">
                 <b-row align-h="between">
                   <b-col cols="6" class="text-center">
-                    <img :src="`http://localhost:3000/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-4">
+                    <img :src="`http://localhost:3000/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
                   </b-col>
                   <b-col @click="detail(item.id_employe)" class="ml-2">
                       <b class="name">{{item.name}}</b>
@@ -173,7 +173,6 @@ input[type="text"]:focus {
 }
 @media(max-width: 999px) {
   .gallery {
-    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
   .photo-profile {
@@ -181,8 +180,11 @@ input[type="text"]:focus {
   }
 }
 @media(max-width: 576px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
   .photo-profile {
-    width: 90px;
+    width: 80px;
   }
   .name {
     font-size: 16px;

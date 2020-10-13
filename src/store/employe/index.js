@@ -13,7 +13,7 @@ const state = () => {
 
 const getters = {
   getAll: state => state.all,
-  getDetail: (state) => state.detail
+  getDetail: state => state.detail
 }
 
 const mutations = {
@@ -46,8 +46,8 @@ const actions = {
   OnDetail (context, payload) {
     return new Promise((resolve, reject) => {
       axios.get(`${url}/employe/getDetail/${payload}`).then((response) => {
-        context.commit('GET_DETAIL', response.data.data)
-        resolve()
+        context.commit('SET_DETAIL', response.data[0])
+        resolve(response)
         console.log(response)
       }).catch((err) => reject(err))
     })

@@ -13,6 +13,7 @@ import EditCompany from '../views/EditCompany.vue'
 import CompanyProfile from '../views/CompanyProfile.vue'
 import Profile from '../views/Profile.vue'
 import Chat from '../views/Chat.vue'
+import JobHire from '../views/JobHire.vue'
 
 Vue.use(VueRouter)
 
@@ -79,6 +80,12 @@ const routes = [
     path: '/chat',
     name: 'Chat',
     component: Chat
+    // meta: { requiresAuth: true }
+  },
+  {
+    path: '/jobHire',
+    name: 'JobHire',
+    component: JobHire
     // meta: { requiresAuth: true }
   }
 ]

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from './auth/'
-import employe from './employe/'
+import employe from './employe'
 
 Vue.use(Vuex)
 
