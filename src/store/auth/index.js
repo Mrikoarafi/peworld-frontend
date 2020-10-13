@@ -42,6 +42,7 @@ const actions = {
             localStorage.setItem('token', response.data.data.tokenacc)
             localStorage.setItem('role', response.data.data.role)
             localStorage.setItem('id', response.data.data.id)
+            localStorage.setItem('idCompany', response.data.data.idCompany)
             resolve(response.data.message)
           }
           resolve(response.data.message)

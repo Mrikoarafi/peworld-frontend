@@ -356,7 +356,7 @@ export default {
         instagram: this.instagram,
         github: this.github,
         linkedin: this.linkedin,
-        id: this.id_user
+        id: this.id_company
       })
     },
     ...mapActions({
