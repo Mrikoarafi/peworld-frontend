@@ -1,25 +1,45 @@
 <template>
   <div>
     <div class="modal" tabindex="-1" id="forgot-pass">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
-          <h5 class="text-center">
-            <img src="../assets/images/logoPurple.png" alt="logo" class="logo" />
-          </h5>
-          <p class="small text-muted text-center mt-3">
-            Enter your user account's verified email address
-            <br>
-            and we will send you a password reset link.
-          </p>
-          <form class="text-center" @submit.prevent="forgotPassword">
-            <input type="email" class="form-control mb-4" placeholder="Email" autofocus required v-model="forgotEmail" />
-            <button type="submit" class="btn btn-orange btn-block text-white">Send</button>
-          </form>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h5 class="text-center">
+              <img src="../assets/images/logoPurple.png" alt="logo" class="logo" />
+            </h5>
+            <p class="small text-muted text-center mt-3">
+              Enter your user account's verified email address
+              <br>
+              and we will send you a password reset link.
+            </p>
+            <form class="text-center" @submit.prevent="forgotPassword">
+              <input type="email" class="form-control mb-4" placeholder="Email" autofocus required v-model="forgotEmail" />
+              <button type="submit" class="btn btn-orange btn-block text-white">Send</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <div class="modal" tabindex="-1" id="forgot-pass-employe">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h5 class="text-center">
+              <img src="../assets/images/logoPurple.png" alt="logo" class="logo" />
+            </h5>
+            <p class="small text-muted text-center mt-3">
+              Enter your user account's verified email address
+              <br>
+              and we will send you a password reset link.
+            </p>
+            <form class="text-center" @submit.prevent="forgotPasswordEmploye">
+              <input type="email" class="form-control mb-4" placeholder="Email" autofocus required v-model="forgotEmailEmploye" />
+              <button type="submit" class="btn btn-orange btn-block text-white">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -31,12 +51,14 @@ export default {
   name: 'ModalForgot',
   data () {
     return {
-      forgotEmail: null
+      forgotEmail: null,
+      forgotEmailEmploye: null
     }
   },
   methods: {
     ...mapActions({
-      onForgotPassword: 'auth/onForgotPassword'
+      onForgotPassword: 'auth/onForgotPassword',
+      onForgotPasswordEmploye: 'auth/onForgotPasswordEmploye'
     }),
     forgotPassword () {
       const data = {
@@ -46,6 +68,15 @@ export default {
         this.alertActivate(result)
         location.reload()
       }).catch(err => this.alertError(err.message))
+    },
+    forgotPasswordEmploye () {
+      const data = {
+        email: this.forgotEmailEmploye
+      }
+      this.onForgotPasswordEmploye(data).then(result => {
+        this.alertActivate(result)
+        location.reload()
+      }).catch(err => console.log(err.message))
     },
     alertActivate () {
       Swal.fire(

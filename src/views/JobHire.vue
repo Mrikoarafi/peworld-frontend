@@ -6,7 +6,8 @@
         <div class="col-sm-4 mb-5">
           <div class="card-left p-4">
             <div class=" text-center mb-3">
-              <img src="../assets/images/profile.png" alt="photo profile">
+              <img
+              :src="`http://18.208.165.238:3009/${detailEmploye.image_employe}`" alt="photo profile" class="photo-profile">
             </div>
             <h5 class="font-weight-bold">{{ detailEmploye.name }}</h5>
             <p class="small">{{ detailEmploye.jobdesk }}</p>
@@ -18,7 +19,9 @@
               {{ detailEmploye.description }}
             </p>
             <h5 class="font-weight-bold">Skill</h5>
-            <a class="btn btn-skill text-white mr-2 mt-2 mb-2">PHP</a>
+            <a class="btn btn-skill text-white mr-2 mt-2" v-for="(item, index) in skillEmploye.name_skill.split()" :key="index">
+              {{item}}
+            </a>
           </div>
         </div>
 
@@ -60,7 +63,7 @@ export default {
   name: 'JobHire',
   data () {
     return {
-      id: localStorage.getItem('id')
+      id: this.$route.query.id
     }
   },
   components: {
@@ -69,16 +72,19 @@ export default {
   },
   computed: {
     ...mapGetters({
-      detailEmploye: 'employe/getDetail'
+      detailEmploye: 'employe/getDetail',
+      skillEmploye: 'employe/getSkill'
     })
   },
   methods: {
     ...mapActions({
-      onDetail: 'employe/onDetail'
+      onDetail: 'employe/onDetail',
+      onGetSkill: 'employe/onGetSkill'
     })
   },
   mounted () {
     this.onDetail(this.id)
+    this.onGetSkill(this.id)
   }
 }
 </script>
@@ -125,5 +131,15 @@ textarea:focus {
   background-color: #FBB017;
   border-radius: 5px;
   font-weight: bold;
+}
+.photo-profile {
+  width: 50%;
+  border-radius: 60px;
+}
+@media(max-width: 999px) {
+  .photo-profile {
+    width: 60%;
+    border-radius: 30px;
+  }
 }
 </style>

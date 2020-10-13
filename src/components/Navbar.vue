@@ -33,10 +33,8 @@
 
             <template v-slot:button-content>
               <div class=" borderprofile rounded-circle ">
-                <!-- <img class="rounded-circle"
-                  src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png" alt="photo profile" /> -->
                 <img class="rounded-circle"
-                  :src="`http://localhost:3000/${detailEmploye.image_employe}`" alt="photo profile" />
+                  :src="`http://18.208.165.238:3009/${detailEmploye.image_employe}`" alt="photo profile" />
               </div>
             </template>
             <b-dropdown-item to="/profile">Profile</b-dropdown-item>

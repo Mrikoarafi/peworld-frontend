@@ -31,7 +31,7 @@
             <input type="email" class="form-control mb-3" placeholder="Masukkan alamat email" v-model="form.email" autofocus required>
             <label class="small text-muted">Kata Sandi</label>
             <input type="password" class="form-control mb-3" placeholder="Masukkan kata sandi" v-model="form.password" required>
-            <p class="small text-right forgot-button"  data-toggle="modal" data-target="#forgot-pass">Lupa kata sandi?</p>
+            <p class="small text-right forgot-button"  data-toggle="modal" data-target="#forgot-pass-employe">Lupa kata sandi?</p>
             <ModalForgot />
             <button type="submit" class="btn btn-orange btn-block text-white">Masuk</button>
 

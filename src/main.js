@@ -20,7 +20,7 @@ axios.interceptors.response.use((response) => {
   if (response.data.message === 'Token is required!') {
     return new Promise((resolve, reject) => {
       axios.post(`${url}/employe/refreshtoken`, {
-        refreshToken: localStorage.getItem('refreshtoken')
+        refreshtoken: localStorage.getItem('refreshtoken')
       })
         .then(res => {
           console.log(res)
