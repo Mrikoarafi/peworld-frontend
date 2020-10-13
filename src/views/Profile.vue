@@ -1,6 +1,6 @@
 <template>
   <div class="outer">
-    <Navbar />
+    <Navbar type="home" />
     <div class="container-fluid p-0 p-sm-3">
       <div class="container p-0 p-sm-3">
         <div class="background mt-sm-5"></div>

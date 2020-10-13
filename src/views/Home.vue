@@ -89,6 +89,7 @@ export default {
   },
   mounted () {
     this.onAll()
+    console.log(this.allEmploye)
   }
 }
 </script>

@@ -51,6 +51,15 @@ const actions = {
         console.log(response)
       }).catch((err) => reject(err))
     })
+  },
+  editDataEmployee (context, payload) {
+    console.log(payload)
+    return new Promise((resolve, reject) => {
+      axios.put(`${url}/employe/edit/${payload.id}`, payload).then((response) => {
+        // resolve()
+        console.log(response)
+      }).catch((err) => reject(err))
+    })
   }
 }
 

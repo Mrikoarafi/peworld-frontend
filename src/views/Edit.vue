@@ -23,7 +23,7 @@
                 <h6 style="font-weight: bold">Luis Sambas</h6>
                 <h6 style="font-size: 14px">Web Developer</h6>
                 <div
-                  class="d-flex justify-content-start p-0"
+                  class="d-flex justify-content-start p-0 mb-1"
                   style="height: 14px"
                 >
                   <img
@@ -43,15 +43,11 @@
               <button
                 type="button"
                 class="btn btn-fluid btns mb-3"
-                data-toggle="modal"
-                data-target="#loginfor"
                 @click="SendData"
               >
                 Simpan
               </button>
               <button
-                data-toggle="modal"
-                data-target="#registerfor"
                 type="button"
                 class="btn btn-fluid btn-outline-s"
               >
@@ -155,7 +151,7 @@
               v-for="(skill, index) in skills" :key="index"
               @click="removeSkill(index)"
               >
-                {{skill.skill_name}}
+                {{skill.name_skill}}
               </div>
             </div>
             <div class="col-12 formEdit">
@@ -191,7 +187,7 @@
                       type="email"
                       class="form-control"
                       placeholder="Januari 2018"
-                    v-model="jobExp.date"
+                    v-model="jobExp.month_year"
                     />
                   </div>
                 </div>
@@ -213,10 +209,8 @@
             <div class="col-12 formEdit  mt-4">
               <h3>Portofolio</h3>
               <hr />
-              <form class="mt-4 mb-4" v-for="(portfolio, index) in portfolios" :key="index">
+              <form class="mt-4 mb-4" v-for="(portfolio, index) in portfolios" :key="index" enctype="multipart/form-data">
                 <div class="d-flex justify-content-between">
-                  <p>Portfolio {{index+1}}</p>
-                  <p style="color: red; cursor: pointer;" @click="deletePortfolio(index)">hapus</p>
                 </div>
                 <label class="small text-muted">Nama Aplikasi</label>
                 <input
@@ -245,7 +239,7 @@
                 <div class="dropzone col-12 p-0 mt-3">
                   <input type="file" class="input-file"
                   ref="file"
-                  @change="fileReady">
+                  @change="fileReady($event)">
                   <img src="../assets/images/Vector (1).png" class="mb-5" alt="">
                   <p v-if="!uploading">Drag and Drop Untuk Upload gambar aplikasi </p>
                   <p v-if="!uploading" style="font-size: 12px">atau cari untuk mengupload file dari direktorimu </p>
@@ -257,11 +251,11 @@
                   </div>
                 </div>
                 <hr />
-              </form>
-              <div class="col 12">
-               <button class=" btn btn-fluid w-100 btn-outline-warning" @click="addPortfolio">
+               <button class=" btn btn-fluid w-100 btn-outline-warning" @click.prevent="addPortfolio">
                 Tambahkan Portofolio
                </button>
+              </form>
+              <div class="col 12">
               </div>
             </div>
           </div>
@@ -275,6 +269,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'edit',
@@ -284,6 +279,7 @@ export default {
   },
   data () {
     return {
+      id_user: localStorage.getItem('id'),
       skill: '',
       skills: [],
       name: '',
@@ -296,14 +292,8 @@ export default {
       instagram: '',
       github: '',
       linkedin: '',
-      jobExps: [
-        {
-          position: '',
-          company_name: '',
-          date: '',
-          description: ''
-        }
-      ],
+      portfolioImg: null,
+      jobExps: [],
       uploading: false,
       portfolios: [
         {
@@ -320,8 +310,9 @@ export default {
         {
           position: '',
           company_name: '',
-          date: '',
-          description: ''
+          month_year: '',
+          description: '',
+          id_employe: this.id_user
         })
     },
     deleteEXp (index) {
@@ -329,32 +320,31 @@ export default {
     },
     addSkill () {
       this.skills.push({
-        skill_name: this.skill,
-        id_employe: 3
+        name_skill: this.skill,
+        id_employe: this.id_user
       })
       this.skill = ''
     },
     removeSkill (index) {
       this.skills.splice(index, 1)
     },
-    fileReady () {
-      const file = this.$refs.file.files[0]
-      const formData = new FormData()
-      formData.append('image', file)
-      console.log(file)
+    fileReady (event) {
+      this.portfolioImg = event.target.files[0]
+      console.log(this.portfolioImg)
     },
     addPortfolio () {
-      this.portfolios.push(
-        {
-          apk_name: '',
-          link_repo: '',
-          type_portfolio: '',
-          id_employe: 3
-        })
+      const data = {
+        id: this.id_user,
+        img: this.portfolioImg,
+        apk: this.portfolios[0].app_name,
+        repo: this.portfolios[0].link_repository,
+        type: this.portfolios[0].type
+      }
+      this.sendPort(data)
     },
     SendData () {
-      console.log({
-        skills: this.skills,
+      this.sendtoData({
+        skill: this.skills,
         work_experience: this.jobExps,
         name: this.name,
         email: this.email,
@@ -366,9 +356,13 @@ export default {
         instagram: this.instagram,
         github: this.github,
         linkedin: this.linkedin,
-        portfolio: this.portfolios
+        id: this.id_user
       })
-    }
+    },
+    ...mapActions({
+      sendPort: 'employe/addPortfolio',
+      sendtoData: 'employe/editDataEmployee'
+    })
 
   }
 }
