@@ -10,36 +10,33 @@
 
         <div class="home-content mb-4 mt-5">
           <div class="container">
-            <form>
+            <form @submit.prevent="search">
               <div class="form">
-                <input type="text" class="form-control p-3" placeholder="Search for any skill" />
+                <input type="text" class="form-control p-3" placeholder="Search for any skill" v-model="keyword" @keyup="search" />
                 <button disabled class="d-none d-sm-block">
                   <b-icon icon="search" variant="secondary" class="pr-4"></b-icon>
                 </button>
                 <b-dropdown no-caret text="sort" variant="violet" class="mr-3 ml-3">
-                  <b-dropdown-item>Sort by name</b-dropdown-item>
-                  <b-dropdown-item>Sort by skill</b-dropdown-item>
-                  <b-dropdown-item>Sort by location</b-dropdown-item>
-                  <b-dropdown-item>Sort by freelance</b-dropdown-item>
-                  <b-dropdown-item>Sort by fulltime</b-dropdown-item>
+                  <b-dropdown-item @click="sortAsc('name')">Sort by name</b-dropdown-item>
+                  <b-dropdown-item @click="sortDesc('skill_employe')">Sort by skill</b-dropdown-item>
+                  <b-dropdown-item @click="sortAsc('domisili')">Sort by location</b-dropdown-item>
                 </b-dropdown>
                 <input type="submit" class="btn btn-purple text-white" value="Search">
               </div>
             </form>
               <div class="gallery">
                 <div v-for="(item, index) in allEmploye.data" :key="index" class="card-home mt-4 p-3">
-                <b-row align-h="between">
-                  <b-col cols="6" class="text-center">
-                    <img :src="`http://localhost:3000/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
+                <b-row align-h="between" @click="detail(item.id_employe)" >
+                  <b-col cols="4" class="text-center">
+                    <img :src="`http://18.208.165.238:3009/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
                   </b-col>
-                  <b-col @click="detail(item.id_employe)" class="ml-2">
+                  <b-col cols="7" class="ml-2">
                       <b class="name">{{item.name}}</b>
                       <p class="small text-muted mt-2">{{item.jobdesk}}</p>
-                      <p class="small text-muted location d-none d-sm-block">
+                      <p class="small text-muted location">
                         <img src="../assets/images/map.png" alt="location"> {{item.domisili}}
                       </p>
-                      <a class="btn btn-skill text-white mr-2 mt-2">PHP</a>
-                      <a class="btn btn-skill text-white mr-2 mt-2">PHP</a>
+                      <a class="btn btn-skill text-white mr-2 mt-2" v-for="(item, index) in item.skill_employe.split(',')" :key="index">{{item}}</a>
                   </b-col>
                 </b-row>
               </div>
@@ -67,7 +64,8 @@ export default {
     return {
       rows: 100,
       currentPage: 1,
-      id: localStorage.getItem('id')
+      id: localStorage.getItem('id'),
+      keyword: null
     }
   },
   components: {
@@ -81,10 +79,25 @@ export default {
   },
   methods: {
     ...mapActions({
-      onAll: 'employe/onAll'
+      onAll: 'employe/onAll',
+      onSortDataAsc: 'employe/onSortDataAsc',
+      onSortDataDesc: 'employe/onSortDataDesc',
+      onSearch: 'employe/onSearch'
     }),
+    search (keyword) {
+      this.onSearch(this.keyword)
+      this.$router.push({ query: { search: this.keyword } })
+    },
+    sortAsc (sort) {
+      this.$router.push({ path: '/home', query: { sort } })
+      this.onSortDataAsc(sort)
+    },
+    sortDesc (sort) {
+      this.$router.push({ path: '/home', query: { sort } })
+      this.onSortDataDesc(sort)
+    },
     detail (id) {
-      alert(id)
+      this.$router.push({ path: '/jobHire', query: { id } })
     }
   },
   mounted () {
@@ -146,7 +159,7 @@ input[type="text"]:focus {
   border-radius: 5px;
 }
 .photo-profile {
-  width: 50%;
+  width: 80%;
 }
 .name {
   font-size: 18px;
@@ -176,7 +189,7 @@ input[type="text"]:focus {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
   .photo-profile {
-    width: 90px;
+    width: 100px;
   }
 }
 @media(max-width: 576px) {

@@ -8,11 +8,13 @@
           <div class="col-sm-4 form-login mt-4">
             <div class="col-12 profileBox">
               <img
-                src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png"
+                :src="`${url}/${detailEmploye.image_employe}`"
                 alt=""
                 class="rounded-circle"
               />
-              <div class="d-flex m-3" style="height: 20px">
+              <div class="d-flex m-3 position-relative" style="height: 20px">
+                  <input type="file" class="input-file"
+                  @change="imageReady($event)">
                 <img
                   src="../assets/icons/pen.svg"
                   style="width: 100%; height: 100%"
@@ -20,8 +22,8 @@
                 <p class="m-0 ml-2" style="color: #9b9b9b">Edit</p>
               </div>
               <div class="d-flex flex-column col mt-4">
-                <h6 style="font-weight: bold">Luis Sambas</h6>
-                <h6 style="font-size: 14px">Web Developer</h6>
+                <h6 style="font-weight: bold">{{detailEmploye.name}}</h6>
+                <h6 style="font-size: 14px">{{detailEmploye.jobdesk}}</h6>
                 <div
                   class="d-flex justify-content-start p-0 mb-1"
                   style="height: 14px"
@@ -31,11 +33,11 @@
                     style="width: 14px; height: 14px; margin-right: 5px"
                   />
                   <p class="h-100" style="color: #9b9b9b; font-size: 12px">
-                    Purwokerto, Jawa Tengah
+                    {{detailEmploye.domisili}}
                   </p>
                 </div>
                 <p style="font-size: 12px; margin: 0; color: #9b9b9b">
-                  Freelancer
+                  {{detailEmploye.workplace}}
                 </p>
               </div>
             </div>
@@ -47,12 +49,13 @@
               >
                 Simpan
               </button>
-              <button
+              <router-link
                 type="button"
                 class="btn btn-fluid btn-outline-s"
+                to="/profile"
               >
                 Batal
-              </button>
+              </router-link>
             </div>
           </div>
           <div class="col-sm-8 form-login ml-3 mt-4 mb-5">
@@ -66,13 +69,6 @@
                   class="form-control mb-3"
                   placeholder="Masukkan nama lengkap"
                   v-model="name"
-                />
-                <label class="small text-muted">Email</label>
-                <input
-                  type="Email"
-                  class="form-control mb-3"
-                  placeholder="Masukkan job desk"
-                  v-model="email"
                 />
                 <label class="small text-muted">Job Desk</label>
                 <input
@@ -251,7 +247,7 @@
                   </div>
                 </div>
                 <hr />
-               <button class=" btn btn-fluid w-100 btn-outline-warning" @click.prevent="addPortfolio">
+               <button class=" btn btn-fluid w-100 btn-warning" @click.prevent="addPortfolio">
                 Tambahkan Portofolio
                </button>
               </form>
@@ -269,7 +265,9 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+// import Swal from 'sweetalert2'
+import { url } from '../helper/env'
 
 export default {
   name: 'edit',
@@ -301,7 +299,8 @@ export default {
           link_repository: '',
           type: ''
         }
-      ]
+      ],
+      url
     }
   },
   methods: {
@@ -332,6 +331,16 @@ export default {
       this.portfolioImg = event.target.files[0]
       console.log(this.portfolioImg)
     },
+    imageReady (event) {
+      const data = event.target.files[0]
+      this.upImage({
+        id: this.id_user,
+        image: data
+      }).then(() => {
+        this.onDetail(this.id_user)
+      })
+      console.log(event.target.files[0])
+    },
     addPortfolio () {
       const data = {
         id: this.id_user,
@@ -356,14 +365,33 @@ export default {
         instagram: this.instagram,
         github: this.github,
         linkedin: this.linkedin,
+<<<<<<< HEAD
         id: this.id_company
+=======
+        id: this.id_user
+      }).then((response) => {
+        alert(response)
+        this.$router.push({ path: '/profile' })
+>>>>>>> 8ff5de0e9999cd8751e17471cb80829c99434c19
       })
     },
     ...mapActions({
+      onDetail: 'employe/OnDetail',
       sendPort: 'employe/addPortfolio',
-      sendtoData: 'employe/editDataEmployee'
+      sendtoData: 'employe/editDataEmployee',
+      upImage: 'employe/updateImage'
     })
-
+  },
+  computed: {
+    ...mapGetters({
+      detailEmploye: 'employe/getDetail'
+    })
+  },
+  mounted () {
+    this.onDetail(this.id_user)
+      .then((response) => {
+        console.log(this.detailEmploye)
+      })
   }
 }
 </script>

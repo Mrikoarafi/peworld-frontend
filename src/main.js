@@ -17,10 +17,11 @@ axios.defaults.headers = {
 
 // handle token expired
 axios.interceptors.response.use((response) => {
-  if (response.data.message === 'Token is required!') {
+  // console.log(response)
+  if (response.data.message === 'tokenExpired') {
     return new Promise((resolve, reject) => {
       axios.post(`${url}/employe/refreshtoken`, {
-        refreshToken: localStorage.getItem('refreshtoken')
+        refreshtoken: localStorage.getItem('refreshtoken')
       })
         .then(res => {
           console.log(res)
