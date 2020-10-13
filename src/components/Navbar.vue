@@ -11,7 +11,7 @@
       /></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav class="ml-sm-auto">
-        <a href="/home" class="text-dark font-weight-bold ml-5" v-if="type !== 'home' && isLogin === true">Home</a>
+        <router-link to="/home" class="text-dark font-weight-bold ml-5" v-if="type !== 'home' && isLogin === true">Home</router-link>
         <b-navbar-nav class=" ml-auto" v-if="type === 'home' && isLogin === true">
           <b-navbar-nav class=" mr-xl-auto notif-chat">
             <b-nav-item href="#" class="d-block d-md-none nav-ChatNotif">Chats</b-nav-item>
@@ -36,7 +36,7 @@
                 <!-- <img class="rounded-circle"
                   src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png" alt="photo profile" /> -->
                 <img class="rounded-circle"
-                  :src="`http://localhost:3000/${detailEmploye.image_employe}`" alt="photo profile" />
+                  :src="`${url}/${detailEmploye.image_employe}`" alt="photo profile" />
               </div>
             </template>
             <b-dropdown-item to="/profile">Profile</b-dropdown-item>
@@ -44,9 +44,12 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else-if="isLogin === true">
-          <a href="/profile" class="btn btnsignup">
+          <router-link to="/profileCompany" class="btn btnsignup" v-if="role === 1">
             Profile
-          </a>
+          </router-link>
+          <router-link to="/profile" class="btn btnsignup" v-else>
+            Profile
+          </router-link>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else>
           <button
@@ -116,13 +119,15 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-// const { url } = require('../helper/env')
+const { url } = require('../helper/env')
 
 export default {
   props: ['type'],
   data () {
     return {
-      id: localStorage.getItem('id')
+      id: localStorage.getItem('id'),
+      role: localStorage.getItem('role'),
+      url: url
     }
   },
   computed: {
@@ -133,7 +138,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      onDetail: 'employe/onDetail'
+      onDetail: 'employe/OnDetail'
     }),
     logout () {
       localStorage.removeItem('token')

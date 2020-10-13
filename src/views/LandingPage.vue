@@ -443,7 +443,6 @@
     </section>
     <!-- scrollbar End -->
     <!-- cta -->
-    <cta>
       <div class="container mt-n4 hero-margin">
         <div class="row">
           <div class="col">
@@ -466,7 +465,6 @@
           </div>
         </div>
       </div>
-    </cta>
     <Footer />
   </div>
 </template>

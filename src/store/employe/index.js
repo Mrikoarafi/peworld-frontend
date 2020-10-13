@@ -46,18 +46,62 @@ const actions = {
   OnDetail (context, payload) {
     return new Promise((resolve, reject) => {
       axios.get(`${url}/employe/getDetail/${payload}`).then((response) => {
-        context.commit('SET_DETAIL', response.data[0])
-        resolve(response)
-        console.log(response)
+        context.commit('SET_DETAIL', response.data.data[0])
+        resolve(response.data)
       }).catch((err) => reject(err))
     })
   },
   editDataEmployee (context, payload) {
-    console.log(payload)
     return new Promise((resolve, reject) => {
       axios.put(`${url}/employe/edit/${payload.id}`, payload).then((response) => {
-        // resolve()
+        resolve(response.data.message)
+      }).catch((err) => reject(err))
+    })
+  },
+  getSkills (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${url}/employe/getSkill/${payload}`).then((response) => {
+        resolve(response.data)
+      }).catch((err) => reject(err))
+    })
+  },
+  getPortfolio (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${url}/employe/getall/profile/${payload}`).then((response) => {
+        resolve(response.data.data)
+      }).catch((err) => reject(err))
+    })
+  },
+  getExperience (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${url}/employe/getWorkExperience/${payload}`).then((response) => {
+        resolve(response.data.data)
+      }).catch((err) => reject(err))
+    })
+  },
+  addPortfolio (context, payload) {
+    console.log(payload)
+    const fd = new FormData()
+    fd.append('image', payload.img)
+    fd.append('id_employe', payload.id)
+    fd.append('apk_name', payload.apk)
+    fd.append('link_repo', payload.repo)
+    fd.append('type_portofolio', payload.type)
+    return new Promise((resolve, reject) => {
+      axios.post(`${url}/employe/portofolio`, fd).then((response) => {
         console.log(response)
+        resolve(response.data.message)
+      }).catch((err) => reject(err))
+    })
+  },
+  updateImage (context, payload) {
+    console.log(payload)
+    return new Promise((resolve, reject) => {
+      const fd = new FormData()
+      fd.append('image', payload.image)
+      axios.put(`${url}/employe/image/${payload.id}`, fd).then((response) => {
+        console.log(response)
+        resolve(response.data.message)
       }).catch((err) => reject(err))
     })
   }

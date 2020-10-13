@@ -30,7 +30,7 @@
                 <div v-for="(item, index) in allEmploye.data" :key="index" class="card-home mt-4 p-3">
                 <b-row align-h="between">
                   <b-col cols="6" class="text-center">
-                    <img :src="`http://localhost:3000/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
+                    <img :src="`http://18.208.165.238:3009/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
                   </b-col>
                   <b-col @click="detail(item.id_employe)" class="ml-2">
                       <b class="name">{{item.name}}</b>
