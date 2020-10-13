@@ -76,8 +76,12 @@ export default {
       } else {
         this.actionRegister(this.form)
           .then((response) => {
-            this.alertActivate()
-            this.$router.push({ path: '/login' })
+            if (response === 'berhasil register') {
+              this.alertActivate()
+              this.$router.push({ path: '/login' })
+            } else {
+              alert(response)
+            }
           }).catch(err => this.alertError(err))
       }
     },
