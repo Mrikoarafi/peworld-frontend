@@ -7,6 +7,7 @@ import LoginHire from '../views/LoginHire.vue'
 import Register from '../views/Register.vue'
 import RegisterHire from '../views/RegisterHire.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
+import ForgotPasswordEmploye from '../views/ForgotPasswordEmploye.vue'
 import Home from '../views/Home.vue'
 import Edit from '../views/Edit.vue'
 import EditCompany from '../views/EditCompany.vue'
@@ -47,6 +48,11 @@ const routes = [
     path: '/forgot',
     name: 'ForgotPassword',
     component: ForgotPassword
+  },
+  {
+    path: '/forgot-employe',
+    name: 'ForgotPasswordEmploye',
+    component: ForgotPasswordEmploye
   },
   {
     path: '/home',

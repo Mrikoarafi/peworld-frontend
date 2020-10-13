@@ -84,6 +84,29 @@ const actions = {
         })
         .catch(err => reject(err.message))
     })
+  },
+  onForgotPasswordEmploye (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`${url}/employe/forgotPassword`, payload)
+        .then(response => {
+          resolve(response.data.message)
+        })
+        .catch(err => reject(err))
+    })
+  },
+  onResetPasswordEmploye (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`${url}/employe/resetPassword`, {
+          password: payload.password,
+          userKey: payload.user_key
+        })
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => reject(err.message))
+    })
   }
 }
 

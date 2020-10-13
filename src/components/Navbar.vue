@@ -33,8 +33,6 @@
 
             <template v-slot:button-content>
               <div class=" borderprofile rounded-circle ">
-                <!-- <img class="rounded-circle"
-                  src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png" alt="photo profile" /> -->
                 <img class="rounded-circle"
                   :src="`${url}/${detailEmploye.image_employe}`" alt="photo profile" />
               </div>
