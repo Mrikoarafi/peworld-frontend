@@ -9,11 +9,13 @@
           <div class="col-sm-4 form-login mt-4">
             <div class="col-12 profileBox">
               <img
-                src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png"
+                :src="`${url}/${detail.image_company}`"
                 alt=""
                 class="rounded-circle"
               />
-              <div class="d-flex m-3" style="height: 20px">
+              <div class="d-flex m-3 position-relative" style="height: 20px">
+                  <input type="file" class="input-file"
+                  @change="imageReady($event)">
                 <img
                   src="../assets/icons/pen.svg"
                   style="width: 100%; height: 100%"
@@ -21,8 +23,8 @@
                 <p class="m-0 ml-2" style="color: #9b9b9b">Edit</p>
               </div>
               <div class="d-flex flex-column col mt-4">
-                <h6 style="font-weight: bold">Luis Sambas</h6>
-                <h6 style="font-size: 14px">Web Developer</h6>
+                <h6 style="font-weight: bold">{{detail.company_name}}</h6>
+                <h6 style="font-size: 14px">{{detail.sector}}</h6>
               <div
                 class="d-flex justify-content-start p-0 mb-2"
                 style="height: 14px"
@@ -32,12 +34,9 @@
                   style="width: 14px; height: 14px; margin-right: 5px"
                 />
                 <p class="h-100" style="color: #9b9b9b; font-size: 12px">
-                  Purwokerto, Jawa Tengah
+                  {{detail.city}}
                 </p>
               </div>
-                <p style="font-size: 12px; margin: 0; color: #9b9b9b">
-                  Freelancer
-                </p>
               </div>
             </div>
             <div class="col-12 p-0 d-flex flex-column mt-3">
@@ -50,7 +49,7 @@
                 Simpan
               </button>
               <router-link
-              to="/profile"
+              to="/profile-company"
                 type="button"
                 class="btn btn-fluid btn-outline-s"
               >
@@ -137,7 +136,8 @@
 import Swal from 'sweetalert2'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import { url } from '../helper/env'
 
 export default {
   data () {
@@ -152,7 +152,8 @@ export default {
       phone_number: null,
       linkedin: null,
       id: this.id_company,
-      errors: []
+      errors: [],
+      url
     }
   },
   components: {
@@ -161,7 +162,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      updateCompany: 'employe/updateCompany'
+      updateCompany: 'employe/updateCompany',
+      onDetail: 'recruiter/onDetail'
     }),
     insertUpdate () {
       if (!this.company_name || !this.sector || !this.city || !this.description || !this.company_email || !this.instagram || !this.phone_number || !this.linkedin || !this.id_company) {
@@ -213,7 +215,28 @@ export default {
           )
         }
       })
+    },
+    imageReady (event) {
+      // const data = event.target.files[0]
+      // this.upImage({
+      //   id: this.id_user,
+      //   image: data
+      // }).then(() => {
+      //   this.onDetail(this.id_user)
+      // })
+      console.log(event.target.files[0])
     }
+  },
+  computed: {
+    ...mapGetters({
+      detail: 'recruiter/getDetail'
+    })
+  },
+  mounted () {
+    this.onDetail(this.id)
+      .then(() => {
+        console.log(this.detail)
+      })
   }
 }
 </script>
@@ -261,6 +284,12 @@ export default {
   border-radius: 4px;
   background: white;
   color: #5e50a1;
+}
+.input-file {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 /* .contain-form {
     height: 700px;

@@ -2,67 +2,94 @@
   <div class="job-hire">
     <Navbar type="home" />
     <div class="container mt-4 mb-5">
-      <div class="row">
-          <div class="col-sm-4 form-login mt-4">
-            <div class="col-12 profileBox">
-              <img
-                :src="`${url}/${detailEmploye.image_employe}`"
-                alt=""
-                class="rounded-circle"
-              />
-              <div class="d-flex flex-column col mt-4">
-                <h6 style="font-weight: bold">{{detailEmploye.name}}</h6>
-                <h6 style="font-size: 14px">{{detailEmploye.jobdesk}}</h6>
-                <div
-                  class="d-flex justify-content-start p-0 mb-1"
-                  style="height: 14px"
-                >
-                  <img
-                    src="../assets/icons/map-pin (4) 1.svg"
-                    style="width: 14px; height: 14px; margin-right: 5px"
-                  />
-                  <p class="h-100" style="color: #9b9b9b; font-size: 12px">
-                    {{detailEmploye.domisili}}
-                  </p>
-                </div>
-                <p style="font-size: 12px; margin: 0; color: #9b9b9b">
-                  {{detailEmploye.workplace}}
+      <div class="row mt-3">
+        <div class="col-sm-4 form-login">
+          <div class="col-12  profileBox">
+            <img
+              :src="`${url}/${detailEmploye.image_employe}`"
+              alt=""
+              class="rounded-circle"
+            />
+            <div class="d-flex flex-column col mt-4 p-0">
+              <h6 style="font-weight: bold">{{ detailEmploye.name }}</h6>
+              <h6 style="font-size: 14px">{{ detailEmploye.jobdesk }}</h6>
+              <div
+                class="d-flex justify-content-start p-0 mb-1"
+                style="height: 14px"
+              >
+                <img
+                  src="../assets/icons/map-pin (4) 1.svg"
+                  style="width: 14px; height: 14px; margin-right: 5px"
+                />
+                <p class="h-100" style="color: #9b9b9b; font-size: 12px">
+                  {{ detailEmploye.domisili }}
                 </p>
               </div>
+              <p style="font-size: 12px; margin: 0; color: #9b9b9b">
+                {{ detailEmploye.workplace }}
+              </p>
             </div>
-            <h5 class="font-weight-bold">{{ detailEmploye.name }}</h5>
-            <p class="small">{{ detailEmploye.jobdesk }}</p>
-            <p class="small text-muted">
-              <img src="../assets/images/map.png" alt="location" class="location mr-1">
-              {{ detailEmploye.domisili }}
-            </p>
-            <p class="small text-muted">
+            <p class="small mt-1 text-muted">
               {{ detailEmploye.description }}
             </p>
-            <h5 class="font-weight-bold">Skill</h5>
-            <a class="btn btn-skill text-white mr-2 mt-2" v-for="(skill, index) in skills" :key="index">
-              {{skill.name_skill}}
-            </a>
+            <div>
+              <h5 class="font-weight-bold">Skill</h5>
+              <a
+                class="btn btn-skill text-white mr-2 mt-2"
+                v-for="(skill, index) in skills"
+                :key="index"
+              >
+                {{ skill.name_skill }}
+              </a>
+            </div>
           </div>
+        </div>
 
         <div class="col-sm-8">
           <div class="card-right">
             <h3 class="font-weight-bold">Hubungi Louis Tomlinson</h3>
-            <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor.</p>
+            <p class="small m-0">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+              euismod ipsum et dui rhoncus auctor.
+            </p>
             <form>
-              <label class="small text-muted mt-3">Tujuan tentang pesan ini</label>
+              <label class="small text-muted mt-3"
+                >Tujuan tentang pesan ini</label
+              >
               <select class="form-control">
-                <option>Projek</option>
+                <option value="Project">Project</option>
+                <option value="Full Time">Full Time</option>
+                <option value="Fix Bugs">Fix Bugs</option>
+                <option value="Part Time">Part Time</option>
               </select>
               <label class="small text-muted mt-3">Nama Lengkap</label>
-              <input type="text" class="form-control" placeholder="Masukkan nama lengkap">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Masukkan nama lengkap"
+              />
               <label class="small text-muted mt-3">Email</label>
-              <input type="text" class="form-control" placeholder="Masukkan email">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Masukkan email"
+              />
               <label class="small text-muted mt-3">No Handphone</label>
-              <input type="text" class="form-control" placeholder="Masukkan no handphone">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Masukkan no handphone"
+              />
               <label class="small text-muted mt-3">Deskripsi</label>
-              <textarea class="form-control" rows="8" placeholder="Deskripsi / jelaskan lebih detail"></textarea>
-              <button type="submit" class="btn btn-orange btn-block text-white mt-5">
+              <textarea
+                class="form-control"
+                rows="8"
+                placeholder="Deskripsi / jelaskan lebih detail"
+              ></textarea>
+              <button
+                type="submit"
+                class="btn btn-orange btn-block text-white mt-5"
+              >
                 Hire
               </button>
             </form>
@@ -106,17 +133,16 @@ export default {
   },
   mounted () {
     this.onDetail(this.id)
-    this.onSkills(this.id)
-      .then((response) => {
-        this.skills = response.data
-      })
+    this.onSkills(this.id).then((response) => {
+      this.skills = response.data
+    })
   }
 }
 </script>
 
 <style scoped>
 .job-hire {
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
   overflow: hidden;
 }
 .card-left {
@@ -128,7 +154,7 @@ export default {
 }
 .btn-skill {
   background: rgba(251, 176, 23, 0.6);
-  border: 1px solid #FBB017;
+  border: 1px solid #fbb017;
   box-sizing: border-box;
   border-radius: 4px;
   padding: 3px 15px;
@@ -153,7 +179,7 @@ textarea:focus {
   box-shadow: none;
 }
 .btn-orange {
-  background-color: #FBB017;
+  background-color: #fbb017;
   border-radius: 5px;
   font-weight: bold;
 }
@@ -165,7 +191,7 @@ textarea:focus {
   padding: 20px;
   background: #ffffff;
   border-radius: 8px;
-  height: 350px;
+  min-height: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -174,7 +200,7 @@ textarea:focus {
   width: 150px;
   height: 150px;
 }
-@media(max-width: 999px) {
+@media (max-width: 999px) {
   .photo-profile {
     width: 60%;
     border-radius: 30px;

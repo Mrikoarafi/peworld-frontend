@@ -38,9 +38,10 @@ const actions = {
     context.commit('SET_ALL_LOADING', true)
     return new Promise((resolve, reject) => {
       axios
-        .get(`${url}/employe/getAll`)
+        .get(`${url}/employe/getAll?limit=2&pages=${payload}`)
         .then(response => {
           context.commit('SET_ALL_DATA', response.data.data)
+          resolve(response.data.tableRow)
         })
         .catch(err => console.log(err))
         .finally(() => {

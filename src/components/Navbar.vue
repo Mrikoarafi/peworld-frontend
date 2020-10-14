@@ -48,9 +48,9 @@
           <router-link to="/profile-company" class="btn btnsignup" v-if="role === '1'">
             Profile
           </router-link>
-          <router-link to="/profile" class="btn btnsignup" v-else>
+          <button @click="toProfile" class="btn btnsignup" v-else>
             Profile
-          </router-link>
+          </button>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else>
           <button
@@ -149,6 +149,9 @@ export default {
       localStorage.removeItem('id')
       localStorage.removeItem('role')
       window.location = '/'
+    },
+    toProfile () {
+      this.$router.push({ path: '/profile', query: { id: this.id } })
     }
   },
   mounted () {

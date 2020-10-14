@@ -38,7 +38,7 @@
               v-if="role === '1'" @click="hire(detailEmploye.id_employe)"
                 >Hire</button>
               <router-link to="/edit" class="btn mt-4 mb-4 btn-violet text-white"
-              v-else-if="!id"
+              v-else
                 >Edit</router-link
               >
               <h5 style="font-weight: bold" class="text-center m-3">Skills</h5>
@@ -118,7 +118,7 @@ export default {
       role: localStorage.getItem('role'),
       skills: null,
       url: url,
-      porto: false,
+      porto: true,
       workExp: false,
       id_profile: this.$route.query.id
     }
@@ -162,6 +162,9 @@ export default {
     this.onSkills(this.id)
       .then((response) => {
         this.skills = response.data
+        if (this.skills.length < 1) {
+          alert('masukkan skills')
+        }
       })
   }
 }

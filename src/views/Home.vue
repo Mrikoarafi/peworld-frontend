@@ -26,7 +26,7 @@
             </form>
               <div class="gallery">
                 <div v-for="(item, index) in allEmploye.data" :key="index" class="card-home mt-4 p-3">
-                <div v-if="role === '0' && id !== item.id_employe">
+                <div v-if="role === '0' ">
                   <b-row align-h="between" @click="detail(item.id_employe)" >
                     <b-col cols="4" class="text-center">
                       <img :src="`${url}/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
@@ -44,7 +44,7 @@
                 <div v-if="role === '1'">
                   <b-row align-h="between" @click="detail(item.id_employe)" >
                     <b-col cols="4" class="text-center">
-                      <img :src="`http://18.208.165.238:3009/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
+                      <img :src="`${url}/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
                     </b-col>
                     <b-col cols="7" class="ml-2">
                       <b class="name">{{item.name}}</b>
@@ -59,7 +59,7 @@
               </div>
             </div>
             <div class="container mt-5">
-              <b-pagination v-model="currentPage" :total-rows="rows" align="fill">
+              <b-pagination v-model="currentPage" :total-rows="rows" :per-page="2" align="fill" @click.native="see">
               </b-pagination>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default {
   name: 'Home',
   data () {
     return {
-      rows: 100,
+      rows: 20,
       currentPage: 1,
       id: localStorage.getItem('id'),
       role: localStorage.getItem('role'),
@@ -118,10 +118,16 @@ export default {
     },
     detail (id) {
       this.$router.push({ path: '/profile', query: { id } })
+    },
+    see () {
+      this.onAll(this.currentPage)
     }
   },
   mounted () {
-    this.onAll()
+    this.onAll(this.currentPage).then((res) => {
+      this.rows = res.totalRow
+      console.log(typeof res.totalRow)
+    })
   }
 }
 </script>

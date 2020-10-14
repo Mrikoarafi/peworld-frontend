@@ -1,18 +1,22 @@
 <template>
   <div class="outer">
-    <Navbar />
+    <Navbar type="home" />
     <div class="container-fluid p-0 p-sm-3">
       <div class="container p-0 p-sm-3">
-        <div class="background mt-sm-5"></div>
+        <div class="background mt-sm-5" v-if="background_img === 'null'"></div>
+        <div class="background mt-sm-5" v-else>
+          <img :src="`${url}/${detail.wallpaper_image}`" alt="background">
+        </div>
         <div class="col-sm-12 .contain-form d-flex p-0 mb-sm-5">
           <div class="col-12 profileBox">
             <img
-              src="../assets/icons/christian-buehner-DItYlc26zVI-unsplash 1.png"
+              :src="`${url}/${detail.image_company}`"
               alt=""
-              class="rounded-circle imgs"
-            />
+              class="rounded-circle imgs">
             <div class="d-flex pen" style="height: 20px">
-              <p class="m-0 ml-2 d-none d-sm-block" style="width: auto; color: white">
+              <p class="m-0 ml-2 d-none d-sm-block position-relative" style="width: auto; color: white">
+                <input type="file" class="input-file"
+                  @change="imageReady($event)">
                 <img
                 src="../assets/icons/pen copy.svg"
                 style="width: 15%; height: 100%"
@@ -24,8 +28,8 @@
               />
             </div>
             <div class="d-flex flex-column align-items-center col-sm-6 mt-4">
-              <h6 style="font-weight: bold" class="text-center">Luis Sambas</h6>
-              <h6 style="font-size: 14px" class="text-center">Web Developer</h6>
+              <h6 style="font-weight: bold" class="text-center">{{detail.company_name}}</h6>
+              <h6 style="font-size: 14px" class="text-center">{{detailCompany.sector}}</h6>
               <div
                 class="d-flex justify-content-center p-0 mb-2"
                 style="height: 14px"
@@ -35,62 +39,30 @@
                   style="width: 14px; height: 14px; margin-right: 5px"
                 />
                 <p class="h-100" style="color: #9b9b9b; font-size: 12px">
-                  Purwokerto, Jawa Tengah
+                  {{detailCompany.city}}
                 </p>
               </div>
               <p style="font-size: 12px; margin: 0; color: #9b9b9b" class="text-center mb-2">
-                Freelancer
-              </p>
-              <p style="font-size: 12px; margin: 0; color: #9b9b9b" class="text-center mb-2">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Pariatur aliquid, id libero optio deserunt beatae quisquam itaque, fuga hic animi tempore perspiciatis nobis laboriosam sed, architecto porro nesciunt ipsa quidem.
+                {{detailCompany.description}}
               </p>
             <router-link to="/editCompany" class="btn mt-4 mb-4 btn-primary">Edit Profile</router-link>
-              <div
-                class="d-flex justify-content-start mb-2 align-items-center p-0"
-                style="height: 14px"
-              >
-                <img
-                  src="../assets/icons/mail (4).svg"
-                  style="width: 14px; height: 14px; margin-right: 5px"
-                />
-                <p class="h-100 m-0" style="color: #9b9b9b; font-size: 14px">
-                  Email Perusahaan
+
+              <div class="social-media">
+                <p class="text-muted small">
+                  <img src="../assets/icons/mail (4).svg" style="width: 20px; height: 20px; margin-right: 10px;" />
+                  {{detailCompany.company_email}}
                 </p>
-              </div>
-              <div
-                class="d-flex justify-content-start mb-2 align-items-center p-0"
-                style="height: 14px"
-              >
-                <img
-                  src="../assets/icons/phone 1.svg"
-                  style="width: 14px; height: 14px; margin-right: 5px"
-                />
-                <p class="h-100 m-0" style="color: #9b9b9b; font-size: 14px">
-                  Telepon Perusahaan
+                <p class="text-muted small">
+                  <img src="../assets/icons/phone 1.svg" style="width: 20px; height: 20px; margin-right: 10px;" />
+                  {{detailCompany.phone_number}}
                 </p>
-              </div>
-              <div
-                class="d-flex justify-content-center mb-2 align-items-center p-0"
-                style="height: 14px"
-              >
-                <img
-                  src="../assets/icons/instagram.svg"
-                  style="width: 14px; height: 14px; margin-right: 5px"
-                />
-                <p class="h-100 m-0" style="color: #9b9b9b; font-size: 14px">
-                  Instagram Perusahaan
+                <p class="text-muted small">
+                  <img src="../assets/icons/instagram.svg" style="width: 20px; height: 20px; margin-right: 10px;" />
+                  {{detailCompany.instagram}}
                 </p>
-              </div>
-              <div
-                class="d-flex justify-content-center mb-2 align-items-center p-0"
-                style="height: 14px"
-              >
-                <img
-                  src="../assets/icons/linkedin 1.svg"
-                  style="width: 14px; height: 14px; margin-right: 5px"
-                />
-                <p class="h-100 m-0" style="color: #9b9b9b; font-size: 14px">
-                  Linkedin Perusahaan
+                <p class="text-muted small">
+                  <img src="../assets/icons/linkedin 1.svg" style="width: 20px; height: 20px; margin-right: 10px;" />
+                  {{detailCompany.linkedin}}
                 </p>
               </div>
             </div>
@@ -105,11 +77,52 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
+import { mapActions, mapGetters } from 'vuex'
+import { url } from '../helper/env'
 
 export default {
+  data () {
+    return {
+      idCompany: localStorage.getItem('idCompany'),
+      id: localStorage.getItem('id'),
+      url,
+      background_img: 'null'
+    }
+  },
   components: {
     Navbar,
     Footer
+  },
+  methods: {
+    imageReady (event) {
+      this.onUpBackground(this.idCompany)
+        .then((response) => {
+          console.log(this.response)
+        })
+      console.log(event.target.files[0])
+    },
+    ...mapActions({
+      onDetailCompany: 'recruiter/onDetailCompany',
+      onDetail: 'recruiter/onDetail',
+      onUpBackground: 'recruiter/updateBackground'
+    })
+  },
+  computed: {
+    ...mapGetters({
+      detailCompany: 'recruiter/getDetailCompany',
+      detail: 'recruiter/getDetail'
+    })
+  },
+  mounted () {
+    this.onDetailCompany(this.idCompany)
+      .then(() => {
+        console.log(this.detailCompany)
+      })
+    this.onDetail(this.id)
+      .then(() => {
+        this.background_img = this.detail.wallpaper_image
+        console.log(this.detail)
+      })
   }
 }
 </script>
@@ -162,6 +175,12 @@ export default {
 }
 .imgs {
   margin-top: -100px;
+}
+.input-file {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 @media (max-width: 575.98px) {
   .profileBox {
