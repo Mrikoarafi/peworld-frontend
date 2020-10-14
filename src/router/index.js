@@ -57,30 +57,32 @@ const routes = [
   {
     path: '/home',
     name: 'Home',
-    component: Home
-    // meta: { requiresAuth: true }
+    component: Home,
+    meta: { requiresAuth: true }
   },
   {
     path: '/edit',
     name: 'Edit',
-    component: Edit
-    // meta: { requiresAuth: true }
+    component: Edit,
+    meta: { requiresAuth: true }
   },
   {
     path: '/editcompany',
     name: 'EditCompany',
-    component: EditCompany
+    component: EditCompany,
+    meta: { requiresAuth: true }
   },
   {
     path: '/profile-company',
     name: 'Company Profile',
-    component: CompanyProfile
+    component: CompanyProfile,
+    meta: { requiresAuth: true }
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile
-    // meta: { requiresAuth: true }
+    component: Profile,
+    meta: { requiresAuth: true }
   },
   {
     path: '/chat',
@@ -108,7 +110,7 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       next({
-        path: '/login'
+        path: '/'
       })
     }
   } else {

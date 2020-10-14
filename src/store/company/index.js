@@ -37,7 +37,7 @@ const actions = {
       axios.get(`${url}/hire/recruiter/getDetailCompany/${payload}`).then((response) => {
         context.commit('SET_DETAIL_COMPANY', response.data.data[0])
         resolve(response)
-        console.log(response)
+        console.log(response.data)
       }).catch((err) => reject(err))
     })
   }

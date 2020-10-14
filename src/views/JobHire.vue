@@ -52,7 +52,7 @@
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
               euismod ipsum et dui rhoncus auctor.
             </p>
-            <form>
+            <form  @submit.prevent="sendHire()">
               <label class="small text-muted mt-3"
                 >Tujuan tentang pesan ini</label
               >
@@ -106,13 +106,20 @@ import { mapGetters, mapActions } from 'vuex'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
 import { url } from '../helper/env'
+import io from 'socket.io-client'
 
 export default {
   name: 'JobHire',
   data () {
     return {
-      id: this.$route.query.id,
-      url
+      id_employe: this.$route.query.id,
+      url,
+      id: localStorage.getItem('id'),
+      socket: io(`${url}`),
+      email: localStorage.getItem('email'),
+      idCompany: localStorage.getItem('idCompany'),
+      image: '',
+      skills: null
     }
   },
   components: {
@@ -122,20 +129,67 @@ export default {
   computed: {
     ...mapGetters({
       detailEmploye: 'employe/getDetail',
-      skillEmploye: 'employe/getSkill'
+      skillEmploye: 'employe/getSkill',
+      detailRecruiter: 'company/getDetail',
+      detailCompany: 'company/getDetailCompany'
     })
   },
   methods: {
     ...mapActions({
       onDetail: 'employe/onDetail',
-      onSkills: 'employe/getSkills'
-    })
+      onSkills: 'employe/getSkills',
+      onDetailRecruiter: 'company/onDetail',
+      onDetailCompany: 'company/onDetailCompany'
+    }),
+    sendHire () {
+      this.socket.emit('send-hire-calling', {
+        id_company: this.idCompany,
+        email_recruiter: this.email,
+        email_employe: this.detailEmploye.email
+      })
+
+      this.socket.emit('send-hire-message', {
+        sender: this.email,
+        receiver: this.detailEmploye.email,
+        message: `<div class="card mb-3 mt-3" style="width: 35rem;">
+                    <img src="${this.detailCompany.image_company}" class="card-img-top" style="height: 20%;">
+                    <div class="card-body">
+                      <div class="list-group">
+                        <div class="list-group-item text-center"><h5 class="card-title">${this.detailRecruiter.company_name}</h5></div>
+                        <div class="list-group-item text-left"><p class="card-text">to: satusebelas0@gmail.com</p></div>
+                        <div class="list-group-item text-left"><p class="card-text">Job Desk: Pembuatan Aplikasi Ekopoi</p></div>
+                        <div class="list-group-item"><p class="card-text">Membuat aplikasi Ekopoi menggunakan VueJS dan NodeJS</p></div>
+                        <div class="list-group-item"><p class="card-text"><small class="text-muted">Contact Us: ${this.detailCompany.phone_number}</small></p></div>
+                      </div>
+
+                      <div class="text-center">
+                        <button class="btn btn-primary btn-sm mt-3">Apply</button>
+                      </div>
+                    </div>
+                  </div>
+                `
+      })
+
+      window.location = '/chat'
+    }
   },
   mounted () {
-    this.onDetail(this.id)
-    this.onSkills(this.id).then((response) => {
+    this.onDetail(this.id_employe).then(() => {
+      console.log(this.detailEmploye.email)
+    })
+    this.onSkills(this.id_employe).then((response) => {
       this.skills = response.data
     })
+    this.onDetailRecruiter(this.id)
+      .then((res) => {
+        console.log(this.detailRecruiter)
+      })
+    this.onDetailCompany(this.idCompany)
+      .then((res) => {
+        console.log(this.detailCompany)
+      })
+    console.log(this.email)
+    this.socket.emit('join-room', this.email)
   }
 }
 </script>
@@ -210,7 +264,7 @@ textarea:focus {
 
 <!-- <template>
   <div class="job-hire">
-    <Navbar type="home" />
+    <Navbar  />
     <img src="../assets/images/logo.png" alt="">
     <div class="container mt-4 mb-5">
       <div class="row">
@@ -237,7 +291,7 @@ textarea:focus {
           <div class="card-right">
             <h3 class="font-weight-bold">Hubungi Louis Tomlinson</h3>
             <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor.</p>
-            <form @submit.prevent="sendHire()">
+            <form">
               <label class="small text-muted mt-3">Tujuan tentang pesan ini</label>
               <select class="form-control">
                 <option>Projek</option>
@@ -266,17 +320,11 @@ textarea:focus {
 import { mapGetters, mapActions } from 'vuex'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
-import io from 'socket.io-client'
 
 export default {
   name: 'JobHire',
   data () {
     return {
-      id: localStorage.getItem('id'),
-      socket: io('http://localhost:3000'),
-      email: localStorage.getItem('email'),
-      idCompany: localStorage.getItem('id_company'),
-      image: ''
     }
   },
   components: {
@@ -286,98 +334,15 @@ export default {
   computed: {
     ...mapGetters({
       detailEmploye: 'employe/getDetail',
-      detailRecruiter: 'company/getDetail',
-      detailCompany: 'company/getDetailCompany'
     })
   },
   methods: {
     ...mapActions({
-      onDetail: 'company/onDetail',
-      onDetailCompany: 'company/onDetailCompany'
-    }),
-    sendHire () {
-      this.socket.emit('send-hire-calling', {
-        id_company: this.idCompany,
-        email_recruiter: this.email,
-        email_employe: 'satusebelas0@gmail.com'
-      })
-
-      this.socket.emit('send-hire-message', {
-        sender: this.email,
-        receiver: 'satusebelas0@gmail.com',
-        message: `<div class="card mb-3 mt-3" style="width: 35rem;">
-                    <img src="${this.detailCompany.image_company}" class="card-img-top" style="height: 20%;">
-                    <div class="card-body">
-                      <div class="list-group">
-                        <div class="list-group-item text-center"><h5 class="card-title">${this.detailRecruiter.company_name}</h5></div>
-                        <div class="list-group-item text-left"><p class="card-text">to: satusebelas0@gmail.com</p></div>
-                        <div class="list-group-item text-left"><p class="card-text">Job Desk: Pembuatan Aplikasi Ekopoi</p></div>
-                        <div class="list-group-item"><p class="card-text">Membuat aplikasi Ekopoi menggunakan VueJS dan NodeJS</p></div>
-                        <div class="list-group-item"><p class="card-text"><small class="text-muted">Contact Us: ${this.detailCompany.phone_number}</small></p></div>
-                      </div>
-
-                      <div class="text-center">
-                        <button class="btn btn-primary btn-sm mt-3">Apply</button>
-                      </div>
-                    </div>
-                  </div>
-                `
-      })
-
-      window.location = '/chat'
-    }
+    })
   },
   mounted () {
-    this.onDetail(this.id)
-    this.onDetailCompany(this.idCompany)
-
-    this.socket.emit('join-room', this.email)
   }
 }
 </script>
 
-<style scoped>
-.job-hire {
-  background-color: #E5E5E5;
-  overflow: hidden;
-}
-.card-left {
-  background-color: #fff;
-  border-radius: 8px;
-}
-.location {
-  margin-top: -5px;
-}
-.btn-skill {
-  background: rgba(251, 176, 23, 0.6);
-  border: 1px solid #FBB017;
-  box-sizing: border-box;
-  border-radius: 4px;
-  padding: 3px 15px;
-  font-size: 12px;
-  margin-top: -5px;
-}
-select,
-input[type="text"],
-input[type="email"],
-textarea {
-  background: #fff;
-  border: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  font-size: 14px;
-}
-select:focus,
-input[type="text"]:focus,
-input[type="email"]:focus,
-textarea:focus {
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-.btn-orange {
-  background-color: #FBB017;
-  border-radius: 5px;
-  font-weight: bold;
-}
-</style>
 -->
