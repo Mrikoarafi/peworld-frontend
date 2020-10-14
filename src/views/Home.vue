@@ -26,19 +26,36 @@
             </form>
               <div class="gallery">
                 <div v-for="(item, index) in allEmploye.data" :key="index" class="card-home mt-4 p-3">
-                <b-row align-h="between" @click="detail(item.id_employe)" >
-                  <b-col cols="4" class="text-center">
-                    <img :src="`http://18.208.165.238:3009/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
-                  </b-col>
-                  <b-col cols="7" class="ml-2">
+                <div v-if="role === '0' && id !== item.id_employe">
+                  <b-row align-h="between" @click="detail(item.id_employe)" >
+                    <b-col cols="4" class="text-center">
+                      <img :src="`${url}/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
+                    </b-col>
+                    <b-col cols="7" class="ml-2">
                       <b class="name">{{item.name}}</b>
                       <p class="small text-muted mt-2">{{item.jobdesk}}</p>
                       <p class="small text-muted location">
                         <img src="../assets/images/map.png" alt="location"> {{item.domisili}}
                       </p>
                       <a class="btn btn-skill text-white mr-2 mt-2" v-for="(item, index) in item.skill_employe.split(',')" :key="index">{{item}}</a>
-                  </b-col>
-                </b-row>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="role === '1'">
+                  <b-row align-h="between" @click="detail(item.id_employe)" >
+                    <b-col cols="4" class="text-center">
+                      <img :src="`http://18.208.165.238:3009/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
+                    </b-col>
+                    <b-col cols="7" class="ml-2">
+                      <b class="name">{{item.name}}</b>
+                      <p class="small text-muted mt-2">{{item.jobdesk}}</p>
+                      <p class="small text-muted location">
+                        <img src="../assets/images/map.png" alt="location"> {{item.domisili}}
+                      </p>
+                      <a class="btn btn-skill text-white mr-2 mt-2" v-for="(item, index) in item.skill_employe.split(',')" :key="index">{{item}}</a>
+                    </b-col>
+                  </b-row>
+                </div>
               </div>
             </div>
             <div class="container mt-5">
@@ -57,6 +74,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
+import { url } from '../helper/env'
 
 export default {
   name: 'Home',
@@ -65,7 +83,9 @@ export default {
       rows: 100,
       currentPage: 1,
       id: localStorage.getItem('id'),
-      keyword: null
+      role: localStorage.getItem('role'),
+      keyword: null,
+      url
     }
   },
   components: {
@@ -97,12 +117,11 @@ export default {
       this.onSortDataDesc(sort)
     },
     detail (id) {
-      this.$router.push({ path: '/jobHire', query: { id } })
+      this.$router.push({ path: '/profile', query: { id } })
     }
   },
   mounted () {
     this.onAll()
-    console.log(this.allEmploye)
   }
 }
 </script>
@@ -183,6 +202,7 @@ input[type="text"]:focus {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   column-gap: 30px;
+  cursor: pointer;
 }
 @media(max-width: 999px) {
   .gallery {

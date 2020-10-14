@@ -19,8 +19,8 @@
               {{ detailEmploye.description }}
             </p>
             <h5 class="font-weight-bold">Skill</h5>
-            <a class="btn btn-skill text-white mr-2 mt-2" v-for="(item, index) in skillEmploye.name_skill.split()" :key="index">
-              {{item}}
+            <a class="btn btn-skill text-white mr-2 mt-2" v-for="(skill, index) in skills" :key="index">
+              {{skill.name_skill}}
             </a>
           </div>
         </div>
@@ -63,7 +63,8 @@ export default {
   name: 'JobHire',
   data () {
     return {
-      id: this.$route.query.id
+      id: this.$route.query.id,
+      skills: null
     }
   },
   components: {
@@ -79,12 +80,15 @@ export default {
   methods: {
     ...mapActions({
       onDetail: 'employe/onDetail',
-      onGetSkill: 'employe/onGetSkill'
+      onSkills: 'employe/getSkills'
     })
   },
   mounted () {
     this.onDetail(this.id)
-    this.onGetSkill(this.id)
+    this.onSkills(this.id)
+      .then((response) => {
+        this.skills = response.data
+      })
   }
 }
 </script>

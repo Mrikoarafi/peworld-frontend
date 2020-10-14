@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="col-12 zero" v-if="portfolio.length < 1">
-      Belum Ada Portfolio
+      <p class="text-muted text-center mt-2">Belum Ada Portfolio</p>
     </div>
     <div class="col-12 zero" v-else>
         <div class="portItem">
@@ -23,7 +23,7 @@ import { url } from '../helper/env'
 export default {
   data () {
     return {
-      id: localStorage.getItem('id'),
+      id: this.$route.query.id,
       portfolio: [],
       url
     }
