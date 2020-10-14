@@ -38,7 +38,7 @@
               >
                 {{detailEmploye.description}}
               </p>
-              <router-link to="/editCompany" class="btn mt-4 mb-4 btn-primary"
+              <router-link to="/jobHire" class="btn mt-4 mb-4 btn-primary"
               v-if="role === 1"
                 >Hire</router-link
               >
@@ -153,8 +153,9 @@ export default {
       role: localStorage.getItem('role'),
       skills: null,
       url: url,
-      porto: true,
-      workExp: false
+      porto: false,
+      workExp: false,
+      id_profile: this.$route.query.id
     }
   },
   computed: {
@@ -165,7 +166,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      onDetail: 'employe/OnDetail',
+      onDetail: 'employe/onDetail',
       onSkills: 'employe/getSkills'
     }),
     logout () {
@@ -173,7 +174,7 @@ export default {
       localStorage.removeItem('refreshtoken')
       localStorage.removeItem('id')
       localStorage.removeItem('role')
-      window.location = '/'
+      this.$router.push('/')
     },
     selectExp () {
       this.workExp = true
@@ -186,9 +187,9 @@ export default {
     }
   },
   mounted () {
-    this.onDetail(this.id)
+    this.onDetail(this.id_profile)
       .then((response) => {
-        // console.log(this.detailEmploye)
+        console.log(this.detailEmploye)
       })
 
     this.onSkills(this.id)

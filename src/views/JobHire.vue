@@ -3,27 +3,34 @@
     <Navbar type="home" />
     <div class="container mt-4 mb-5">
       <div class="row">
-        <div class="col-sm-4 mb-5">
-          <div class="card-left p-4">
-            <div class=" text-center mb-3">
+          <div class="col-sm-4 form-login mt-4">
+            <div class="col-12 profileBox">
               <img
-              :src="`http://18.208.165.238:3009/${detailEmploye.image_employe}`" alt="photo profile" class="photo-profile">
+                :src="`${url}/${detailEmploye.image_employe}`"
+                alt=""
+                class="rounded-circle"
+              />
+              <div class="d-flex flex-column col mt-4">
+                <h6 style="font-weight: bold">{{detailEmploye.name}}</h6>
+                <h6 style="font-size: 14px">{{detailEmploye.jobdesk}}</h6>
+                <div
+                  class="d-flex justify-content-start p-0 mb-1"
+                  style="height: 14px"
+                >
+                  <img
+                    src="../assets/icons/map-pin (4) 1.svg"
+                    style="width: 14px; height: 14px; margin-right: 5px"
+                  />
+                  <p class="h-100" style="color: #9b9b9b; font-size: 12px">
+                    {{detailEmploye.domisili}}
+                  </p>
+                </div>
+                <p style="font-size: 12px; margin: 0; color: #9b9b9b">
+                  {{detailEmploye.workplace}}
+                </p>
+              </div>
             </div>
-            <h5 class="font-weight-bold">{{ detailEmploye.name }}</h5>
-            <p class="small">{{ detailEmploye.jobdesk }}</p>
-            <p class="small text-muted">
-              <img src="../assets/images/map.png" alt="location" class="location mr-1">
-              {{ detailEmploye.domisili }}
-            </p>
-            <p class="small text-muted">
-              {{ detailEmploye.description }}
-            </p>
-            <h5 class="font-weight-bold">Skill</h5>
-            <a class="btn btn-skill text-white mr-2 mt-2" v-for="(item, index) in skillEmploye.name_skill.split()" :key="index">
-              {{item}}
-            </a>
           </div>
-        </div>
 
         <div class="col-sm-8">
           <div class="card-right">
@@ -58,12 +65,14 @@
 import { mapGetters, mapActions } from 'vuex'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
+import { url } from '../helper/env'
 
 export default {
   name: 'JobHire',
   data () {
     return {
-      id: this.$route.query.id
+      id: this.$route.query.id,
+      url
     }
   },
   components: {
@@ -135,6 +144,19 @@ textarea:focus {
 .photo-profile {
   width: 50%;
   border-radius: 60px;
+}
+.profileBox {
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profileBox img {
+  width: 150px;
+  height: 150px;
 }
 @media(max-width: 999px) {
   .photo-profile {

@@ -68,7 +68,7 @@ export default {
       this.actionRegister(this.form)
         .then((response) => {
           if (response === 'Success') {
-            window.location = '/'
+            this.$router.push('/')
           } else if (response === 'Email has not been actived') {
             this.alertActivate()
           } else if (response === 'Email has not been registered') {

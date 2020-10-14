@@ -136,14 +136,14 @@ export default {
   },
   methods: {
     ...mapActions({
-      onDetail: 'employe/OnDetail'
+      onDetail: 'employe/onDetail'
     }),
     logout () {
       localStorage.removeItem('token')
       localStorage.removeItem('refreshtoken')
       localStorage.removeItem('id')
       localStorage.removeItem('role')
-      window.location = '/'
+      this.$router.push('/')
     }
   },
   mounted () {

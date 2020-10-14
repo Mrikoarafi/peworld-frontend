@@ -69,7 +69,7 @@ export default {
       this.actionLogin(this.form)
         .then((response) => {
           if (response === 'Success') {
-            window.location = '/'
+            this.$router.push('/')
           } else if (response === 'Employe has not been actived') {
             this.alertActivate()
           } else if (response === 'wrong password') {

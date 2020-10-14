@@ -97,7 +97,7 @@ export default {
       this.onSortDataDesc(sort)
     },
     detail (id) {
-      this.$router.push({ path: '/jobHire', query: { id } })
+      this.$router.push({ path: '/profile', query: { id } })
     }
   },
   mounted () {

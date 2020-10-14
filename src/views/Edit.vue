@@ -372,7 +372,7 @@ export default {
       })
     },
     ...mapActions({
-      onDetail: 'employe/OnDetail',
+      onDetail: 'employe/onDetail',
       sendPort: 'employe/addPortfolio',
       sendtoData: 'employe/editDataEmployee',
       upImage: 'employe/updateImage'

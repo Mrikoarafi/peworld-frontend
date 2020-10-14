@@ -69,7 +69,7 @@ export default {
           user_key: this.user_key
         }
         this.onResetPasswordEmploye(ukey).then(result => {
-          window.location = '/login'
+          this.$router.push('/login')
         }).catch(err => this.alertError(err))
       }
     },
