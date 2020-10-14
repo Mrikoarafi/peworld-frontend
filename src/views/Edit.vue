@@ -365,14 +365,10 @@ export default {
         instagram: this.instagram,
         github: this.github,
         linkedin: this.linkedin,
-<<<<<<< HEAD
-        id: this.id_company
-=======
         id: this.id_user
       }).then((response) => {
         alert(response)
         this.$router.push({ path: '/profile' })
->>>>>>> 8ff5de0e9999cd8751e17471cb80829c99434c19
       })
     },
     ...mapActions({
