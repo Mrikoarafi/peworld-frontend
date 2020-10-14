@@ -153,7 +153,8 @@ export default {
       linkedin: null,
       id: this.id_company,
       errors: [],
-      url
+      url,
+      image_company: null
     }
   },
   components: {
@@ -162,8 +163,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      updateCompany: 'employe/updateCompany',
-      onDetail: 'recruiter/onDetail'
+      onDetail: 'recruiter/onDetail',
+      onUpdateData: 'recruiter/updateImage'
     }),
     insertUpdate () {
       if (!this.company_name || !this.sector || !this.city || !this.description || !this.company_email || !this.instagram || !this.phone_number || !this.linkedin || !this.id_company) {
@@ -197,7 +198,7 @@ export default {
         confirmButtonText: 'Iya udah'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.updateCompany({
+          this.onUpdateData({
             company_name: this.company_name,
             sector: this.sector,
             city: this.city,
@@ -206,7 +207,8 @@ export default {
             instagram: this.instagram,
             phone_number: this.phone_number,
             linkedin: this.linkedin,
-            id_company: this.id_company
+            id_company: this.id_company,
+            image: this.image_company
           })
           Swal.fire(
             'Done',
@@ -217,13 +219,7 @@ export default {
       })
     },
     imageReady (event) {
-      // const data = event.target.files[0]
-      // this.upImage({
-      //   id: this.id_user,
-      //   image: data
-      // }).then(() => {
-      //   this.onDetail(this.id_user)
-      // })
+      this.image_company = event.target.files[0]
       console.log(event.target.files[0])
     }
   },

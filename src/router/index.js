@@ -85,14 +85,14 @@ const routes = [
   {
     path: '/chat',
     name: 'Chat',
-    component: Chat
-    // meta: { requiresAuth: true }
+    component: Chat,
+    meta: { requiresAuth: true }
   },
   {
     path: '/jobHire',
     name: 'JobHire',
-    component: JobHire
-    // meta: { requiresAuth: true }
+    component: JobHire,
+    meta: { requiresAuth: true }
   }
 ]
 
