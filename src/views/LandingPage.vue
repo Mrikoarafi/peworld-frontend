@@ -493,15 +493,27 @@ import OpinionAbout2 from '@/components/Home/OpinionAbout2.vue'
 export default {
   data () {
     return {
+
       itemsFake: [
-        { nama: 'Udin Gele 1' },
-        { nama: 'Udin Gele 2' },
-        { nama: 'Udin Gele 3' }
+        {
+          nama: 'Udin Gele 1', message: 'Kalau lorem bisa ngomong, Dia jujur tak akan bohong.'
+        },
+        {
+          nama: 'Udin Gele 2', message: `Lorem ipsum aku suka,Lorem ipsum kebanggaanku, Lorem ipsum
+                    di hatiku.`
+        },
+        { nama: 'Udin Gele 3', message: 'Lorem aku cinta padamu , ipsum aku sayang padamu.' }
       ],
       itemsFake2: [
-        { nama: 'Udin Gele 4' },
-        { nama: 'Udin Gele 5' },
-        { nama: 'Udin Gele 6' }
+        {
+          nama: 'Udin Gele 4', message: 'Jangan di lietin terus,entar suka :)'
+        },
+        {
+          nama: 'Udin Gele 5', message: 'Jangan di lietin terus,entar suka :)'
+        },
+        {
+          nama: 'Udin Gele 6', message: 'Jangan di lietin terus,entar suka :)'
+        }
       ]
     }
   },

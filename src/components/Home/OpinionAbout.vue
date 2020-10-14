@@ -12,9 +12,8 @@
                   <h6 class="card-subtitle mb-2 mt-n2 mt-lg-n1 text-muted">
                     Web Developer
                   </h6>
-                  <p class="cardText mt-3 mt-lg-4 mx-lg-1">
-                    Lorem ipsum aku suka,Lorem ipsum kebanggaanku, Lorem ipsum
-                    di hatiku.
+                  <p class="cardText mt-4 mt-lg-5 mx-1 mx-lg-2">
+                    {{user.message}}
                   </p>
                 </div>
               </div>
@@ -55,35 +54,39 @@ export default {
   font-size: 18px;
   line-height: 28px;
   color: #46505c;
+  overflow: scroll !important;
 }
-
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
 @media screen and (max-width: 550px) {
   .card-title {
   font-weight: 600;
   font-size: 14px;
-  color: #1f2a36;
 }
   .card-img-top {
-  border-radius: 50%;
   width: auto;
   height: 70px;
-  background: rgba(251, 176, 23, 0.37);
   padding: 4px;
 }
   .card {
   box-shadow: 0px 8px 16px rgba(197, 197, 197, 0.25);
 
   width: auto !important;
-  height: auto !important;
+  height: 250px !important;
 }
 .card-subtitle{
   font-size: 11px;
 }
 .cardText {
   font-size: 12px;
-  color: #46505c;
+  height:100px;
   overflow: scroll !important;
-  height:90px;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
 }
 }
 </style>
