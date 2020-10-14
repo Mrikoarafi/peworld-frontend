@@ -34,15 +34,18 @@
             <template v-slot:button-content>
               <div class=" borderprofile rounded-circle ">
                 <img class="rounded-circle"
-                  :src="`${url}/${detailEmploye.image_employe}`" alt="photo profile" />
+                  :src="`${url}/${detailEmploye.image_employe}`" alt="photo profile" v-if="role === '0' && id"/>
+                <img class="rounded-circle"
+                  :src="`${url}/${detailRecruiter.image_company}`" alt="photo profile" v-if="role === '1'"/>
               </div>
             </template>
-            <b-dropdown-item to="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item to="/profile" v-if="role === '0'">Profile</b-dropdown-item>
+            <b-dropdown-item to="/profile-company" v-if="role === '1'">Profile</b-dropdown-item>
             <b-dropdown-item @click="logout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else-if="isLogin === true">
-          <router-link to="/profileCompany" class="btn btnsignup" v-if="role === 1">
+          <router-link to="/profile-company" class="btn btnsignup" v-if="role === '1'">
             Profile
           </router-link>
           <router-link to="/profile" class="btn btnsignup" v-else>
@@ -131,12 +134,14 @@ export default {
   computed: {
     ...mapGetters({
       isLogin: 'auth/isLogin',
-      detailEmploye: 'employe/getDetail'
+      detailEmploye: 'employe/getDetail',
+      detailRecruiter: 'recruiter/getDetail'
     })
   },
   methods: {
     ...mapActions({
-      onDetail: 'employe/onDetail'
+      onDetail: 'employe/onDetail',
+      onDetailRecruiter: 'recruiter/onDetail'
     }),
     logout () {
       localStorage.removeItem('token')
@@ -148,6 +153,7 @@ export default {
   },
   mounted () {
     this.onDetail(this.id)
+    this.onDetailRecruiter(this.id)
   }
 }
 </script>

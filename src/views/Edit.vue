@@ -107,7 +107,7 @@
                 ></textarea>
                 <label class="small text-muted">Instagram</label>
                 <input
-                  type="email"
+                  type="text"
                   class="form-control mb-3"
                   placeholder="Instagram"
                   v-model="instagram"
@@ -143,7 +143,7 @@
                 </button>
               </form>
               <div
-              class="btn btn-outline-warning text-dark mr-1"
+              class="btn btn-skill text-white mr-1"
               v-for="(skill, index) in skills" :key="index"
               @click="removeSkill(index)"
               >
@@ -171,7 +171,7 @@
                   <div class="form-group col-md-6">
                     <label class="small text-muted">Nama Perusahaan</label>
                     <input
-                      type="email"
+                      type="text"
                       class="form-control"
                       placeholder="PT Harus Bisa"
                     v-model="jobExp.company_name"
@@ -180,7 +180,7 @@
                   <div class="form-group col-md-6">
                     <label class="small text-muted">Bulan / Tahun</label>
                     <input
-                      type="email"
+                      type="text"
                       class="form-control"
                       placeholder="Januari 2018"
                     v-model="jobExp.month_year"
@@ -197,7 +197,7 @@
                 <hr>
               </form>
               <div class="col 12">
-               <button class=" btn btn-fluid w-100 btn-outline-warning" @click="addExp">
+               <button class=" btn btn-fluid w-100 outline-warning text-warning" @click="addExp">
                 Tambahkan Pengalaman Kerja
                </button>
               </div>
@@ -217,7 +217,7 @@
                 />
                 <label class="small text-muted">Link Repository</label>
                 <input
-                  type="teks"
+                  type="text"
                   class="form-control mb-3"
                   placeholder="Masukkan link repository"
                   v-model="portfolio.link_repository"
@@ -247,7 +247,7 @@
                   </div>
                 </div>
                 <hr />
-               <button class=" btn btn-fluid w-100 btn-warning" @click.prevent="addPortfolio">
+               <button class=" btn btn-fluid w-100 outline-warning text-warning" @click.prevent="addPortfolio">
                 Tambahkan Portofolio
                </button>
               </form>
@@ -419,7 +419,22 @@ export default {
   background: #ffffff;
   border-radius: 8px;
 }
-
+input[type="text"],
+input[type="number"],
+textarea {
+  background: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  font-size: 14px;
+}
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+.outline-warning:focus,
+.btn:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
 .btns {
   background: #5e50a1;
   border-radius: 4px;
@@ -440,12 +455,22 @@ export default {
   background: #fbb017;
   border-radius: 4px;
 }
+.btn-skill {
+  background: rgba(251, 176, 23, 0.6);
+  border: 1px solid #FBB017;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 3px 15px;
+  font-size: 14px;
+}
 /* .contain-form {
     height: 700px;
 } */
-.btn-outline-warning {
-    color: #fbb017;
-    border-color: #fbb017;
+.outline-warning {
+  border-color: #fbb017;
+}
+.outline-warning:focus {
+  border-color: #fbb017;
 }
 .radioBtn {
   background: #FFFFFF;

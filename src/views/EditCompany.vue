@@ -1,3 +1,4 @@
+
 <template>
   <div class="outer">
     <Navbar />
@@ -40,73 +41,83 @@
               </div>
             </div>
             <div class="col-12 p-0 d-flex flex-column mt-3">
+
               <button
-                type="button"
+@click.prevent="insertUpdate"
+             type="button"
                 class="btn btn-fluid btns mb-3"
-                data-toggle="modal"
-                data-target="#loginfor"
               >
                 Simpan
               </button>
-              <button
-                data-toggle="modal"
-                data-target="#registerfor"
+              <router-link
+              to="/profile"
                 type="button"
                 class="btn btn-fluid btn-outline-s"
               >
                 Batal
-              </button>
+              </router-link>
             </div>
           </div>
           <div class="col-sm-8 form-login ml-3 mt-4 mb-5">
             <div class="col-12 formEdit">
               <h3>Data perusahaan</h3>
               <hr />
-              <form class="mt-4 mb-4">
+              <form class="mt-4 mb-4" id="myForm" >
                 <label class="small text-muted">Nama Perusahaan</label>
                 <input
+
+                v-model="company_name"
                   type="text"
                   class="form-control mb-3"
                   placeholder="Masukkan nama perusahaan"
                 />
                 <label class="small text-muted">Bidang</label>
                 <input
-                  type="email"
+                v-model="sector"
+                  type="text"
                   class="form-control mb-3"
                   placeholder="Masukkan bidang perusahaan ex: Finance"
                 />
                 <label class="small text-muted">Kota</label>
                 <input
+                v-model="city"
                   type="text"
                   class="form-control mb-3"
                   placeholder="Masukkan kota"
                 />
                 <label class="small text-muted">Deskripsi Singkat</label>
                 <textarea
-                  class="form-control"
+                minlength="5"
+                v-model="description"
+                  class="form-control mb-3"
                   placeholder="Tuliskan deskripsi singkat"
                   rows="3"
                 ></textarea>
                 <label class="small text-muted">Email</label>
                 <input
-                  type="text"
+                type="text"
+                v-model="company_email"
                   class="form-control mb-3"
                   placeholder="Masukkan email"
                 />
                 <label class="small text-muted">Instagram</label>
                 <input
+                v-model="instagram"
                   type="text"
                   class="form-control mb-3"
                   placeholder="Masukkan instagram"
                 />
                 <label class="small text-muted">No. Telp</label>
                 <input
+                v-model="phone_number"
+                @keypress="no"
                   type="text"
                   class="form-control mb-3"
                   placeholder="Masukkan no telepon"
                 />
                 <label class="small text-muted">LinkedIn</label>
                 <input
+                v-model="linkedin"
                   type="text"
                   class="form-control mb-3"
                   placeholder="Masukkan linkedin"
@@ -122,13 +133,87 @@
 </template>
 
 <script>
+
+import Swal from 'sweetalert2'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
+import { mapActions } from 'vuex'
 
 export default {
+  data () {
+    return {
+      id_company: localStorage.getItem('idCompany'),
+      company_name: null,
+      sector: null,
+      city: null,
+      description: null,
+      company_email: null,
+      instagram: null,
+      phone_number: null,
+      linkedin: null,
+      id: this.id_company,
+      errors: []
+    }
+  },
   components: {
     Navbar,
     Footer
+  },
+  methods: {
+    ...mapActions({
+      updateCompany: 'employe/updateCompany'
+    }),
+    insertUpdate () {
+      if (!this.company_name || !this.sector || !this.city || !this.description || !this.company_email || !this.instagram || !this.phone_number || !this.linkedin || !this.id_company) {
+        this.alertData()
+      } else {
+        this.alertSimpan()
+      }
+    },
+    no ($event) {
+      const keyCode = ($event.keyCode ? $event.keyCode : $event.which)
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        $event.preventDefault()
+      }
+    },
+    alertData () {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Suara lu kaya gitar',
+        text: 'Data harus di isi semuah! Pliss aku mohon'
+      })
+    },
+    alertSimpan () {
+      Swal.fire({
+        title: 'Apakah udah?',
+        text: 'Kalo salah ,salah lu sendiri ya ',
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Belom',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Iya udah'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.updateCompany({
+            company_name: this.company_name,
+            sector: this.sector,
+            city: this.city,
+            description: this.description,
+            company_email: this.company_email,
+            instagram: this.instagram,
+            phone_number: this.phone_number,
+            linkedin: this.linkedin,
+            id_company: this.id_company
+          })
+          Swal.fire(
+            'Done',
+            'Data udah ke ganti!',
+            'success'
+          )
+        }
+      })
+    }
   }
 }
 </script>

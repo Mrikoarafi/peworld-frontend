@@ -30,6 +30,19 @@
                 </p>
               </div>
             </div>
+            <h5 class="font-weight-bold">{{ detailEmploye.name }}</h5>
+            <p class="small">{{ detailEmploye.jobdesk }}</p>
+            <p class="small text-muted">
+              <img src="../assets/images/map.png" alt="location" class="location mr-1">
+              {{ detailEmploye.domisili }}
+            </p>
+            <p class="small text-muted">
+              {{ detailEmploye.description }}
+            </p>
+            <h5 class="font-weight-bold">Skill</h5>
+            <a class="btn btn-skill text-white mr-2 mt-2" v-for="(skill, index) in skills" :key="index">
+              {{skill.name_skill}}
+            </a>
           </div>
 
         <div class="col-sm-8">
@@ -88,12 +101,15 @@ export default {
   methods: {
     ...mapActions({
       onDetail: 'employe/onDetail',
-      onGetSkill: 'employe/onGetSkill'
+      onSkills: 'employe/getSkills'
     })
   },
   mounted () {
     this.onDetail(this.id)
-    this.onGetSkill(this.id)
+    this.onSkills(this.id)
+      .then((response) => {
+        this.skills = response.data
+      })
   }
 }
 </script>

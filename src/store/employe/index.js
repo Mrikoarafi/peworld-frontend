@@ -153,6 +153,19 @@ const actions = {
         resolve(response.data.message)
       }).catch((err) => reject(err))
     })
+  },
+  updateCompany (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios
+        .put(`${url}/hire/recruiter/updateCompany/${payload.id_company}`, payload)
+        .then((response) => {
+          resolve(response)
+          console.log(payload)
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
   }
 }
 
