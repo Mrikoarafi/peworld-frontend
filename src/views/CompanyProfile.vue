@@ -3,8 +3,8 @@
     <Navbar type="home" />
     <div class="container-fluid p-0 p-sm-3">
       <div class="container p-0 p-sm-3">
-        <div class="background mt-sm-5" v-if="background_img === 'null'"></div>
-        <div class="background mt-sm-5" v-else>
+        <div class="background mt-sm-5" v-if="background_img === null"></div>
+        <div class="background mt-sm-5 backg" v-else>
           <img :src="`${url}/${detail.wallpaper_image}`" alt="background">
         </div>
         <div class="col-sm-12 .contain-form d-flex p-0 mb-sm-5">
@@ -87,7 +87,7 @@ export default {
       idCompany: localStorage.getItem('idCompany'),
       id: localStorage.getItem('id'),
       url,
-      background_img: 'null'
+      background_img: null
     }
   },
   components: {
@@ -96,9 +96,16 @@ export default {
   },
   methods: {
     imageReady (event) {
-      this.onUpBackground(this.idCompany)
+      this.onUpBackground({
+        id: this.idCompany,
+        image: event.target.files[0]
+      })
         .then((response) => {
+<<<<<<< HEAD
           this.alertUpdate()
+=======
+          this.onDetailCompany(this.idCompany)
+>>>>>>> 88296f53a8076e27ef27d91d6079f118c21be6a5
         })
       console.log(event.target.files[0])
     },
@@ -187,6 +194,11 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
+}
+.backg img{
+  width: 100%;
+  height: 100%;
+  border-radius: 8px 8px 0px 0px;
 }
 @media (max-width: 575.98px) {
   .profileBox {
