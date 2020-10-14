@@ -148,7 +148,7 @@ export default {
       localStorage.removeItem('refreshtoken')
       localStorage.removeItem('id')
       localStorage.removeItem('role')
-      this.$router.push('/')
+      window.location = '/'
     }
   },
   mounted () {
