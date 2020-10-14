@@ -38,7 +38,7 @@
               v-if="role === '1'" @click="hire(detailEmploye.id_employe)"
                 >Hire</button>
               <router-link to="/edit" class="btn mt-4 mb-4 btn-violet text-white"
-              v-else
+              v-else-if="role === '0' && idUser === id"
                 >Edit</router-link
               >
               <h5 style="font-weight: bold" class="text-center m-3">Skills</h5>
@@ -103,6 +103,7 @@ import Footer from '@/components/Footer.vue'
 import WorkExp from '@/components/WorkExp.vue'
 import Portfolio from '@/components/Portfolio.vue'
 import { mapActions, mapGetters } from 'vuex'
+import Swal from 'sweetalert2'
 import { url } from '../helper/env'
 
 export default {
@@ -116,6 +117,7 @@ export default {
     return {
       id: this.$route.query.id,
       role: localStorage.getItem('role'),
+      idUser: localStorage.getItem('id'),
       skills: null,
       url: url,
       porto: true,
@@ -151,19 +153,23 @@ export default {
     },
     hire (id) {
       this.$router.push({ path: '/jobHire', query: { id } })
+    },
+    alertSkill () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Access Denied',
+        text: 'Please, insert your skill first!'
+      })
     }
   },
   mounted () {
     this.onDetail(this.id_profile)
-      .then((response) => {
-        console.log(this.detailEmploye)
-      })
-
     this.onSkills(this.id)
       .then((response) => {
         this.skills = response.data
         if (this.skills.length < 1) {
-          alert('masukkan skills')
+          this.alertSkill()
+          this.$router.push({ path: '/edit', query: { id: this.id_profile } })
         }
       })
   }
@@ -173,6 +179,7 @@ export default {
 <style scoped>
 .outer {
   background: #e5e5e5;
+  overflow: hidden;
 }
 .background {
   background: #5e50a1;

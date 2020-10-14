@@ -34,7 +34,6 @@ const actions = {
   onDetailCompany (context, payload) {
     return new Promise((resolve, reject) => {
       axios.get(`${url}/hire/recruiter/getDetailCompany/${payload}`).then((response) => {
-        console.log(response.data.data)
         context.commit('SET_DETAIL_COMPANY', response.data.data[0])
         resolve(response)
       }).catch((err) => reject(err))
@@ -45,7 +44,6 @@ const actions = {
       const fd = new FormData()
       fd.append('wallpaper_image', payload.image)
       axios.put(`${url}/hire/recruiter/updateWallpaper/${payload.id}`, fd).then((response) => {
-        console.log(response.data)
         resolve(response)
       }).catch((err) => reject(err))
     })
