@@ -14,8 +14,7 @@ const state = () => {
 
 const getters = {
   getAll: state => state.all,
-  getDetail: state => state.detail,
-  getSkill: state => state.skill
+  getDetail: state => state.detail
 }
 
 const mutations = {
@@ -27,9 +26,6 @@ const mutations = {
   },
   SET_DETAIL (state, payload) {
     state.detail = payload
-  },
-  SET_SKILL (state, payload) {
-    state.skill = payload
   }
 }
 
@@ -38,11 +34,12 @@ const actions = {
     context.commit('SET_ALL_LOADING', true)
     return new Promise((resolve, reject) => {
       axios
-        .get(`${url}/employe/getAll`)
+        .get(`${url}/employe/getAll?limit=2&pages=${payload}`)
         .then(response => {
           context.commit('SET_ALL_DATA', response.data.data)
+          resolve(response.data.tableRow)
         })
-        .catch(err => console.log(err))
+        .catch(err => reject(err))
         .finally(() => {
           context.commit('SET_ALL_LOADING', false)
         })
@@ -92,14 +89,6 @@ const actions = {
         })
     })
   },
-  onGetSkill (context, payload) {
-    return new Promise((resolve, reject) => {
-      axios.get(`${url}/employe/getSkill/${payload}`).then((response) => {
-        context.commit('SET_SKILL', response.data.data[0])
-        resolve(response)
-      }).catch((err) => reject(err))
-    })
-  },
   editDataEmployee (context, payload) {
     return new Promise((resolve, reject) => {
       axios.put(`${url}/employe/edit/${payload.id}`, payload).then((response) => {
@@ -129,7 +118,6 @@ const actions = {
     })
   },
   addPortfolio (context, payload) {
-    console.log(payload)
     const fd = new FormData()
     fd.append('image', payload.img)
     fd.append('id_employe', payload.id)
@@ -138,18 +126,15 @@ const actions = {
     fd.append('type_portofolio', payload.type)
     return new Promise((resolve, reject) => {
       axios.post(`${url}/employe/portofolio`, fd).then((response) => {
-        console.log(response)
         resolve(response.data.message)
       }).catch((err) => reject(err))
     })
   },
   updateImage (context, payload) {
-    console.log(payload)
     return new Promise((resolve, reject) => {
       const fd = new FormData()
       fd.append('image', payload.image)
       axios.put(`${url}/employe/image/${payload.id}`, fd).then((response) => {
-        console.log(response)
         resolve(response.data.message)
       }).catch((err) => reject(err))
     })
@@ -160,7 +145,6 @@ const actions = {
         .put(`${url}/hire/recruiter/updateCompany/${payload.id_company}`, payload)
         .then((response) => {
           resolve(response)
-          console.log(payload)
         })
         .catch((err) => {
           reject(err)

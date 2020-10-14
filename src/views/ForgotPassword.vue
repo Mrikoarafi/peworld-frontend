@@ -69,7 +69,7 @@ export default {
           user_key: this.user_key
         }
         this.onResetPassword(ukey).then(result => {
-          window.location = '/loginHire'
+          this.$router.push('/loginHire')
         }).catch(err => this.alertError(err))
       }
     },

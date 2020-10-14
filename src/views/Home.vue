@@ -26,23 +26,25 @@
             </form>
               <div class="gallery">
                 <div v-for="(item, index) in allEmploye.data" :key="index" class="card-home mt-4 p-3">
-                <b-row align-h="between" @click="detail(item.id_employe)" >
-                  <b-col cols="4" class="text-center">
-                    <img :src="`http://18.208.165.238:3009/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
-                  </b-col>
-                  <b-col cols="7" class="ml-2">
+                <div>
+                  <b-row align-h="between" @click="detail(item.id_employe)" >
+                    <b-col cols="4" class="text-center">
+                      <img :src="`${url}/${item.image_employe}`" alt="photo profile" class="photo-profile mr-2 mt-3">
+                    </b-col>
+                    <b-col cols="7" class="ml-2">
                       <b class="name">{{item.name}}</b>
                       <p class="small text-muted mt-2">{{item.jobdesk}}</p>
                       <p class="small text-muted location">
                         <img src="../assets/images/map.png" alt="location"> {{item.domisili}}
                       </p>
                       <a class="btn btn-skill text-white mr-2 mt-2" v-for="(item, index) in item.skill_employe.split(',')" :key="index">{{item}}</a>
-                  </b-col>
-                </b-row>
+                    </b-col>
+                  </b-row>
+                </div>
               </div>
             </div>
             <div class="container mt-5">
-              <b-pagination v-model="currentPage" :total-rows="rows" align="fill">
+              <b-pagination v-model="currentPage" :total-rows="rows" :per-page="2" align="fill" @click.native="see">
               </b-pagination>
             </div>
           </div>
@@ -57,15 +59,19 @@
 import { mapGetters, mapActions } from 'vuex'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
+import Swal from 'sweetalert2'
+import { url } from '../helper/env'
 
 export default {
   name: 'Home',
   data () {
     return {
-      rows: 100,
+      rows: 20,
       currentPage: 1,
       id: localStorage.getItem('id'),
-      keyword: null
+      role: localStorage.getItem('role'),
+      keyword: null,
+      url
     }
   },
   components: {
@@ -82,7 +88,8 @@ export default {
       onAll: 'employe/onAll',
       onSortDataAsc: 'employe/onSortDataAsc',
       onSortDataDesc: 'employe/onSortDataDesc',
-      onSearch: 'employe/onSearch'
+      onSearch: 'employe/onSearch',
+      onSkills: 'employe/getSkills'
     }),
     search (keyword) {
       this.onSearch(this.keyword)
@@ -97,12 +104,30 @@ export default {
       this.onSortDataDesc(sort)
     },
     detail (id) {
-      this.$router.push({ path: '/jobHire', query: { id } })
+      this.$router.push({ path: '/profile', query: { id } })
+    },
+    see () {
+      this.onAll(this.currentPage)
+    },
+    alertSkill () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Please, insert your skill first!'
+      })
     }
   },
   mounted () {
-    this.onAll()
-    console.log(this.allEmploye)
+    this.onAll(this.currentPage).then((res) => {
+      this.rows = res.totalRow
+    })
+    if (this.role === '0') {
+      this.onSkills(this.id).then((response) => {
+        this.skills = response.data
+        if (this.skills.length < 1) {
+          this.alertSkill()
+        }
+      })
+    }
   }
 }
 </script>
@@ -183,6 +208,7 @@ input[type="text"]:focus {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   column-gap: 30px;
+  cursor: pointer;
 }
 @media(max-width: 999px) {
   .gallery {
