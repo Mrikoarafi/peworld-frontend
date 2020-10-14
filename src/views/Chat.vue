@@ -7,7 +7,7 @@
         <div class="col-sm-12 d-flex heightChat">
           <div class="col-sm-4 form-login mt-4">
             <div class="row listUser pl-0 pr-0">
-              <div class="col-12 pl-0 pr-0 mt-4">
+              <div class="col-12 pl-0 pr-0">
                 <small class="mx-4 " style="font-size: 16px; font-weight: 600">
                   Chat
                 </small>
