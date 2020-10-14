@@ -9,7 +9,7 @@
         v-for="(item, index) in portfolio"
         :key="index">
             <img class="imgPort" :src="`${url}/${item.image_portfolio}`" />
-            <p class="m-0 font-weight-bold text-center">{{ item.apk_name }}</p>
+            <p class="m-0 font-weight-bold text-center">- {{ item.apk_name }} -</p>
           </div>
         </div>
     </div>
@@ -36,7 +36,6 @@ export default {
   mounted () {
     this.onPortfolio(this.id).then((response) => {
       this.portfolio = response
-      console.log(this.portfolio)
     })
   }
 }
@@ -63,7 +62,7 @@ export default {
   justify-content: center;
 }
 .imgPort {
-  max-width: 300px;
+  max-width: 250px;
   border-radius: 8px;
   margin-bottom: 10px;
   border: 4px solid #e5e5e5;

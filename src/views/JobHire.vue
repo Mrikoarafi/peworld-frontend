@@ -1,13 +1,13 @@
 <template>
   <div class="job-hire">
     <Navbar type="home" />
-    <div class="container mt-4 mb-5">
+    <div class="container-fluid mt-4 mb-5">
       <div class="row mt-3">
-        <div class="col-sm-4 form-login">
-          <div class="col-12  profileBox">
+        <div class="col-sm-4 mb-5">
+          <div class="profileBox p-4">
             <img
               :src="`${url}/${detailEmploye.image_employe}`"
-              alt=""
+              alt="profile employe"
               class="rounded-circle"
             />
             <div class="d-flex flex-column col mt-4 p-0">
@@ -67,18 +67,21 @@
                 type="text"
                 class="form-control"
                 placeholder="Masukkan nama lengkap"
+                v-model="detailCompany.company_name"
               />
               <label class="small text-muted mt-3">Email</label>
               <input
                 type="text"
                 class="form-control"
                 placeholder="Masukkan email"
+                v-model="detailCompany.company_email"
               />
               <label class="small text-muted mt-3">No Handphone</label>
               <input
                 type="text"
                 class="form-control"
                 placeholder="Masukkan no handphone"
+                v-model="detailCompany.phone_number"
               />
               <label class="small text-muted mt-3">Deskripsi</label>
               <textarea
@@ -112,7 +115,9 @@ export default {
   data () {
     return {
       id: this.$route.query.id,
-      url
+      idCompany: localStorage.getItem('id'),
+      url,
+      skills: []
     }
   },
   components: {
@@ -122,17 +127,20 @@ export default {
   computed: {
     ...mapGetters({
       detailEmploye: 'employe/getDetail',
+      detailCompany: 'recruiter/getDetail',
       skillEmploye: 'employe/getSkill'
     })
   },
   methods: {
     ...mapActions({
       onDetail: 'employe/onDetail',
+      onDetailCompany: 'recruiter/onDetail',
       onSkills: 'employe/getSkills'
     })
   },
   mounted () {
     this.onDetail(this.id)
+    this.onDetailCompany(this.idCompany)
     this.onSkills(this.id).then((response) => {
       this.skills = response.data
     })
@@ -200,10 +208,15 @@ textarea:focus {
   width: 150px;
   height: 150px;
 }
-@media (max-width: 999px) {
-  .photo-profile {
-    width: 60%;
-    border-radius: 30px;
+@media(max-width: 768px) {
+  .profileBox img {
+    width: 130px;
+    height: 130px;
   }
+}
+@media(min-width: 1024px) {
+ .row {
+   margin: 0 50px;
+ }
 }
 </style>

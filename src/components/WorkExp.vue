@@ -3,14 +3,21 @@
     <div class="col-12 zero" v-if="experience.length < 1">
       <p class="text-muted text-center mt-2">Belum Ada pengalaman Kerja</p>
     </div>
-    <div class="col-10 zero" v-else>
+    <div class="zero" v-else>
       <div class="container">
-        <div class="col-12 expitem p-3" v-for="(item, index) in experience" :key="index">
-          <h5 class="col-12 text-left font-weight-bold">{{item.position}}</h5>
-          <h6 class="col-12 text-left">{{item.company_name}}</h6>
-          <p class="col-12 text-left text-muted small">{{item.month_year}}</p>
-          <hr>
-          <p class="col-12 text-left small">{{item.description}}</p>
+        <div class="col-12 expitem p-2" v-for="(item, index) in experience" :key="index">
+          <div class="form-inline row">
+            <div class="col-sm-3 text-center">
+              <img src="../assets/images/work.png" alt="Work Image" class="image d-none d-sm-block">
+            </div>
+            <div class="col-sm-9">
+              <h5 class="font-weight-bold">{{item.position}}</h5>
+              <h6 class="small font-weight-bold text-muted">{{item.company_name}}</h6>
+              <p class="text-muted">{{item.month_year}}</p>
+              <b>{{item.description}}</b>
+              <hr>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -35,7 +42,6 @@ export default {
   mounted () {
     this.onExperience(this.id)
       .then((response) => {
-        console.log(response)
         this.experience = response
       })
   }
@@ -49,8 +55,18 @@ export default {
   margin: auto;
 }
 .expitem {
-  border: 1px #e5e5e5 solid;
   margin-bottom: 10px;
   border-radius: 8px;
+}
+.image {
+  height: 130px;
+}
+p, b {
+  font-size: 14px;
+}
+@media(max-width: 768px) {
+  .image {
+    height: 100px;
+  }
 }
 </style>

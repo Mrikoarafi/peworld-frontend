@@ -42,10 +42,10 @@
                   {{detailCompany.city}}
                 </p>
               </div>
-              <p style="font-size: 12px; margin: 0; color: #9b9b9b" class="text-center mb-2">
+              <p style="font-size: 12px; color: #9b9b9b; line-height: 20px" class="text-center mb-2 mt-2">
                 {{detailCompany.description}}
               </p>
-            <router-link to="/editCompany" class="btn mt-4 mb-4 btn-primary">Edit Profile</router-link>
+            <router-link to="/editCompany" class="btn mt-4 mb-4 btn-violet text-white">Edit Profile</router-link>
 
               <div class="social-media">
                 <p class="text-muted small">
@@ -78,6 +78,7 @@
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
 import { mapActions, mapGetters } from 'vuex'
+import Swal from 'sweetalert2'
 import { url } from '../helper/env'
 
 export default {
@@ -97,9 +98,15 @@ export default {
     imageReady (event) {
       this.onUpBackground(this.idCompany)
         .then((response) => {
-          console.log(this.response)
+          this.alertUpdate()
         })
       console.log(event.target.files[0])
+    },
+    alertUpdate () {
+      Swal.fire({
+        icon: 'success',
+        title: 'Background Image Updated'
+      })
     },
     ...mapActions({
       onDetailCompany: 'recruiter/onDetailCompany',
@@ -146,17 +153,16 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-.btn-primary {
+.btn-violet {
   border: 1px #5e50a1;
   background: #5e50a1;
   width: 150px;
- }
- .btn-primary:hover {
+}
+.btn-violet:focus {
   border: 1px #5e50a1;
   background: #423870;
   width: 150px;
- }
-
+}
 .pen {
   position: absolute;
   right: 40px;
@@ -184,19 +190,17 @@ export default {
 }
 @media (max-width: 575.98px) {
   .profileBox {
-  border-radius: 0px;
+    border-radius: 0px;
+  }
+  .pen {
+    position: absolute;
+    right: 20px;
+    top: -40px;
+    cursor: pointer;
+  }
+  .background {
+    border-radius:0px;
+  }
 }
-
-.pen {
-  position: absolute;
-  right: 20px;
-  top: -40px;
-  cursor: pointer;
-}
-
-.background {
-  border-radius:0px;
-}
- }
 
 </style>

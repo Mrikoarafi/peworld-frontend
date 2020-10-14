@@ -34,7 +34,6 @@ const actions = {
   onDetailCompany (context, payload) {
     return new Promise((resolve, reject) => {
       axios.get(`${url}/hire/recruiter/getDetailCompany/${payload}`).then((response) => {
-        console.log(response.data.data)
         context.commit('SET_DETAIL_COMPANY', response.data.data[0])
         resolve(response)
       }).catch((err) => reject(err))
@@ -43,7 +42,6 @@ const actions = {
   updateBackground (context, payload) {
     return new Promise((resolve, reject) => {
       axios.put(`${url}/hire/recruiter/updateWallpaper/${payload}`).then((response) => {
-        console.log(response.data)
         resolve(response)
       }).catch((err) => reject(err))
     })

@@ -39,7 +39,7 @@
                   :src="`${url}/${detailRecruiter.image_company}`" alt="photo profile" v-if="role === '1'"/>
               </div>
             </template>
-            <b-dropdown-item to="/profile" v-if="role === '0'">Profile</b-dropdown-item>
+            <b-dropdown-item v-if="role === '0'" @click="toProfile">Profile</b-dropdown-item>
             <b-dropdown-item to="/profile-company" v-if="role === '1'">Profile</b-dropdown-item>
             <b-dropdown-item @click="logout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
