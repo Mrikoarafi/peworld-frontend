@@ -11,14 +11,14 @@
       </div>
       <div class="row  marginBottomHero1" >
         <div class="col-12 col-lg-7 align-self-center">
-          <p class="mt-4 mt-lg-3 teks-hero1 mb-2">
-            <small class="triggerTeksHero1"> Talenta terbaik <span class="d-none d-md-block">negri</span> </small> <br class="d-md-none" />
+          <p class="mt-4 mt-lg-3 teks-hero1 mb-2 ">
+            <small class="triggerTeksHero1"> Talenta terbaik <span class="d-none d-lg-inline ">negri</span> </small><br/>
             untuk perubahan <br class="d-none d-md-block" />
             revolusi 4.0
           </p>
           <small class="small-teks-hero1">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-            <br class="d-none" />
+            <br class="d-none d-md-block" />
             euismod ipsum et dui rhoncus auctor.
           </small>
           <br />
