@@ -1,12 +1,12 @@
 <template>
   <div class="container-fluid p-0" id="navbar">
-    <div class="container">
+    <div class="container pl-0 pr-0">
     <b-navbar toggleable="md" type="light">
       <b-navbar-brand to="/" class=" d-flex">
         <img src="../assets/icons/Peworld Logo.svg" alt="Logo">
       </b-navbar-brand>
 
-      <b-navbar-toggle target="nav-collapse"
+      <b-navbar-toggle target="nav-collapse" class="mr-n3 mr-md-0"
         ><img src="../assets/icons/align-right.png"
       /></b-navbar-toggle>
 
@@ -52,7 +52,7 @@
             Profile
           </button>
         </b-navbar-nav>
-        <b-navbar-nav class="ml-auto" v-else>
+        <b-navbar-nav class="ml-auto mr-lg-n3" v-else>
           <button
             type="button"
             class="btn mr-2 btn-outline-signup"
@@ -164,7 +164,7 @@ export default {
 <style scoped>
 #navbar {
   background: white;
-  box-shadow: 0px 10px 50px rgba(132, 132, 132, 0.25);
+  box-shadow: 0px 10px 70px rgba(214, 214, 214, 0.25);
 }
 .bg-lighto {
   background: #fff;
@@ -237,6 +237,9 @@ export default {
   color: #5E50A1;
 }
 @media (max-width: 767px) {
+  #navbar {
+  box-shadow: 0px 10px 70px rgba(214, 214, 214, 0);
+}
   .active::after {
     display: none;
   }
