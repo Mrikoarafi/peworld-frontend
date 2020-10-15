@@ -1,6 +1,6 @@
 <template>
   <div class="outer">
-    <Navbar />
+    <Navbar type="home"/>
     <div class="background p-3"></div>
     <div class="container-fluid">
 
@@ -323,7 +323,25 @@ export default {
         repo: this.portfolios[0].link_repository,
         type: this.portfolios[0].type
       }
-      this.sendPort(data)
+      this.sendPort(data).then((res) => {
+        if (res.success === false) {
+          Swal.fire({
+            icon: 'error',
+            title: res.message
+          })
+        } else if (res.message === 'Error: Images Only !!!') {
+          Swal.fire({
+            icon: 'error',
+            title: res.message
+          })
+        } else {
+          console.warn(res)
+          Swal.fire({
+            icon: 'success',
+            title: res.message
+          })
+        }
+      })
     },
     SendData () {
       this.sendtoData({

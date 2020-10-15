@@ -1,6 +1,6 @@
 <template>
   <div class="outer">
-    <Navbar />
+    <Navbar type="home" />
     <div class="background p-3"></div>
     <div class="container-fluid">
       <div class="container">
@@ -22,7 +22,7 @@
               </div>
 
               <div class="col-12 mt-4 mx-auto text-center" v-else>
-                <div class="btn w-100 text-white bg-violet" v-for="(item, index) in listCalling[0]" :key="index">
+                <div class="btn w-100 text-white bg-violet" style="margin-bottom: 10px;" v-for="(item, index) in listCalling[0]" :key="index">
                   <div v-if="role == 0" @click="chats(item.email_recruiter)">
                     {{item.email_recruiter}}
                   </div>
@@ -48,25 +48,27 @@
               </div>
               <div class="box-message">
                 <div class="" v-for="(item, index) in historyMsg" :key="index">
-                  <div v-if="item.sender === email" class=" chat-out p-2 in-chat mb-2"
+                  <div v-if="item.sender === email" class="bg-violet in-chat text-white text-right ml-auto chat-in p-2 mb-2 "
                   style="overflow : scroll; max-width: 100%;"
                   >
                     <p class="m-0" style="font-size: 12px;">{{item.sender}}</p>
                     <div v-html="item.message"></div>
                   </div>
-                  <div v-else class="bg-violet text-white text-right ml-auto chat-in p-2 mb-2">
+                  <div v-else class="chat-out p-2  mb-2">
                     <p class="m-0" style="font-size: 12px;">{{item.sender}}</p>
                     <div v-html="item.message"></div>
                   </div>
                 </div>
-                <div class="col-12 p-0 listMessage" v-if="receiver !== null">
-                  <div v-for="(item, index) in getAllPrivateMessage" :key="index">
-                    {{item.message}}
+                <div class="" v-for="(item, index) in getAllPrivateMessage" :key="'a'+index">
+                  <div v-if="item.sender === email" class="bg-violet text-white text-right ml-auto chat-in p-2 mb-2 "
+                  style="overflow : scroll; max-width: 100%;"
+                  >
+                    <p class="m-0" style="font-size: 12px;">{{item.sender}}</p>
+                    <div v-html="item.message"></div>
                   </div>
-                </div>
-                <div v-else>
-                  <div class="row mt-4" v-for="(item, index) in listMsg" :key="index">
-                    {{item.message}}
+                  <div v-else class="chat-out p-2 in-chat mb-2">
+                    <p class="m-0" style="font-size: 12px;">{{item.sender}}</p>
+                    <div v-html="item.message"></div>
                   </div>
                 </div>
               </div>
@@ -142,12 +144,10 @@ export default {
       if (!this.receiver) {
         alert('receiver is null')
       } else {
-        const msg = `${this.email} : ${this.message}`
-
         this.listMsg = [...this.listMsg, {
           sender: this.email,
           receiver: this.receiver,
-          message: msg
+          message: this.message
         }]
 
         this.getPrivateMessage()
@@ -275,7 +275,6 @@ export default {
 }
 .chat-out {
   border: 1px #5e50a1 solid;
-  background: #e5e5e5;
   width: fit-content;
   border-radius: 0px 10px 10px 10px;
 }

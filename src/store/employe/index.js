@@ -79,7 +79,7 @@ const actions = {
   },
   onSearch (context, payload) {
     return new Promise((resolve, reject) => {
-      axios.get(`${url}/employe/getAll?where=name_skill&name=${payload}`)
+      axios.get(`${url}/employe/getAll?where=${payload.where}&name=${payload.keyword}`)
         .then((result) => {
           context.commit('SET_ALL_DATA', result.data.data)
           resolve()
@@ -126,7 +126,7 @@ const actions = {
     fd.append('type_portofolio', payload.type)
     return new Promise((resolve, reject) => {
       axios.post(`${url}/employe/portofolio`, fd).then((response) => {
-        resolve(response.data.message)
+        resolve(response.data)
       }).catch((err) => reject(err))
     })
   },

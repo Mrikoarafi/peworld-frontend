@@ -63,7 +63,7 @@ const actions = {
       fd.append('company_name', payload.company_name)
       axios.put(`${url}/hire/recruiter/updateCompany/${payload.id_company}`, fd).then((response) => {
         console.log(response)
-        resolve(response.data.message)
+        resolve(response.data)
       }).catch((err) => reject(err))
     })
   }

@@ -18,7 +18,7 @@
                 </button>
                 <b-dropdown no-caret text="sort" variant="violet" class="mr-3 ml-3">
                   <b-dropdown-item @click="sortAsc('name')">Sort by name</b-dropdown-item>
-                  <b-dropdown-item @click="sortDesc('skill_employe')">Sort by skill</b-dropdown-item>
+                  <b-dropdown-item @click="sortDesc('name_skill')">Sort by skill</b-dropdown-item>
                   <b-dropdown-item @click="sortAsc('domisili')">Sort by location</b-dropdown-item>
                 </b-dropdown>
                 <input type="submit" class="btn btn-purple text-white" value="Search">
@@ -71,7 +71,8 @@ export default {
       id: localStorage.getItem('id'),
       role: localStorage.getItem('role'),
       keyword: null,
-      url
+      url,
+      sorting: 'name'
     }
   },
   components: {
@@ -91,15 +92,20 @@ export default {
       onSearch: 'employe/onSearch',
       onSkills: 'employe/getSkills'
     }),
-    search (keyword) {
-      this.onSearch(this.keyword)
+    search () {
+      this.onSearch({
+        keyword: this.keyword,
+        where: this.sorting
+      })
       this.$router.push({ query: { search: this.keyword } })
     },
     sortAsc (sort) {
+      this.sorting = sort
       this.$router.push({ path: '/home', query: { sort } })
       this.onSortDataAsc(sort)
     },
     sortDesc (sort) {
+      this.sorting = sort
       this.$router.push({ path: '/home', query: { sort } })
       this.onSortDataDesc(sort)
     },

@@ -1,6 +1,6 @@
 <template>
   <div class="outer">
-    <Navbar />
+    <Navbar type="home"/>
     <div class="background p-3"></div>
     <div class="container-fluid">
       <div class="row">
@@ -139,11 +139,21 @@ export default {
             linkedin: this.linkedin,
             id_company: this.id_company,
             image: this.image_company
+          }).then((response) => {
+            console.log(response)
+            if (response.success === false) {
+              Swal.fire({
+                icon: 'warning',
+                title: response.message
+              })
+            } else {
+              Swal.fire(
+                'Success',
+                response.message
+              )
+              window.location = '/profile-company'
+            }
           })
-          Swal.fire(
-            'Success',
-            'Profile perusahaan Anda berhasil disimpan'
-          )
         }
       })
     },

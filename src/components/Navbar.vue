@@ -1,6 +1,7 @@
 <template>
   <div class="container-fluid p-0" id="navbar">
     <div class="container pl-0 pr-0">
+    <Notification :listMsg="listMsg" @delNotif="deleteNotif"/>
     <b-navbar toggleable="md" type="light">
       <b-navbar-brand to="/" class=" d-flex">
         <img src="../assets/icons/Peworld Logo.svg" alt="Logo">
@@ -9,19 +10,24 @@
       <b-navbar-toggle target="nav-collapse" class="mr-n3 mr-md-0"
         ><img src="../assets/icons/align-right.png"
       /></b-navbar-toggle>
-
       <b-collapse id="nav-collapse" is-nav class="ml-sm-auto">
         <router-link to="/home" class="text-dark font-weight-bold ml-5" v-if="type !== 'home' && isLogin === true">Home</router-link>
         <b-navbar-nav class=" ml-auto" v-if="type === 'home' && isLogin === true">
           <b-navbar-nav class=" mr-xl-auto notif-chat">
-            <b-nav-item href="#" class="d-block d-md-none nav-ChatNotif">Chats</b-nav-item>
+            <b-nav-item href="#" class="d-block d-md-none nav-ChatNotif" to="/chat">Chats</b-nav-item>
             <b-nav-item href="#" class="d-block d-md-none nav-ChatNotif"
               >Notifications</b-nav-item
             >
-            <b-nav-item href="/notifications" class="d-none mr-2 d-md-flex"
-              ><img src="../assets/icons/bell.png"
-            /></b-nav-item>
+            <b-nav-item href="#" class="d-none mr-2 d-md-flex position-relative"
+              data-toggle="modal" data-target="#exampleModal">
+              <img src="../assets/icons/bell.png"
+            />
+            <p class="position-absolute text-dark font-weight-bold" v-if="listMsg.length > 0"
+              style="top: 0; right: 0; color: #5E50A1;"
+              >{{listMsg.length}}</p>
+            </b-nav-item>
             <b-nav-item href="#" class="d-none mr-2 d-md-flex"
+            to="/chat"
               ><img src="../assets/icons/mail.png"
             /></b-nav-item>
           </b-navbar-nav>
@@ -126,15 +132,23 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import Notification from '../components/Notification'
+import io from 'socket.io-client'
 const { url } = require('../helper/env')
 
 export default {
+  components: {
+    Notification
+  },
   props: ['type'],
   data () {
     return {
       id: localStorage.getItem('id'),
       role: localStorage.getItem('role'),
-      url: url
+      url: url,
+      socket: io(`${url}`),
+      listMsg: [],
+      email: localStorage.getItem('email')
     }
   },
   computed: {
@@ -160,11 +174,19 @@ export default {
     },
     toProfile () {
       this.$router.push({ path: '/profile', query: { id: this.id } })
+    },
+    deleteNotif () {
+      this.listMsg = []
     }
   },
   mounted () {
     this.onDetail(this.id)
     this.onDetailRecruiter(this.id)
+    this.socket.emit('join-room', this.email)
+    this.socket.on('get-message', payload => {
+      this.listMsg = [...this.listMsg, payload]
+      console.log(this.listMsg)
+    })
   }
 }
 </script>
