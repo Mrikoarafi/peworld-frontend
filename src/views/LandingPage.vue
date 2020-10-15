@@ -508,7 +508,7 @@ export default {
           nama: 'Udin Gele 4', message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus praesentium pariatur molestias. Accusamus nihil eveniet voluptates, dolores iste nulla dolorem quae? Aliquid distinctio ab doloremque, quasi consequuntur voluptate ipsa natus!'
         },
         {
-          nama: 'Udin Gele 5', message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus praesentium pariatur molestias. Accusamus nihil eveniet voluptates, dolores iste nulla dolorem quae? Aliquid distinctio ab doloremque, quasi consequuntur voluptate ipsa natus!'
+          nama: 'Udin Gele 5', message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus praesentium pariatur molestias. Accusamus nihil eveniet voluptates, dolores iste nulla dolorem quae? Aliquid distinctio ab doloremque, quasi consequuntur voluptate ipsa natus!,dolores iste nulla dolorem quae? Aliquid distinctio ab doloremque, quasi consequuntur voluptate ipsa natus!'
         },
         {
           nama: 'Udin Gele 6', message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus praesentium pariatur molestias. Accusamus nihil eveniet voluptates, dolores iste nulla dolorem quae? Aliquid distinctio ab doloremque, quasi consequuntur voluptate ipsa natus!'
