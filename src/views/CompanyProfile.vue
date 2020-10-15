@@ -101,11 +101,8 @@ export default {
         image: event.target.files[0]
       })
         .then((response) => {
-<<<<<<< HEAD
           this.alertUpdate()
-=======
           this.onDetailCompany(this.idCompany)
->>>>>>> 88296f53a8076e27ef27d91d6079f118c21be6a5
         })
       console.log(event.target.files[0])
     },

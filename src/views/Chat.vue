@@ -4,8 +4,8 @@
     <div class="background p-3"></div>
     <div class="container-fluid">
       <div class="container">
-        <div class="col-sm-12 d-flex heightChat">
-          <div class="col-sm-4 form-login mt-4">
+        <div class="row position-relative">
+          <div class="col-12 col-sm-4">
             <div class="row listUser pl-0 pr-0">
               <div class="col-12 pl-0 pr-0 mt-4">
                 <small class="mx-4 " style="font-size: 16px; font-weight: 600">
@@ -34,12 +34,15 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-8 form-login ml-3 mt-4">
+          <div class="col-12 col-sm-8 chaaat">
             <div class="col-12 Message pl-0 pr-0">
               <div class="col-12 pl-0 pr-0">
                 <img class="ml-3 mt-3" style="border-radius: 50%;" src="..\assets\images\Chat\profile.png" >
-                <small class="mx-4"  style="font-size: 17px; font-weight: 600">
+                <small class="mx-4"  style="font-size: 17px; font-weight: 600" v-if="receiver === null">
                   Nama Orang
+                </small>
+                <small class="mx-4"  style="font-size: 17px; font-weight: 600">
+                  {{receiver}}
                 </small>
                 <div class="mt-3" style="border: 1px solid #e2e5ed"></div>
               </div>
@@ -290,5 +293,10 @@ export default {
 }
 .in-chat::-webkit-scrollbar-thumb {
   background-color: #5e50a1;
+}
+@media (max-width: 500px) {
+  .chaaat {
+    position: absolute;
+  }
 }
 </style>

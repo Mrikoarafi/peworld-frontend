@@ -47,16 +47,16 @@
 
         <div class="col-sm-8">
           <div class="card-right">
-            <h3 class="font-weight-bold">Hubungi Louis Tomlinson</h3>
+            <h3 class="font-weight-bold">Hubungi {{ detailEmploye.name }}</h3>
             <p class="small m-0">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
               euismod ipsum et dui rhoncus auctor.
             </p>
-            <form  @submit.prevent="sendHire()">
+            <form @submit.prevent="sendHire()">
               <label class="small text-muted mt-3"
                 >Tujuan tentang pesan ini</label
               >
-              <select class="form-control">
+              <select class="form-control" v-model="objective">
                 <option value="Project">Project</option>
                 <option value="Full Time">Full Time</option>
                 <option value="Fix Bugs">Fix Bugs</option>
@@ -67,27 +67,28 @@
                 type="text"
                 class="form-control"
                 placeholder="Masukkan nama lengkap"
-                v-model="detailCompany.company_name"
+                v-model="company_name"
               />
               <label class="small text-muted mt-3">Email</label>
               <input
                 type="text"
                 class="form-control"
                 placeholder="Masukkan email"
-                v-model="detailCompany.company_email"
+                v-model="company_email"
               />
               <label class="small text-muted mt-3">No Handphone</label>
               <input
                 type="text"
                 class="form-control"
                 placeholder="Masukkan no handphone"
-                v-model="detailCompany.phone_number"
+                v-model="phone_number"
               />
               <label class="small text-muted mt-3">Deskripsi</label>
               <textarea
                 class="form-control"
                 rows="8"
                 placeholder="Deskripsi / jelaskan lebih detail"
+                v-model="description"
               ></textarea>
               <button
                 type="submit"
@@ -122,7 +123,12 @@ export default {
       email: localStorage.getItem('email'),
       idCompany: localStorage.getItem('idCompany'),
       image: '',
-      skills: null
+      skills: null,
+      company_name: '',
+      company_email: '',
+      phone_number: '',
+      description: '',
+      objective: null
     }
   },
   components: {
@@ -154,22 +160,36 @@ export default {
       this.socket.emit('send-hire-message', {
         sender: this.email,
         receiver: this.detailEmploye.email,
-        message: `<div class="card mb-3 mt-3" style="width: 35rem;">
-                    <img src="${this.detailCompany.image_company}" class="card-img-top" style="height: 20%;">
-                    <div class="card-body">
-                      <div class="list-group">
-                        <div class="list-group-item text-center"><h5 class="card-title">${this.detailRecruiter.company_name}</h5></div>
-                        <div class="list-group-item text-left"><p class="card-text">to: satusebelas0@gmail.com</p></div>
-                        <div class="list-group-item text-left"><p class="card-text">Job Desk: Pembuatan Aplikasi Ekopoi</p></div>
-                        <div class="list-group-item"><p class="card-text">Membuat aplikasi Ekopoi menggunakan VueJS dan NodeJS</p></div>
-                        <div class="list-group-item"><p class="card-text"><small class="text-muted">Contact Us: ${this.detailCompany.phone_number}</small></p></div>
-                      </div>
+        message: ` <div class="container">
+                    <div class="row">
+                        <div class="col col-md-3 p-0">
+                            <div class="card h-100 p-0">
+                                <p class="card-body p-0"><img src="${url}/${this.detailCompany.image_company}" class="card-img-top h-100 w-100"></p>
+                            </div>
+                        </div>
+                        <div class="col col-md-9">
+                            <div class="card">
+                                <p class="card-body">Hey ${this.detailEmploye.email},
 
-                      <div class="text-center">
-                        <button class="btn btn-primary btn-sm mt-3">Apply</button>
-                      </div>
+On behalf of everyone at ${this.company_name}, we’re delighted to offer you to ${this.objective}!
+
+After getting to know you over these past few [days/weeks/months], it became clear that your talents, goals, and values are a perfect match for our team. It would be an honor to bring you on board as we work toward ${this.description}.
+
+
+                            </div>
+                            <div class="card">
+                                <p class="card-body">
+As you review the offer details, we’d love to answer any questions you might have before you make your decision.
+
+We’re aiming for a start date of [Date], and it would be great to hear your feedback on this offer at ${this.company_email} or ${this.phone_number} or you just can replying this chat on this app. If this time frame doesn’t work for you, just let us know.
+
+Cheers,
+
+${this.company_name}<p></p>
+                            </div>
+                        </div>
                     </div>
-                  </div>
+                </div>
                 `
       })
 
@@ -183,14 +203,12 @@ export default {
     this.onSkills(this.id_employe).then((response) => {
       this.skills = response.data
     })
-    this.onDetailRecruiter(this.id)
-      .then((res) => {
-        console.log(this.detailRecruiter)
-      })
-    this.onDetailCompany(this.idCompany)
-      .then((res) => {
-        console.log(this.detailCompany)
-      })
+    this.onDetailRecruiter(this.id).then((res) => {
+      console.log(this.detailRecruiter)
+    })
+    this.onDetailCompany(this.idCompany).then((res) => {
+      console.log(this.detailCompany)
+    })
     console.log(this.email)
     this.socket.emit('join-room', this.email)
   }
@@ -257,15 +275,15 @@ textarea:focus {
   width: 150px;
   height: 150px;
 }
-@media(max-width: 768px) {
+@media (max-width: 768px) {
   .profileBox img {
     width: 130px;
     height: 130px;
   }
 }
-@media(min-width: 1024px) {
- .row {
-   margin: 0 50px;
- }
+@media (min-width: 1024px) {
+  .row {
+    margin: 0 50px;
+  }
 }
 </style>
