@@ -85,8 +85,8 @@ export default {
   font-size: 11px;
 }
 .cardText {
-  font-size: 12px;
-    line-height: 15px;
+  font-size: 11px;
+    line-height: 13px;
   height:100px;
   overflow: scroll !important;
   margin-bottom:2px;

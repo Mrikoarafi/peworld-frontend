@@ -12,7 +12,7 @@
                   <h6 class="card-subtitle mb-2 mt-n2 mt-lg-n1 text-muted">
                     Web Developer
                   </h6>
-                  <p class="cardText mt-3 mt-lg-4 mx-lg-3" >
+                  <p class="cardText mt-3 mx-1 mt-lg-4 mx-lg-3" >
                     {{user2.message}}
                   </p>
                 </div>
@@ -85,8 +85,8 @@ export default {
   font-size: 11px;
 }
 .cardText {
-  font-size: 12px;
-    line-height: 15px;
+  font-size: 11px;
+    line-height: 13px;
   height:100px;
   overflow: scroll !important;
   margin-bottom:2px;
