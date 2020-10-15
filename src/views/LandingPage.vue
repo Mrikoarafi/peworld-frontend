@@ -400,15 +400,15 @@
       >
       <small class="mr-0 teksSection">Their opinion about peworld</small>
 
-        <div class=" container position-relative mt-3 pb-lg-5">
+        <div class="container position-relative mt-3 pb-lg-5 ">
           <div class="row mt-2 mt-lg-0">
             <div class="col text-center d-flex justify-content-center">
-              <div class="slidershow ">
+              <div class="slidershow">
                 <div class="slides">
                   <input type="radio" name="r" id="r1" checked />
                   <input type="radio" name="r" id="r2" />
                   <div class="slide s1">
-                    <div class="row mx-1 mx-lg-0 pl-0 pr-0 mt-4 justify-content-center mb-5 px-lg-3">
+                    <div class="row mx-1 mx-lg-0 mt-4 justify-content-center mb-5 px-lg-3">
                       <div
                         class="col-4 pl-0 pr-0"
                         v-for="(item, index) in itemsFake"
@@ -467,9 +467,9 @@
             </p>
             <button
               style="z-index: 2;"
-              class="ml-auto mr-3 mr-lg-5 my-lg-auto btn btn-light py-lg-3 px-lg-3 textbtnCTA"
-            >
-              Mulai Dari Sekarang
+              class="btn btn-light ml-auto mr-3 mr-lg-5 my-auto   py-lg-3 px-lg-3 textbtnCTA"
+            >Mulai Dari Sekarang
+
             </button>
           </div>
           <img
@@ -496,23 +496,22 @@ export default {
 
       itemsFake: [
         {
-          nama: 'Udin Gele 1', message: 'Kalau lorem bisa ngomong, Dia jujur tak akan bohong.'
+          nama: 'Udin Gele 1', message: 'Lorem ipsum aku suka.'
         },
         {
-          nama: 'Udin Gele 2', message: `Lorem ipsum aku suka,Lorem ipsum kebanggaanku, Lorem ipsum
-                    di hatiku.`
+          nama: 'Udin Gele 2', message: 'Lorem ipsum kebanggaanku.'
         },
-        { nama: 'Udin Gele 3', message: 'Lorem aku cinta padamu , ipsum aku sayang padamu.' }
+        { nama: 'Udin Gele 3', message: 'Lorem ipsum aku sayang padamu.' }
       ],
       itemsFake2: [
         {
-          nama: 'Udin Gele 4', message: 'Jangan di lietin terus,entar suka :)'
+          nama: 'Udin Gele 4', message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus praesentium pariatur molestias. Accusamus nihil eveniet voluptates, dolores iste nulla dolorem quae? Aliquid distinctio ab doloremque, quasi consequuntur voluptate ipsa natus!'
         },
         {
-          nama: 'Udin Gele 5', message: 'Jangan di lietin terus,entar suka :)'
+          nama: 'Udin Gele 5', message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus praesentium pariatur molestias. Accusamus nihil eveniet voluptates, dolores iste nulla dolorem quae? Aliquid distinctio ab doloremque, quasi consequuntur voluptate ipsa natus!'
         },
         {
-          nama: 'Udin Gele 6', message: 'Jangan di lietin terus,entar suka :)'
+          nama: 'Udin Gele 6', message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus praesentium pariatur molestias. Accusamus nihil eveniet voluptates, dolores iste nulla dolorem quae? Aliquid distinctio ab doloremque, quasi consequuntur voluptate ipsa natus!'
         }
       ]
     }
@@ -849,11 +848,8 @@ input[name="r"] {
 .teksSection {
   font-weight: 600;
   font-size: 24px;
-  color: #1f2a36;
-  background: #f7f7f7;
 }
 .navigationButton {
-
   top: 85.5%;
   left: 275px;
   right: 27px;
@@ -868,11 +864,10 @@ input[name="r"] {
   margin-left:-2px;
 }
 .slidershow {
-  width: 370px !important;
+  margin-left: -4px;
   overflow: hidden;
 }
 .bg-cta {
-  background: #5e50a1;
   border-radius: 40px 8px;
   width: auto;
   height: auto;
@@ -880,12 +875,11 @@ input[name="r"] {
 .textCTA {
   font-size: 14px;
   line-height: 26px;
-  color: #ffffff;
 }
 .textbtnCTA {
-  font-weight: bold;
-  font-size: 14px;
-  color: #796eaf;
+  font-size: 12px;
+  line-height: 10px;
+  padding:15px !important;
 }
 .bgCeteA {
   z-index: 1;
