@@ -296,7 +296,11 @@ export default {
         image: data
       }).then((result) => {
         this.onDetail(this.id_user)
-        this.alertImage()
+        if (result === 'Error: Images Only !!!') {
+          this.alertImageWrong()
+        } else {
+          this.alertImage()
+        }
       }).catch(err => this.alertImageWrong(err))
     },
     alertImage () {

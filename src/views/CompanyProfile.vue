@@ -101,6 +101,7 @@ export default {
         image: event.target.files[0]
       })
         .then((response) => {
+          this.alertUpdate()
           this.onDetailCompany(this.idCompany)
         })
       console.log(event.target.files[0])
