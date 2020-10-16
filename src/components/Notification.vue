@@ -12,9 +12,10 @@
               <div v-for="(item, index) in listMsg" :key="index">
                 <p>You have message unread</p>
                 <hr>
-                <p style="font-size: 14px">
+                <p style="font-size: 14px" @click="deleteNotif(index)">
                   <b-icon-chat-right-dots-fill class="mr-2"></b-icon-chat-right-dots-fill>{{item.sender}}
                 </p>
+                <hr>
               </div>
             </div>
           </div>
@@ -38,8 +39,8 @@ export default {
     }
   },
   methods: {
-    deleteNotif () {
-      this.$emit('delNotif')
+    deleteNotif (index) {
+      this.$emit('delNotif', index)
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid p-0" id="navbar">
     <div class="container pl-0 pr-0">
-    <Notification :listMsg="listMsg" @delNotif="deleteNotif"/>
+    <Notification :listMsg="listMsg" @delNotif="deleteNotif($event)"/>
     <b-navbar toggleable="md" type="light">
       <b-navbar-brand to="/" class=" d-flex">
         <img src="../assets/icons/Peworld Logo.svg" alt="Logo">
@@ -176,7 +176,8 @@ export default {
     toProfile () {
       this.$router.push({ path: '/profile', query: { id: this.id } })
     },
-    deleteNotif () {
+    deleteNotif (index) {
+      // this.listMsg.splice(index, 1)
       this.listMsg = []
     }
   },

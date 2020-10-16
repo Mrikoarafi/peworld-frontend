@@ -277,9 +277,9 @@ export default {
   overflow-y: scroll;
   padding: 20px;
 }
-/* .box-message::-webkit-scrollbar {
+.box-message::-webkit-scrollbar {
     width: 0.2em;
-} */
+}
 .bg-violet {
   background: #5e50a1;
 }
