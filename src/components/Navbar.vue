@@ -170,6 +170,7 @@ export default {
       localStorage.removeItem('role')
       localStorage.removeItem('idCompany')
       localStorage.removeItem('email_recruiter')
+      localStorage.removeItem('email')
       window.location = '/'
     },
     toProfile () {

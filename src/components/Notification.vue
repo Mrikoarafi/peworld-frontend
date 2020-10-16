@@ -3,25 +3,20 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
           <div class="modal-body">
-            <div v-if="listMsg.length < 1">
-              No Notification !
+            <div class="text-center mt-5 mb-5" v-if="listMsg.length < 1">
+              <img src="../assets/images/notification.png" alt="notification empty" data-dismiss="modal">
             </div>
 
-            <div v-else>
+            <div v-else data-dismiss="modal">
               <div v-for="(item, index) in listMsg" :key="index">
-                <div>New message from {{item.sender}}</div>
+                <p>You have message unread</p>
+                <hr>
+                <p style="font-size: 14px">
+                  <b-icon-chat-right-dots-fill class="mr-2"></b-icon-chat-right-dots-fill>{{item.sender}}
+                </p>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="deleteNotif">Close</button>
           </div>
         </div>
       </div>

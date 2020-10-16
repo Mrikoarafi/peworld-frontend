@@ -1,29 +1,23 @@
 <template>
   <div class="outer">
     <Navbar type="home" />
-    <div class="background p-3"></div>
-    <div class="container-fluid">
-      <div class="container">
-        <div class="row position-relative">
-          <div class="col-12 col-sm-4">
-            <div class="row listUser pl-0 pr-0">
-              <div class="col-12 pl-0 pr-0 mt-4">
-                <small class="mx-4 " style="font-size: 16px; font-weight: 600">
-                  Chat
-                </small>
-                <div class="mt-3" style="border: 1px solid #e2e5ed"></div>
-              </div>
+      <div class="container-fluid mt-5">
+        <div class="row">
+          <div class="col-sm-4 mb-5 d-none d-sm-block">
+            <div class="listUser">
+              <b class="mx-4 mt-4" style="font-size: 20px">
+                <b-icon-chat-square-dots-fill class="mr-2"></b-icon-chat-square-dots-fill>
+                Chat
+              </b>
+              <div class="mt-3" style="border: 1px solid #e2e5ed"></div>
 
-              <div
-                class="col-12 my-auto mx-auto text-center"
-                v-if="listCalling.length === 0"
-              >
+              <div class="my-auto mx-auto text-center" v-if="listCalling.length === 0">
                 <img src="..\assets\images\Chat\chat 0.png" />
               </div>
 
               <div class="col-12 mt-4 mx-auto text-center" v-else>
                 <div class="btn w-100 text-white bg-violet" style="margin-bottom: 10px;" v-for="(item, index) in listCalling[0]" :key="index">
-                  <div v-if="role == 0" @click="chats(item.email_recruiter)">
+                  <div v-if="role == '0'" @click="chats(item.email_recruiter)">
                     {{item.email_recruiter}}
                   </div>
 
@@ -34,23 +28,56 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-8 chaaat">
-            <div class="col-12 Message pl-0 pr-0">
-              <div class="col-12 pl-0 pr-0">
-                <img class="ml-3 mt-3" style="border-radius: 50%;" src="..\assets\images\Chat\profile.png" >
-                <small class="mx-4"  style="font-size: 17px; font-weight: 600" v-if="receiver === null">
-                  Nama Orang
-                </small>
-                <small class="mx-4"  style="font-size: 17px; font-weight: 600">
-                  {{receiver}}
-                </small>
+
+        <div class="d-block d-sm-none">
+          <b-button v-b-toggle.chat-left style="background-color: transparent; border: none; outline: none" class="connect">
+            <b-icon-chat-square-dots-fill variant="dark"></b-icon-chat-square-dots-fill>
+          </b-button>
+          <b-sidebar id="chat-left" shadow>
+            <div class="px-3 py-2">
+              <div class="listUser">
+                <b class="mx-4 mt-4" style="font-size: 20px">
+                  <b-icon-chat-square-dots-fill class="mr-2"></b-icon-chat-square-dots-fill>
+                  Chat
+                </b>
                 <div class="mt-3" style="border: 1px solid #e2e5ed"></div>
+
+                <div class="my-auto mx-auto text-center" v-if="listCalling.length === 0">
+                  <img src="..\assets\images\Chat\chat 0.png" />
+                </div>
+
+                <div class="col-12 mt-4 mx-auto text-center" v-else>
+                  <div class="btn w-100 text-white bg-violet" style="margin-bottom: 10px;" v-for="(item, index) in listCalling[0]" :key="index">
+                    <div v-if="role == '0'" @click="chats(item.email_recruiter)">
+                      {{item.email_recruiter}}
+                    </div>
+
+                    <div v-else @click="chats(item.email_employe)">
+                      {{item.email_employe}}
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+          </b-sidebar>
+        </div>
+
+          <div class="col-sm-7 chaaat mb-5">
+            <div class="Message">
+              <div class="row container">
+                <img class="ml-2 mt-3" style="border-radius: 50%;" src="..\assets\images\Chat\profile.png" >
+                <b class="mx-3 mt-4"  style="font-size: 17px" v-if="receiver === null">
+                  Nama Orang
+                </b>
+                <b class="mx-3 mt-4"  style="font-size: 17px">
+                  {{receiver}}
+                </b>
+              </div>
+              <div class="mt-3" style="border: 1px solid #e2e5ed"></div>
               <div class="box-message">
-                <div class="" v-for="(item, index) in historyMsg" :key="index">
+                <div v-for="(item, index) in historyMsg" :key="index">
                   <div v-if="item.sender === email" class="bg-violet in-chat text-white text-right ml-auto chat-in p-2 mb-2 "
-                  style="overflow : scroll; max-width: 100%;"
-                  >
+                  style="max-width: 100%;" >
                     <p class="m-0" style="font-size: 12px;">{{item.sender}}</p>
                     <div v-html="item.message"></div>
                   </div>
@@ -59,10 +86,9 @@
                     <div v-html="item.message"></div>
                   </div>
                 </div>
-                <div class="" v-for="(item, index) in getAllPrivateMessage" :key="'a'+index">
+                <div v-for="(item, index) in getAllPrivateMessage" :key="'a'+index">
                   <div v-if="item.sender === email" class="bg-violet text-white text-right ml-auto chat-in p-2 mb-2 "
-                  style="overflow : scroll; max-width: 100%;"
-                  >
+                  style="max-width: 100%;">
                     <p class="m-0" style="font-size: 12px;">{{item.sender}}</p>
                     <div v-html="item.message"></div>
                   </div>
@@ -72,30 +98,19 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 p-0 mt-auto mb-4">
-                <div class="col-12">
-                  <form @submit.prevent="send" class="col-12 p-0 d-flex flex-row">
-                    <input
-                    type="text"
-                    class="form-control col-11"
-                    placeholder="type message..."
-                    style="border-radius: 30px"
-                    v-model="message"
-                    />
-                    <button
-                    type="submit"
-                      style="background: #5e50a1; width: 40px; height: 40px;"
-                      class="text-center ml-auto btn btn text-white rounded-circle py-2"
-                    >
-                      <img src="..\assets\images\Chat\send.png" alt="" />
-                    </button>
-                  </form>
-                </div>
+
+              <div class="mt-3" style="border: 1px solid #e2e5ed"></div>
+              <div class="container mt-3 mb-4">
+                <form @submit.prevent="send" class="d-flex flex-row">
+                  <input type="text" class="form-control col-11" placeholder="type message..." style="border-radius: 30px" v-model="message" />
+                  <button type="submit" class="send-btn text-center ml-2 btn text-white rounded-circle d-none d-sm-block" >
+                    <img src="..\assets\images\Chat\send.png" alt="button send" class="img-send"/>
+                  </button>
+                </form>
               </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
     <Footer />
   </div>
@@ -105,6 +120,7 @@
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
 import io from 'socket.io-client'
+import Swal from 'sweetalert2'
 import { url } from '../helper/env'
 
 export default {
@@ -137,12 +153,11 @@ export default {
         sender: this.email,
         receiver: emailReceiver
       })
-
       this.getHistoryMsg()
     },
     send () {
       if (!this.receiver) {
-        alert('receiver is null')
+        this.alertExist()
       } else {
         this.listMsg = [...this.listMsg, {
           sender: this.email,
@@ -160,6 +175,13 @@ export default {
 
         this.message = ''
       }
+    },
+    alertExist () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Receiver is null',
+        text: 'Please select receiver first'
+      })
     },
     getPrivateMessage () {
       const privateMsg = this.listMsg.filter(e => {
@@ -207,20 +229,17 @@ export default {
 </script>
 
 <style scoped>
-.heightChat {
-  margin-bottom: 30px;
-}
 .outer {
   background: #e5e5e5;
+  overflow: hidden;
 }
 .Message,
 .listUser {
-  min-height: 583px;
+  min-height: 580px;
   background: #ffffff;
   border-radius: 13px;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
 }
 .listMessage {
   overflow-y: scroll;
@@ -236,7 +255,6 @@ export default {
   background: #ffffff;
   border-radius: 8px;
 }
-
 .btns {
   background: #5e50a1;
   border-radius: 4px;
@@ -259,9 +277,9 @@ export default {
   overflow-y: scroll;
   padding: 20px;
 }
-.box-message::-webkit-scrollbar {
+/* .box-message::-webkit-scrollbar {
     width: 0.2em;
-}
+} */
 .bg-violet {
   background: #5e50a1;
 }
@@ -278,10 +296,10 @@ export default {
   width: fit-content;
   border-radius: 0px 10px 10px 10px;
 }
-.in-chat::-webkit-scrollbar {
+/* .in-chat::-webkit-scrollbar {
     width: 0.2em;
     height: 0.2em;
-}
+} */
 .bg-violet {
   background: #5e50a1;
   border: none;
@@ -293,9 +311,29 @@ export default {
 .in-chat::-webkit-scrollbar-thumb {
   background-color: #5e50a1;
 }
-@media (max-width: 500px) {
-  .chaaat {
-    position: absolute;
+.send-btn {
+  background-color: #5e50a1;
+  width: 40px;
+  height: 40px;
+}
+.connect {
+  position: fixed;
+  right: 20px;
+  bottom: 40px;
+  z-index: 1;
+}
+@media(min-width: 1024px) {
+  .row {
+    margin-left: 30px;
+  }
+}
+@media(max-width: 768px) {
+  .send-btn {
+    width: 30px;
+    height: 40px;
+  }
+  .img-send {
+    margin-left: -5px;
   }
 }
 </style>

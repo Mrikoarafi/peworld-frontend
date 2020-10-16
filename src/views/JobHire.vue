@@ -67,21 +67,21 @@
                 type="text"
                 class="form-control"
                 placeholder="Masukkan nama lengkap"
-                v-model="company_name"
+                v-model="detailRecruiter.company_name"
               />
               <label class="small text-muted mt-3">Email</label>
               <input
                 type="text"
                 class="form-control"
                 placeholder="Masukkan email"
-                v-model="company_email"
+                v-model="detailRecruiter.company_email"
               />
               <label class="small text-muted mt-3">No Handphone</label>
               <input
                 type="text"
                 class="form-control"
                 placeholder="Masukkan no handphone"
-                v-model="phone_number"
+                v-model="detailRecruiter.phone_number"
               />
               <label class="small text-muted mt-3">Deskripsi</label>
               <textarea
@@ -161,36 +161,28 @@ export default {
         sender: this.email,
         receiver: this.detailEmploye.email,
         message: ` <div class="container">
-                    <div class="row">
-                        <div class="col col-md-3 p-0">
-                            <div class="card h-100 p-0">
-                                <p class="card-body p-0"><img src="${url}/${this.detailCompany.image_company}" class="card-img-top h-100 w-100"></p>
-                            </div>
-                        </div>
-                        <div class="col col-md-9">
-                            <div class="card">
-                                <p class="card-body">Hey ${this.detailEmploye.email},
-
-On behalf of everyone at ${this.company_name}, we’re delighted to offer you to ${this.objective}!
-
-After getting to know you over these past few [days/weeks/months], it became clear that your talents, goals, and values are a perfect match for our team. It would be an honor to bring you on board as we work toward ${this.description}.
-
-
-                            </div>
-                            <div class="card">
-                                <p class="card-body">
-As you review the offer details, we’d love to answer any questions you might have before you make your decision.
-
-We’re aiming for a start date of [Date], and it would be great to hear your feedback on this offer at ${this.company_email} or ${this.phone_number} or you just can replying this chat on this app. If this time frame doesn’t work for you, just let us know.
-
-Cheers,
-
-${this.company_name}<p></p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="card">
+              <div class="row p-3">
+                <div class="col-sm-6">
+                  <img src="${url}/${this.detailCompany.image_company}" class="card-img-top h-100 w-100">
                 </div>
-                `
+                <div class="col-sm-6">
+                  <div class="card-body">
+                    <p class="small">Hey ${this.detailEmploye.email},
+                      On behalf of everyone at ${this.company_name}, we’re delighted to offer you to ${this.objective}!
+                      After getting to know you over these past few [days/weeks/months], it became clear that your talents, goals, and values are a perfect match for our team. It would be an honor to bring you on board as we work toward ${this.description}.
+                    </p>
+                    <p class="small">
+                      As you review the offer details, we’d love to answer any questions you might have before you make your decision.
+                      We’re aiming for a start date of [Date], and it would be great to hear your feedback on this offer at ${this.company_email} or ${this.phone_number} or you just can replying this chat on this app. If this time frame doesn’t work for you, just let us know.
+                      Cheers,
+                      ${this.company_name}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>`
       })
 
       window.location = '/chat'
@@ -274,6 +266,9 @@ textarea:focus {
 .profileBox img {
   width: 150px;
   height: 150px;
+}
+.bg-violet {
+  background: #5e50a1;
 }
 @media (max-width: 768px) {
   .profileBox img {
